@@ -76,6 +76,12 @@ export type MaterialListItem = {
 export type ProjectDetails = ProjectListItem & {
   areas: ProjectAreaItem[];
   tasks: TaskItem[];
+  materialRequests: PurchaseListItem[];
+  stockMovements: StockMovementListItem[];
+  contractors: ProjectContractorItem[];
+  financialEntries: ProjectFinancialEntryItem[];
+  files: ProjectFileItem[];
+  dailyReports: DailyReportListItem[];
 };
 
 const stockMovementSigns: Record<string, number> = {
@@ -128,6 +134,39 @@ export type StockMovementListItem = {
   unit: string;
   totalCost: number;
   createdBy: string;
+  createdAt: string;
+};
+
+export type ProjectContractorItem = {
+  id: string;
+  contractor: string;
+  contact: string;
+  serviceDescription: string;
+  contractedValue: number;
+  startDate: string;
+  endDate: string;
+  status: string;
+};
+
+export type ProjectFinancialEntryItem = {
+  id: string;
+  entryType: string;
+  category: string;
+  description: string;
+  amount: number;
+  dueDate: string;
+  paidAt: string;
+  status: string;
+};
+
+export type ProjectFileItem = {
+  id: string;
+  fileName: string;
+  fileUrl: string;
+  fileType: string;
+  category: string;
+  mimeType: string;
+  uploadedBy: string;
   createdAt: string;
 };
 
@@ -234,6 +273,12 @@ function demoProjectDetails(id: string): ProjectDetails | null {
     ...project,
     areas: demoProjectAreas,
     tasks: demoTasks,
+    materialRequests: [],
+    stockMovements: [],
+    contractors: [],
+    financialEntries: [],
+    files: [],
+    dailyReports: [],
   };
 }
 
@@ -473,6 +518,59 @@ export async function getProjectDetails(id: string): Promise<ProjectDetails | nu
             plannedEndDate: "asc",
           },
         },
+        projectContractors: {
+          include: {
+            contractor: true,
+          },
+          orderBy: {
+            updatedAt: "desc",
+          },
+        },
+        purchaseRequests: {
+          include: {
+            requestedBy: true,
+            _count: {
+              select: {
+                items: true,
+              },
+            },
+          },
+          orderBy: {
+            updatedAt: "desc",
+          },
+        },
+        stockMovements: {
+          include: {
+            material: true,
+            createdBy: true,
+          },
+          orderBy: {
+            createdAt: "desc",
+          },
+          take: 40,
+        },
+        financialEntries: {
+          orderBy: {
+            dueDate: "asc",
+          },
+        },
+        files: {
+          include: {
+            uploadedBy: true,
+          },
+          orderBy: {
+            createdAt: "desc",
+          },
+        },
+        dailyReports: {
+          include: {
+            createdBy: true,
+          },
+          orderBy: {
+            reportDate: "desc",
+          },
+          take: 30,
+        },
         _count: {
           select: {
             purchaseRequests: true,
@@ -525,6 +623,70 @@ export async function getProjectDetails(id: string): Promise<ProjectDetails | nu
         tasks: area.tasks.length,
       })),
       tasks: mappedTasks,
+      materialRequests: project.purchaseRequests.map((purchase) => ({
+        id: purchase.id,
+        project: project.name,
+        requester: purchase.requestedBy.name,
+        status: purchaseStatusLabels[purchase.status] ?? purchase.status,
+        urgency: purchase.urgency ?? "-",
+        neededBy: formatDate(purchase.neededBy),
+        estimatedTotal: toNumber(purchase.estimatedTotal),
+        approvedTotal: toNumber(purchase.approvedTotal),
+        items: purchase._count.items,
+      })),
+      stockMovements: project.stockMovements.map((movement) => ({
+        id: movement.id,
+        project: project.name,
+        material: movement.material.name,
+        movementType: stockMovementLabels[movement.movementType] ?? movement.movementType,
+        quantity: toNumber(movement.quantity),
+        unit: movement.unit,
+        totalCost: toNumber(movement.totalCost),
+        createdBy: movement.createdBy.name,
+        createdAt: formatDate(movement.createdAt),
+      })),
+      contractors: project.projectContractors.map((contract) => ({
+        id: contract.id,
+        contractor: contract.contractor.name,
+        contact: contract.contractor.contactName ?? contract.contractor.phone ?? "-",
+        serviceDescription: contract.serviceDescription,
+        contractedValue: toNumber(contract.contractedValue),
+        startDate: formatDate(contract.startDate),
+        endDate: formatDate(contract.endDate),
+        status: contract.status,
+      })),
+      financialEntries: project.financialEntries.map((entry) => ({
+        id: entry.id,
+        entryType: entry.entryType,
+        category: entry.category,
+        description: entry.description,
+        amount: toNumber(entry.amount),
+        dueDate: formatDate(entry.dueDate),
+        paidAt: formatDate(entry.paidAt),
+        status: entry.status,
+      })),
+      files: project.files.map((file) => ({
+        id: file.id,
+        fileName: file.fileName,
+        fileUrl: file.fileUrl,
+        fileType: file.fileType,
+        category: file.category ?? "-",
+        mimeType: file.mimeType,
+        uploadedBy: file.uploadedBy.name,
+        createdAt: formatDate(file.createdAt),
+      })),
+      dailyReports: project.dailyReports.map((report) => ({
+        id: report.id,
+        project: project.name,
+        projectId: report.projectId,
+        reportDate: formatDate(report.reportDate),
+        createdBy: report.createdBy.name,
+        servicesExecuted: report.servicesExecuted ?? "-",
+        occurrences: report.occurrences ?? "-",
+        issues: report.issues ?? "-",
+        pendingItems: report.pendingItems ?? "-",
+        validatedAt: formatDate(report.validatedAt),
+      })),
     };
   } catch (error) {
     console.warn("Falha ao buscar detalhe da obra no banco. Usando dados demo.", error);
