@@ -1,4 +1,5 @@
 import "dotenv/config";
+import { randomBytes, scryptSync } from "node:crypto";
 import { PrismaClient, ProjectPriority, ProjectStatus, TaskStatus, UserRole } from "../src/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 
@@ -10,15 +11,27 @@ if (!connectionString) {
 
 const adapter = new PrismaPg({ connectionString });
 const prisma = new PrismaClient({ adapter });
+const seedPassword = process.env.GRAPHITE_SEED_PASSWORD ?? "Graphite@2026";
+
+function hashSeedPassword(password: string) {
+  const salt = randomBytes(16);
+  const derivedKey = scryptSync(password, salt, 64);
+
+  return `scrypt$${salt.toString("base64url")}$${derivedKey.toString("base64url")}`;
+}
 
 async function main() {
+  const passwordHash = hashSeedPassword(seedPassword);
+
   const admin = await prisma.user.upsert({
     where: { email: "admin@graphite.local" },
-    update: {},
+    update: {
+      passwordHash,
+    },
     create: {
       name: "Admin Graphite",
       email: "admin@graphite.local",
-      passwordHash: "dev-placeholder-change-before-production",
+      passwordHash,
       role: UserRole.ADMIN,
       phone: "(11) 90000-0000",
     },
@@ -26,11 +39,13 @@ async function main() {
 
   const manager = await prisma.user.upsert({
     where: { email: "rafael@graphite.local" },
-    update: {},
+    update: {
+      passwordHash,
+    },
     create: {
       name: "Rafael Torres",
       email: "rafael@graphite.local",
-      passwordHash: "dev-placeholder-change-before-production",
+      passwordHash,
       role: UserRole.PROJECT_MANAGER,
       phone: "(11) 91111-1111",
     },
@@ -95,6 +110,7 @@ async function main() {
   await prisma.task.createMany({
     data: [
       {
+        id: "seed-task-cozinha-eletrica",
         projectId: project.id,
         areaId: cozinha.id,
         title: "Finalizar infraestrutura eletrica da cozinha",
@@ -107,6 +123,7 @@ async function main() {
         priority: ProjectPriority.HIGH,
       },
       {
+        id: "seed-task-cozinha-hidraulica",
         projectId: project.id,
         areaId: cozinha.id,
         title: "Instalar registros e pontos hidraulicos",

@@ -70,10 +70,32 @@ Para popular o banco com dados iniciais de demonstracao:
 npm run db:seed
 ```
 
+## Autenticacao
+
+O sistema usa login por e-mail e senha com os usuarios da tabela `User`. A sessao fica em cookie HTTP-only assinado por `SESSION_SECRET`.
+
+Defina tambem no `.env` e na Vercel:
+
+```bash
+SESSION_SECRET="gere-um-segredo-longo"
+GRAPHITE_SEED_PASSWORD="defina-uma-senha-forte"
+```
+
+O seed cria/atualiza estes usuarios com a senha definida em `GRAPHITE_SEED_PASSWORD`:
+
+- `admin@graphite.local`
+- `rafael@graphite.local`
+
+Depois de alterar `GRAPHITE_SEED_PASSWORD`, rode novamente:
+
+```bash
+npm run db:seed
+```
+
 ## Proximos passos recomendados
 
-1. Implementar autenticacao real e controle de permissoes por perfil.
-2. Conectar CRUD de clientes e obras ao Prisma.
+1. Refinar autorizacao por perfil em cada modulo operacional.
+2. Conectar os demais modulos ao Prisma.
 3. Criar Server Actions ou API routes para formularios com validacao Zod.
 4. Implementar upload de arquivos em storage externo.
 5. Adicionar testes basicos para regras de negocio criticas.

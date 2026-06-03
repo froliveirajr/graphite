@@ -1,6 +1,13 @@
 import Link from "next/link";
+import { loginAction } from "@/lib/actions/auth";
 
-export default function LoginPage() {
+export default async function LoginPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ error?: string }>;
+}) {
+  const { error } = await searchParams;
+
   return (
     <main className="grid min-h-screen bg-zinc-100 lg:grid-cols-[1fr_480px]">
       <section className="hidden bg-zinc-950 p-10 text-white lg:flex lg:flex-col lg:justify-between">
@@ -19,24 +26,29 @@ export default function LoginPage() {
         </div>
       </section>
       <section className="flex items-center justify-center p-6">
-        <form className="w-full max-w-sm rounded-lg border border-zinc-200 bg-white p-6 shadow-sm">
+        <form action={loginAction} className="w-full max-w-sm rounded-lg border border-zinc-200 bg-white p-6 shadow-sm">
           <div className="mb-8 lg:hidden">
             <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#f9a52c] text-2xl font-black text-white">G</div>
             <h1 className="mt-4 text-2xl font-semibold">Graphite Operacional</h1>
           </div>
           <h2 className="text-xl font-semibold">Entrar</h2>
           <p className="mt-1 text-sm text-zinc-500">Use seu e-mail corporativo e senha.</p>
+          {error ? (
+            <div className="mt-5 rounded-md border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-medium text-amber-800">
+              {error}
+            </div>
+          ) : null}
           <label className="mt-6 block text-sm font-medium">
             E-mail
-            <input className="mt-2 h-11 w-full rounded-md border border-zinc-200 px-3 text-sm" type="email" placeholder="admin@graphite.com" />
+            <input name="email" required className="mt-2 h-11 w-full rounded-md border border-zinc-200 px-3 text-sm" type="email" placeholder="admin@graphite.local" />
           </label>
           <label className="mt-4 block text-sm font-medium">
             Senha
-            <input className="mt-2 h-11 w-full rounded-md border border-zinc-200 px-3 text-sm" type="password" placeholder="********" />
+            <input name="password" required className="mt-2 h-11 w-full rounded-md border border-zinc-200 px-3 text-sm" type="password" placeholder="********" />
           </label>
           <button className="mt-6 h-11 w-full rounded-md bg-zinc-950 text-sm font-semibold text-white">Entrar</button>
           <Link className="mt-4 block text-center text-sm font-medium text-zinc-600 hover:text-zinc-950" href="/">
-            Acessar prototipo
+            Voltar ao painel
           </Link>
         </form>
       </section>

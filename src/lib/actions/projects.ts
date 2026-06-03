@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { ProjectPriority, ProjectStatus } from "@/generated/prisma/client";
+import { requireSession } from "@/lib/auth/session";
 import { projectSchema } from "@/lib/validations/graphite";
 
 const statusMap: Record<string, ProjectStatus> = {
@@ -41,6 +42,8 @@ function makeProjectCode() {
 }
 
 export async function createProjectAction(formData: FormData) {
+  await requireSession();
+
   const parsed = projectSchema.safeParse({
     code: getString(formData, "code"),
     name: getString(formData, "name"),

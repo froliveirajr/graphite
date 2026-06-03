@@ -1,8 +1,24 @@
 import Link from "next/link";
-import { Bell, Search } from "lucide-react";
+import { Bell, LogOut, Search } from "lucide-react";
+import { logoutAction } from "@/lib/actions/auth";
+import { requireSession } from "@/lib/auth/session";
 import { navigation } from "@/lib/data/graphite";
 
-export function AppShell({ children }: { children: React.ReactNode }) {
+const roleLabels: Record<string, string> = {
+  ADMIN: "Administrador",
+  PROJECT_MANAGER: "Gestor de obras",
+  OFFICE: "Escritorio",
+  FOREMAN: "Encarregado",
+  EMPLOYEE: "Funcionario",
+  CONTRACTOR: "Terceirizado",
+  CLIENT: "Cliente",
+};
+
+export async function AppShell({ children }: { children: React.ReactNode }) {
+  const session = await requireSession();
+  const userName = session.name;
+  const userRole = roleLabels[session.role] ?? session.role;
+
   return (
     <div className="min-h-screen bg-zinc-100 text-zinc-950">
       <aside className="fixed inset-y-0 left-0 hidden w-72 border-r border-zinc-200 bg-zinc-950 text-white lg:block">
@@ -47,9 +63,18 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               <Bell className="h-4 w-4" aria-hidden="true" />
             </button>
             <div className="hidden text-right sm:block">
-              <p className="text-sm font-semibold">Admin Graphite</p>
-              <p className="text-xs text-zinc-500">Administrador</p>
+              <p className="text-sm font-semibold">{userName}</p>
+              <p className="text-xs text-zinc-500">{userRole}</p>
             </div>
+            <form action={logoutAction}>
+              <button
+                className="flex h-10 w-10 items-center justify-center rounded-md border border-zinc-200 bg-white text-zinc-700 hover:bg-zinc-50"
+                aria-label="Sair"
+                title="Sair"
+              >
+                <LogOut className="h-4 w-4" aria-hidden="true" />
+              </button>
+            </form>
           </div>
         </header>
         <main>{children}</main>

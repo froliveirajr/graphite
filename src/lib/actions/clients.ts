@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { requireSession } from "@/lib/auth/session";
 import { clientSchema } from "@/lib/validations/graphite";
 
 function getString(formData: FormData, key: string) {
@@ -10,6 +11,8 @@ function getString(formData: FormData, key: string) {
 }
 
 export async function createClientAction(formData: FormData) {
+  await requireSession();
+
   const parsed = clientSchema.safeParse({
     name: getString(formData, "name"),
     documentType: getString(formData, "documentType") || undefined,
