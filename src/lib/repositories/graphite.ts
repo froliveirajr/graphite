@@ -178,6 +178,26 @@ export type TaskDetails = {
   priority: string;
 };
 
+export type DailyReportListItem = {
+  id: string;
+  project: string;
+  projectId: string;
+  reportDate: string;
+  createdBy: string;
+  servicesExecuted: string;
+  occurrences: string;
+  issues: string;
+  pendingItems: string;
+  validatedAt: string;
+};
+
+export type DailyReportDetails = DailyReportListItem & {
+  teamNotes: string;
+  materialsReceived: string;
+  materialsUsed: string;
+  weatherNotes: string;
+};
+
 function hasDatabaseUrl() {
   return Boolean(process.env.DATABASE_URL);
 }
@@ -779,6 +799,85 @@ export async function getStockMovements(): Promise<StockMovementListItem[]> {
   } catch (error) {
     console.warn("Falha ao buscar movimentacoes de estoque no banco.", error);
     return [];
+  }
+}
+
+export async function getDailyReports(): Promise<DailyReportListItem[]> {
+  if (!hasDatabaseUrl()) {
+    return [];
+  }
+
+  try {
+    const { prisma } = await import("@/lib/db/prisma");
+    const reports = await prisma.dailyReport.findMany({
+      include: {
+        project: true,
+        createdBy: true,
+      },
+      orderBy: {
+        reportDate: "desc",
+      },
+      take: 120,
+    });
+
+    return reports.map((report) => ({
+      id: report.id,
+      project: report.project.name,
+      projectId: report.projectId,
+      reportDate: formatDate(report.reportDate),
+      createdBy: report.createdBy.name,
+      servicesExecuted: report.servicesExecuted ?? "-",
+      occurrences: report.occurrences ?? "-",
+      issues: report.issues ?? "-",
+      pendingItems: report.pendingItems ?? "-",
+      validatedAt: formatDate(report.validatedAt),
+    }));
+  } catch (error) {
+    console.warn("Falha ao buscar diarios de obra no banco.", error);
+    return [];
+  }
+}
+
+export async function getDailyReportDetails(id: string): Promise<DailyReportDetails | null> {
+  if (!hasDatabaseUrl()) {
+    return null;
+  }
+
+  try {
+    const { prisma } = await import("@/lib/db/prisma");
+    const report = await prisma.dailyReport.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        project: true,
+        createdBy: true,
+      },
+    });
+
+    if (!report) {
+      return null;
+    }
+
+    return {
+      id: report.id,
+      project: report.project.name,
+      projectId: report.projectId,
+      reportDate: formatDate(report.reportDate),
+      createdBy: report.createdBy.name,
+      servicesExecuted: report.servicesExecuted ?? "",
+      occurrences: report.occurrences ?? "",
+      issues: report.issues ?? "",
+      pendingItems: report.pendingItems ?? "",
+      validatedAt: formatDate(report.validatedAt),
+      teamNotes: report.teamNotes ?? "",
+      materialsReceived: report.materialsReceived ?? "",
+      materialsUsed: report.materialsUsed ?? "",
+      weatherNotes: report.weatherNotes ?? "",
+    };
+  } catch (error) {
+    console.warn("Falha ao buscar diario de obra no banco.", error);
+    return null;
   }
 }
 

@@ -79,7 +79,21 @@ export const materialSchema = z.object({
   notes: z.string().optional(),
 });
 
+export const dailyReportSchema = z.object({
+  projectId: z.string().min(1, "Selecione uma obra."),
+  reportDate: z.string().min(1, "Informe a data do diario."),
+  teamNotes: z.string().optional(),
+  servicesExecuted: z.string().optional(),
+  materialsReceived: z.string().optional(),
+  materialsUsed: z.string().optional(),
+  occurrences: z.string().optional(),
+  issues: z.string().optional(),
+  pendingItems: z.string().optional(),
+  weatherNotes: z.string().optional(),
+});
+
 export type ClientInput = z.infer<typeof clientSchema>;
 export type ProjectInput = z.infer<typeof projectSchema>;
 export type TaskInput = z.infer<typeof taskSchema>;
 export type MaterialInput = z.infer<typeof materialSchema>;
+export type DailyReportInput = z.infer<typeof dailyReportSchema>;
