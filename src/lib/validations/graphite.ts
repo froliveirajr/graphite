@@ -1,0 +1,71 @@
+import { z } from "zod";
+
+export const clientSchema = z.object({
+  name: z.string().min(2, "Informe o nome do cliente."),
+  documentType: z.enum(["CPF", "CNPJ"]).optional(),
+  documentNumber: z.string().min(11, "Informe CPF ou CNPJ."),
+  phone: z.string().min(8, "Informe um telefone valido."),
+  whatsapp: z.string().optional(),
+  email: z.email("Informe um e-mail valido.").optional().or(z.literal("")),
+  address: z.string().optional(),
+  clientType: z.enum(["Pessoa fisica", "Empresa", "Restaurante", "Investidor", "Arquiteto parceiro"]),
+  notes: z.string().optional(),
+});
+
+export const projectSchema = z.object({
+  code: z.string().optional(),
+  name: z.string().min(3, "Informe o nome da obra."),
+  clientId: z.string().min(1, "Selecione um cliente."),
+  projectType: z.enum([
+    "Reforma residencial",
+    "Reforma de apartamento",
+    "Reforma comercial",
+    "Restaurante",
+    "Construcao interna",
+    "Adequacao de imovel",
+    "Manutencao",
+    "Obra personalizada",
+  ]),
+  address: z.string().min(5, "Informe o endereco da obra."),
+  plannedBudget: z.coerce.number().nonnegative(),
+  plannedStartDate: z.string().min(1),
+  plannedEndDate: z.string().min(1),
+  status: z.enum([
+    "Orcamento",
+    "Planejamento",
+    "Em andamento",
+    "Pausada",
+    "Aguardando cliente",
+    "Aguardando material",
+    "Aguardando terceirizado",
+    "Em vistoria",
+    "Concluida",
+    "Cancelada",
+  ]),
+  priority: z.enum(["Alta", "Media", "Baixa"]).default("Media"),
+  notes: z.string().optional(),
+});
+
+export const taskSchema = z.object({
+  projectId: z.string().min(1),
+  areaId: z.string().optional(),
+  title: z.string().min(3),
+  description: z.string().optional(),
+  serviceType: z.string().min(2),
+  status: z.enum([
+    "A fazer",
+    "Em andamento",
+    "Pausada",
+    "Bloqueada",
+    "Aguardando material",
+    "Aguardando aprovacao",
+    "Concluida",
+    "Reprovada",
+    "Cancelada",
+  ]),
+  priority: z.enum(["Alta", "Media", "Baixa"]),
+});
+
+export type ClientInput = z.infer<typeof clientSchema>;
+export type ProjectInput = z.infer<typeof projectSchema>;
+export type TaskInput = z.infer<typeof taskSchema>;
