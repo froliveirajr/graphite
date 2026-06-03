@@ -1,11 +1,13 @@
 import { AppShell } from "@/components/layout/app-shell";
 import { PageHeader } from "@/components/ui/page-header";
 import { StatusBadge } from "@/components/ui/status-badge";
-import { tasks } from "@/lib/data/graphite";
+import { getTasks } from "@/lib/repositories/graphite";
 
 const columns = ["A fazer", "Em andamento", "Aguardando material", "Concluida"];
 
-export default function TasksPage() {
+export default async function TasksPage() {
+  const tasks = await getTasks();
+
   return (
     <AppShell>
       <PageHeader
@@ -22,9 +24,10 @@ export default function TasksPage() {
                 <span className="text-xs text-zinc-500">{tasks.filter((task) => task.status === column).length}</span>
               </div>
               <div className="space-y-3">
-                {tasks
-                  .filter((task) => task.status === column)
-                  .map((task) => (
+                {tasks.filter((task) => task.status === column).length > 0 ? (
+                  tasks
+                    .filter((task) => task.status === column)
+                    .map((task) => (
                     <div key={task.id} className="rounded-md border border-zinc-200 p-4">
                       <StatusBadge value={task.priority} />
                       <h3 className="mt-3 text-sm font-semibold leading-5">{task.title}</h3>
@@ -34,7 +37,12 @@ export default function TasksPage() {
                         <span>{task.due}</span>
                       </div>
                     </div>
-                  ))}
+                    ))
+                ) : (
+                  <div className="rounded-md border border-dashed border-zinc-200 p-4 text-sm text-zinc-500">
+                    Nenhuma tarefa nesta etapa.
+                  </div>
+                )}
               </div>
             </div>
           ))}

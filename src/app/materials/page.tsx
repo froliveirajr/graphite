@@ -1,8 +1,11 @@
 import { AppShell } from "@/components/layout/app-shell";
 import { PageHeader } from "@/components/ui/page-header";
-import { formatCurrency, materials } from "@/lib/data/graphite";
+import { formatCurrency } from "@/lib/data/graphite";
+import { getMaterials } from "@/lib/repositories/graphite";
 
-export default function MaterialsPage() {
+export default async function MaterialsPage() {
+  const materials = await getMaterials();
+
   return (
     <AppShell>
       <PageHeader
@@ -24,7 +27,7 @@ export default function MaterialsPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-zinc-100">
-              {materials.map((material) => (
+              {materials.length > 0 ? materials.map((material) => (
                 <tr key={material.name} className="hover:bg-zinc-50">
                   <td className="px-4 py-4 font-semibold">{material.name}</td>
                   <td className="px-4 py-4 text-zinc-700">{material.category}</td>
@@ -33,7 +36,13 @@ export default function MaterialsPage() {
                   <td className="px-4 py-4">{material.minimum}</td>
                   <td className="px-4 py-4">{formatCurrency(material.averagePrice)}</td>
                 </tr>
-              ))}
+              )) : (
+                <tr>
+                  <td colSpan={6} className="px-4 py-10 text-center text-sm text-zinc-500">
+                    Nenhum material cadastrado.
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

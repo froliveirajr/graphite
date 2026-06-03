@@ -1,5 +1,6 @@
 import {
   clients as demoClients,
+  materials as demoMaterials,
   projectAreas as demoProjectAreas,
   projects as demoProjects,
   tasks as demoTasks,
@@ -59,10 +60,88 @@ export type ClientListItem = (typeof demoClients)[number];
 export type ProjectListItem = (typeof demoProjects)[number];
 export type ProjectAreaItem = (typeof demoProjectAreas)[number];
 export type TaskItem = (typeof demoTasks)[number];
+export type MaterialListItem = (typeof demoMaterials)[number];
 
 export type ProjectDetails = ProjectListItem & {
   areas: ProjectAreaItem[];
   tasks: TaskItem[];
+};
+
+const stockMovementSigns: Record<string, number> = {
+  PURCHASE_ENTRY: 1,
+  TRANSFER_ENTRY: 1,
+  CONSUMPTION: -1,
+  DISPOSAL: -1,
+  LOSS: -1,
+  RETURN_TO_CENTRAL: -1,
+};
+
+const purchaseStatusLabels: Record<string, string> = {
+  REQUESTED: "Solicitada",
+  QUOTING: "Em cotacao",
+  WAITING_APPROVAL: "Aguardando aprovacao",
+  APPROVED: "Aprovada",
+  PURCHASED: "Comprada",
+  RECEIVED: "Recebida",
+  CANCELED: "Cancelada",
+  REJECTED: "Reprovada",
+};
+
+const stockMovementLabels: Record<string, string> = {
+  PURCHASE_ENTRY: "Entrada por compra",
+  TRANSFER_ENTRY: "Entrada por transferencia",
+  CONSUMPTION: "Consumo",
+  DISPOSAL: "Descarte",
+  LOSS: "Perda",
+  RETURN_TO_CENTRAL: "Retorno ao central",
+};
+
+export type PurchaseListItem = {
+  id: string;
+  project: string;
+  requester: string;
+  status: string;
+  urgency: string;
+  neededBy: string;
+  estimatedTotal: number;
+  approvedTotal: number;
+  items: number;
+};
+
+export type StockMovementListItem = {
+  id: string;
+  project: string;
+  material: string;
+  movementType: string;
+  quantity: number;
+  unit: string;
+  totalCost: number;
+  createdBy: string;
+  createdAt: string;
+};
+
+export type EmployeeListItem = {
+  id: string;
+  name: string;
+  jobTitle: string;
+  specialty: string;
+  employmentType: string;
+  phone: string;
+  status: string;
+  dailyRate: number;
+  salary: number;
+};
+
+export type ContractorListItem = {
+  id: string;
+  name: string;
+  contactName: string;
+  specialty: string;
+  phone: string;
+  email: string;
+  status: string;
+  rating: number | null;
+  activeContracts: number;
 };
 
 function hasDatabaseUrl() {
@@ -381,5 +460,235 @@ export async function getProjectDetails(id: string): Promise<ProjectDetails | nu
   } catch (error) {
     console.warn("Falha ao buscar detalhe da obra no banco. Usando dados demo.", error);
     return demoProjectDetails(id);
+  }
+}
+
+export async function getTasks(): Promise<TaskItem[]> {
+  if (!hasDatabaseUrl()) {
+    return demoTasks;
+  }
+
+  try {
+    const { prisma } = await import("@/lib/db/prisma");
+    const tasks = await prisma.task.findMany({
+      include: {
+        project: true,
+        area: true,
+        assignedToUser: true,
+        assignedToContractor: true,
+      },
+      orderBy: [
+        {
+          plannedEndDate: "asc",
+        },
+        {
+          updatedAt: "desc",
+        },
+      ],
+    });
+
+    return tasks.map((task) => ({
+      id: task.id,
+      title: task.title,
+      project: task.project.name,
+      area: task.area?.name ?? "-",
+      serviceType: task.serviceType,
+      owner: task.assignedToUser?.name ?? task.assignedToContractor?.name ?? "-",
+      status: taskStatusLabels[task.status] ?? task.status,
+      priority: priorityLabels[task.priority] ?? task.priority,
+      due: formatDate(task.plannedEndDate),
+    }));
+  } catch (error) {
+    console.warn("Falha ao buscar tarefas no banco. Usando dados demo.", error);
+    return demoTasks;
+  }
+}
+
+export async function getMaterials(): Promise<MaterialListItem[]> {
+  if (!hasDatabaseUrl()) {
+    return demoMaterials;
+  }
+
+  try {
+    const { prisma } = await import("@/lib/db/prisma");
+    const materials = await prisma.material.findMany({
+      include: {
+        stockMovements: {
+          select: {
+            movementType: true,
+            quantity: true,
+          },
+        },
+      },
+      orderBy: [
+        {
+          category: "asc",
+        },
+        {
+          name: "asc",
+        },
+      ],
+    });
+
+    return materials.map((material) => {
+      const stock = material.stockMovements.reduce((total, movement) => {
+        const sign = stockMovementSigns[movement.movementType] ?? 0;
+        return total + Number(movement.quantity) * sign;
+      }, 0);
+
+      return {
+        name: material.name,
+        category: material.category,
+        unit: material.unit,
+        stock,
+        minimum: toNumber(material.minimumStock),
+        averagePrice: toNumber(material.averagePrice),
+      };
+    });
+  } catch (error) {
+    console.warn("Falha ao buscar materiais no banco. Usando dados demo.", error);
+    return demoMaterials;
+  }
+}
+
+export async function getPurchases(): Promise<PurchaseListItem[]> {
+  if (!hasDatabaseUrl()) {
+    return [];
+  }
+
+  try {
+    const { prisma } = await import("@/lib/db/prisma");
+    const purchases = await prisma.purchaseRequest.findMany({
+      include: {
+        project: true,
+        requestedBy: true,
+        _count: {
+          select: {
+            items: true,
+          },
+        },
+      },
+      orderBy: {
+        updatedAt: "desc",
+      },
+    });
+
+    return purchases.map((purchase) => ({
+      id: purchase.id,
+      project: purchase.project.name,
+      requester: purchase.requestedBy.name,
+      status: purchaseStatusLabels[purchase.status] ?? purchase.status,
+      urgency: purchase.urgency ?? "-",
+      neededBy: formatDate(purchase.neededBy),
+      estimatedTotal: toNumber(purchase.estimatedTotal),
+      approvedTotal: toNumber(purchase.approvedTotal),
+      items: purchase._count.items,
+    }));
+  } catch (error) {
+    console.warn("Falha ao buscar compras no banco.", error);
+    return [];
+  }
+}
+
+export async function getStockMovements(): Promise<StockMovementListItem[]> {
+  if (!hasDatabaseUrl()) {
+    return [];
+  }
+
+  try {
+    const { prisma } = await import("@/lib/db/prisma");
+    const movements = await prisma.stockMovement.findMany({
+      include: {
+        project: true,
+        material: true,
+        createdBy: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      take: 80,
+    });
+
+    return movements.map((movement) => ({
+      id: movement.id,
+      project: movement.project.name,
+      material: movement.material.name,
+      movementType: stockMovementLabels[movement.movementType] ?? movement.movementType,
+      quantity: toNumber(movement.quantity),
+      unit: movement.unit,
+      totalCost: toNumber(movement.totalCost),
+      createdBy: movement.createdBy.name,
+      createdAt: formatDate(movement.createdAt),
+    }));
+  } catch (error) {
+    console.warn("Falha ao buscar movimentacoes de estoque no banco.", error);
+    return [];
+  }
+}
+
+export async function getEmployees(): Promise<EmployeeListItem[]> {
+  if (!hasDatabaseUrl()) {
+    return [];
+  }
+
+  try {
+    const { prisma } = await import("@/lib/db/prisma");
+    const employees = await prisma.employee.findMany({
+      orderBy: {
+        name: "asc",
+      },
+    });
+
+    return employees.map((employee) => ({
+      id: employee.id,
+      name: employee.name,
+      jobTitle: employee.jobTitle,
+      specialty: employee.specialty ?? "-",
+      employmentType: employee.employmentType ?? "-",
+      phone: employee.phone ?? "-",
+      status: recordStatusLabels[employee.status] ?? employee.status,
+      dailyRate: toNumber(employee.dailyRate),
+      salary: toNumber(employee.salary),
+    }));
+  } catch (error) {
+    console.warn("Falha ao buscar funcionarios no banco.", error);
+    return [];
+  }
+}
+
+export async function getContractors(): Promise<ContractorListItem[]> {
+  if (!hasDatabaseUrl()) {
+    return [];
+  }
+
+  try {
+    const { prisma } = await import("@/lib/db/prisma");
+    const contractors = await prisma.contractor.findMany({
+      include: {
+        _count: {
+          select: {
+            projectContracts: true,
+          },
+        },
+      },
+      orderBy: {
+        name: "asc",
+      },
+    });
+
+    return contractors.map((contractor) => ({
+      id: contractor.id,
+      name: contractor.name,
+      contactName: contractor.contactName ?? "-",
+      specialty: contractor.specialty ?? "-",
+      phone: contractor.phone ?? "-",
+      email: contractor.email ?? "-",
+      status: recordStatusLabels[contractor.status] ?? contractor.status,
+      rating: contractor.rating,
+      activeContracts: contractor._count.projectContracts,
+    }));
+  } catch (error) {
+    console.warn("Falha ao buscar terceirizados no banco.", error);
+    return [];
   }
 }
