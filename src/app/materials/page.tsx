@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { AppShell } from "@/components/layout/app-shell";
 import { PageHeader } from "@/components/ui/page-header";
 import { formatCurrency } from "@/lib/data/graphite";
@@ -11,7 +12,7 @@ export default async function MaterialsPage() {
       <PageHeader
         title="Materiais"
         description="Catalogo padronizado, fornecedores preferenciais, preco medio e estoque minimo."
-        action={<button className="h-10 rounded-md bg-zinc-950 px-4 text-sm font-semibold text-white">Novo material</button>}
+        action={<Link href="/materials/new" className="inline-flex h-10 items-center rounded-md bg-zinc-950 px-4 text-sm font-semibold text-white">Novo material</Link>}
       />
       <div className="p-5 sm:p-8">
         <div className="overflow-hidden rounded-lg border border-zinc-200 bg-white shadow-sm">

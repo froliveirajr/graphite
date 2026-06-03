@@ -144,6 +144,16 @@ export type ContractorListItem = {
   activeContracts: number;
 };
 
+export type ProjectTaskOption = {
+  id: string;
+  name: string;
+  code: string;
+  areas: Array<{
+    id: string;
+    name: string;
+  }>;
+};
+
 function hasDatabaseUrl() {
   return Boolean(process.env.DATABASE_URL);
 }
@@ -690,5 +700,55 @@ export async function getContractors(): Promise<ContractorListItem[]> {
   } catch (error) {
     console.warn("Falha ao buscar terceirizados no banco.", error);
     return [];
+  }
+}
+
+export async function getProjectTaskOptions(): Promise<ProjectTaskOption[]> {
+  if (!hasDatabaseUrl()) {
+    return demoProjects.map((project) => ({
+      id: project.id,
+      name: project.name,
+      code: project.code,
+      areas: demoProjectAreas.map((area) => ({
+        id: area.name,
+        name: area.name,
+      })),
+    }));
+  }
+
+  try {
+    const { prisma } = await import("@/lib/db/prisma");
+    const projects = await prisma.project.findMany({
+      select: {
+        id: true,
+        name: true,
+        code: true,
+        areas: {
+          select: {
+            id: true,
+            name: true,
+          },
+          orderBy: {
+            name: "asc",
+          },
+        },
+      },
+      orderBy: {
+        updatedAt: "desc",
+      },
+    });
+
+    return projects;
+  } catch (error) {
+    console.warn("Falha ao buscar obras para tarefa. Usando dados demo.", error);
+    return demoProjects.map((project) => ({
+      id: project.id,
+      name: project.name,
+      code: project.code,
+      areas: demoProjectAreas.map((area) => ({
+        id: area.name,
+        name: area.name,
+      })),
+    }));
   }
 }

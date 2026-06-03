@@ -52,6 +52,8 @@ export const taskSchema = z.object({
   title: z.string().min(3),
   description: z.string().optional(),
   serviceType: z.string().min(2),
+  plannedStartDate: z.string().optional(),
+  plannedEndDate: z.string().optional(),
   status: z.enum([
     "A fazer",
     "Em andamento",
@@ -66,6 +68,18 @@ export const taskSchema = z.object({
   priority: z.enum(["Alta", "Media", "Baixa"]),
 });
 
+export const materialSchema = z.object({
+  name: z.string().min(2, "Informe o nome do material."),
+  category: z.string().min(2, "Informe a categoria."),
+  unit: z.string().min(1, "Informe a unidade."),
+  brand: z.string().optional(),
+  internalCode: z.string().optional(),
+  averagePrice: z.coerce.number().nonnegative("Informe um preco valido.").optional(),
+  minimumStock: z.coerce.number().nonnegative("Informe um estoque minimo valido.").optional(),
+  notes: z.string().optional(),
+});
+
 export type ClientInput = z.infer<typeof clientSchema>;
 export type ProjectInput = z.infer<typeof projectSchema>;
 export type TaskInput = z.infer<typeof taskSchema>;
+export type MaterialInput = z.infer<typeof materialSchema>;

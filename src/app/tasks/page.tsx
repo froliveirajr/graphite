@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { AppShell } from "@/components/layout/app-shell";
 import { PageHeader } from "@/components/ui/page-header";
 import { StatusBadge } from "@/components/ui/status-badge";
@@ -13,7 +14,7 @@ export default async function TasksPage() {
       <PageHeader
         title="Tarefas e cronograma"
         description="Lista, Kanban e calendario para atividades por obra, ambiente, responsavel e prazo."
-        action={<button className="h-10 rounded-md bg-zinc-950 px-4 text-sm font-semibold text-white">Nova tarefa</button>}
+        action={<Link href="/tasks/new" className="inline-flex h-10 items-center rounded-md bg-zinc-950 px-4 text-sm font-semibold text-white">Nova tarefa</Link>}
       />
       <div className="p-5 sm:p-8">
         <div className="grid gap-4 xl:grid-cols-4">
