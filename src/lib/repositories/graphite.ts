@@ -60,7 +60,18 @@ export type ClientListItem = (typeof demoClients)[number];
 export type ProjectListItem = (typeof demoProjects)[number];
 export type ProjectAreaItem = (typeof demoProjectAreas)[number];
 export type TaskItem = (typeof demoTasks)[number];
-export type MaterialListItem = (typeof demoMaterials)[number];
+export type MaterialListItem = {
+  id: string;
+  name: string;
+  category: string;
+  unit: string;
+  brand: string;
+  internalCode: string;
+  stock: number;
+  minimum: number;
+  averagePrice: number;
+  notes: string;
+};
 
 export type ProjectDetails = ProjectListItem & {
   areas: ProjectAreaItem[];
@@ -154,6 +165,19 @@ export type ProjectTaskOption = {
   }>;
 };
 
+export type TaskDetails = {
+  id: string;
+  projectId: string;
+  areaId: string;
+  title: string;
+  description: string;
+  serviceType: string;
+  plannedStartDate: string;
+  plannedEndDate: string;
+  status: string;
+  priority: string;
+};
+
 function hasDatabaseUrl() {
   return Boolean(process.env.DATABASE_URL);
 }
@@ -224,6 +248,21 @@ function filterDemoProjects(filters: ProjectFilters) {
 
     return matchesQuery && matchesStatus && matchesManager && matchesType;
   });
+}
+
+function getDemoMaterials(): MaterialListItem[] {
+  return demoMaterials.map((material) => ({
+    id: material.name,
+    name: material.name,
+    category: material.category,
+    unit: material.unit,
+    brand: "-",
+    internalCode: "-",
+    stock: material.stock,
+    minimum: material.minimum,
+    averagePrice: material.averagePrice,
+    notes: "",
+  }));
 }
 
 export async function getClients(filters: ClientFilters = {}): Promise<ClientListItem[]> {
@@ -514,9 +553,64 @@ export async function getTasks(): Promise<TaskItem[]> {
   }
 }
 
+export async function getTaskDetails(id: string): Promise<TaskDetails | null> {
+  if (!hasDatabaseUrl()) {
+    const task = demoTasks.find((item) => item.id === id);
+
+    if (!task) {
+      return null;
+    }
+
+    const project = demoProjects.find((item) => item.name === task.project);
+    const area = demoProjectAreas.find((item) => item.name === task.area);
+
+    return {
+      id: task.id,
+      projectId: project?.id ?? "",
+      areaId: area?.name ?? "",
+      title: task.title,
+      description: "",
+      serviceType: task.serviceType,
+      plannedStartDate: "",
+      plannedEndDate: task.due === "-" ? "" : task.due,
+      status: task.status,
+      priority: task.priority,
+    };
+  }
+
+  try {
+    const { prisma } = await import("@/lib/db/prisma");
+    const task = await prisma.task.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!task) {
+      return null;
+    }
+
+    return {
+      id: task.id,
+      projectId: task.projectId,
+      areaId: task.areaId ?? "",
+      title: task.title,
+      description: task.description ?? "",
+      serviceType: task.serviceType,
+      plannedStartDate: task.plannedStartDate ? task.plannedStartDate.toISOString().slice(0, 10) : "",
+      plannedEndDate: task.plannedEndDate ? task.plannedEndDate.toISOString().slice(0, 10) : "",
+      status: taskStatusLabels[task.status] ?? task.status,
+      priority: priorityLabels[task.priority] ?? task.priority,
+    };
+  } catch (error) {
+    console.warn("Falha ao buscar tarefa no banco.", error);
+    return null;
+  }
+}
+
 export async function getMaterials(): Promise<MaterialListItem[]> {
   if (!hasDatabaseUrl()) {
-    return demoMaterials;
+    return getDemoMaterials();
   }
 
   try {
@@ -547,17 +641,69 @@ export async function getMaterials(): Promise<MaterialListItem[]> {
       }, 0);
 
       return {
+        id: material.id,
         name: material.name,
         category: material.category,
         unit: material.unit,
+        brand: material.brand ?? "-",
+        internalCode: material.internalCode ?? "-",
         stock,
         minimum: toNumber(material.minimumStock),
         averagePrice: toNumber(material.averagePrice),
+        notes: material.notes ?? "",
       };
     });
   } catch (error) {
     console.warn("Falha ao buscar materiais no banco. Usando dados demo.", error);
-    return demoMaterials;
+    return getDemoMaterials();
+  }
+}
+
+export async function getMaterialDetails(id: string): Promise<MaterialListItem | null> {
+  if (!hasDatabaseUrl()) {
+    return getDemoMaterials().find((material) => material.id === id) ?? null;
+  }
+
+  try {
+    const { prisma } = await import("@/lib/db/prisma");
+    const material = await prisma.material.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        stockMovements: {
+          select: {
+            movementType: true,
+            quantity: true,
+          },
+        },
+      },
+    });
+
+    if (!material) {
+      return null;
+    }
+
+    const stock = material.stockMovements.reduce((total, movement) => {
+      const sign = stockMovementSigns[movement.movementType] ?? 0;
+      return total + Number(movement.quantity) * sign;
+    }, 0);
+
+    return {
+      id: material.id,
+      name: material.name,
+      category: material.category,
+      unit: material.unit,
+      brand: material.brand ?? "",
+      internalCode: material.internalCode ?? "",
+      stock,
+      minimum: toNumber(material.minimumStock),
+      averagePrice: toNumber(material.averagePrice),
+      notes: material.notes ?? "",
+    };
+  } catch (error) {
+    console.warn("Falha ao buscar material no banco.", error);
+    return null;
   }
 }
 
