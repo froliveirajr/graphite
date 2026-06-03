@@ -273,6 +273,7 @@ export type DailyReportWhereInput = {
   project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
   createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   validatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  attendances?: Prisma.DailyReportAttendanceListRelationFilter
 }
 
 export type DailyReportOrderByWithRelationInput = {
@@ -295,6 +296,7 @@ export type DailyReportOrderByWithRelationInput = {
   project?: Prisma.ProjectOrderByWithRelationInput
   createdBy?: Prisma.UserOrderByWithRelationInput
   validatedBy?: Prisma.UserOrderByWithRelationInput
+  attendances?: Prisma.DailyReportAttendanceOrderByRelationAggregateInput
 }
 
 export type DailyReportWhereUniqueInput = Prisma.AtLeast<{
@@ -321,6 +323,7 @@ export type DailyReportWhereUniqueInput = Prisma.AtLeast<{
   project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
   createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   validatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  attendances?: Prisma.DailyReportAttendanceListRelationFilter
 }, "id" | "projectId_reportDate">
 
 export type DailyReportOrderByWithAggregationInput = {
@@ -384,6 +387,7 @@ export type DailyReportCreateInput = {
   project: Prisma.ProjectCreateNestedOneWithoutDailyReportsInput
   createdBy: Prisma.UserCreateNestedOneWithoutDailyReportsInput
   validatedBy?: Prisma.UserCreateNestedOneWithoutValidatedDailyReportsInput
+  attendances?: Prisma.DailyReportAttendanceCreateNestedManyWithoutDailyReportInput
 }
 
 export type DailyReportUncheckedCreateInput = {
@@ -403,6 +407,7 @@ export type DailyReportUncheckedCreateInput = {
   validatedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  attendances?: Prisma.DailyReportAttendanceUncheckedCreateNestedManyWithoutDailyReportInput
 }
 
 export type DailyReportUpdateInput = {
@@ -422,6 +427,7 @@ export type DailyReportUpdateInput = {
   project?: Prisma.ProjectUpdateOneRequiredWithoutDailyReportsNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutDailyReportsNestedInput
   validatedBy?: Prisma.UserUpdateOneWithoutValidatedDailyReportsNestedInput
+  attendances?: Prisma.DailyReportAttendanceUpdateManyWithoutDailyReportNestedInput
 }
 
 export type DailyReportUncheckedUpdateInput = {
@@ -441,6 +447,7 @@ export type DailyReportUncheckedUpdateInput = {
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  attendances?: Prisma.DailyReportAttendanceUncheckedUpdateManyWithoutDailyReportNestedInput
 }
 
 export type DailyReportCreateManyInput = {
@@ -569,6 +576,11 @@ export type DailyReportMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
+export type DailyReportScalarRelationFilter = {
+  is?: Prisma.DailyReportWhereInput
+  isNot?: Prisma.DailyReportWhereInput
+}
+
 export type DailyReportCreateNestedManyWithoutCreatedByInput = {
   create?: Prisma.XOR<Prisma.DailyReportCreateWithoutCreatedByInput, Prisma.DailyReportUncheckedCreateWithoutCreatedByInput> | Prisma.DailyReportCreateWithoutCreatedByInput[] | Prisma.DailyReportUncheckedCreateWithoutCreatedByInput[]
   connectOrCreate?: Prisma.DailyReportCreateOrConnectWithoutCreatedByInput | Prisma.DailyReportCreateOrConnectWithoutCreatedByInput[]
@@ -695,6 +707,20 @@ export type DailyReportUncheckedUpdateManyWithoutProjectNestedInput = {
   deleteMany?: Prisma.DailyReportScalarWhereInput | Prisma.DailyReportScalarWhereInput[]
 }
 
+export type DailyReportCreateNestedOneWithoutAttendancesInput = {
+  create?: Prisma.XOR<Prisma.DailyReportCreateWithoutAttendancesInput, Prisma.DailyReportUncheckedCreateWithoutAttendancesInput>
+  connectOrCreate?: Prisma.DailyReportCreateOrConnectWithoutAttendancesInput
+  connect?: Prisma.DailyReportWhereUniqueInput
+}
+
+export type DailyReportUpdateOneRequiredWithoutAttendancesNestedInput = {
+  create?: Prisma.XOR<Prisma.DailyReportCreateWithoutAttendancesInput, Prisma.DailyReportUncheckedCreateWithoutAttendancesInput>
+  connectOrCreate?: Prisma.DailyReportCreateOrConnectWithoutAttendancesInput
+  upsert?: Prisma.DailyReportUpsertWithoutAttendancesInput
+  connect?: Prisma.DailyReportWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.DailyReportUpdateToOneWithWhereWithoutAttendancesInput, Prisma.DailyReportUpdateWithoutAttendancesInput>, Prisma.DailyReportUncheckedUpdateWithoutAttendancesInput>
+}
+
 export type DailyReportCreateWithoutCreatedByInput = {
   id?: string
   reportDate: Date | string
@@ -711,6 +737,7 @@ export type DailyReportCreateWithoutCreatedByInput = {
   updatedAt?: Date | string
   project: Prisma.ProjectCreateNestedOneWithoutDailyReportsInput
   validatedBy?: Prisma.UserCreateNestedOneWithoutValidatedDailyReportsInput
+  attendances?: Prisma.DailyReportAttendanceCreateNestedManyWithoutDailyReportInput
 }
 
 export type DailyReportUncheckedCreateWithoutCreatedByInput = {
@@ -729,6 +756,7 @@ export type DailyReportUncheckedCreateWithoutCreatedByInput = {
   validatedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  attendances?: Prisma.DailyReportAttendanceUncheckedCreateNestedManyWithoutDailyReportInput
 }
 
 export type DailyReportCreateOrConnectWithoutCreatedByInput = {
@@ -757,6 +785,7 @@ export type DailyReportCreateWithoutValidatedByInput = {
   updatedAt?: Date | string
   project: Prisma.ProjectCreateNestedOneWithoutDailyReportsInput
   createdBy: Prisma.UserCreateNestedOneWithoutDailyReportsInput
+  attendances?: Prisma.DailyReportAttendanceCreateNestedManyWithoutDailyReportInput
 }
 
 export type DailyReportUncheckedCreateWithoutValidatedByInput = {
@@ -775,6 +804,7 @@ export type DailyReportUncheckedCreateWithoutValidatedByInput = {
   validatedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  attendances?: Prisma.DailyReportAttendanceUncheckedCreateNestedManyWithoutDailyReportInput
 }
 
 export type DailyReportCreateOrConnectWithoutValidatedByInput = {
@@ -857,6 +887,7 @@ export type DailyReportCreateWithoutProjectInput = {
   updatedAt?: Date | string
   createdBy: Prisma.UserCreateNestedOneWithoutDailyReportsInput
   validatedBy?: Prisma.UserCreateNestedOneWithoutValidatedDailyReportsInput
+  attendances?: Prisma.DailyReportAttendanceCreateNestedManyWithoutDailyReportInput
 }
 
 export type DailyReportUncheckedCreateWithoutProjectInput = {
@@ -875,6 +906,7 @@ export type DailyReportUncheckedCreateWithoutProjectInput = {
   validatedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  attendances?: Prisma.DailyReportAttendanceUncheckedCreateNestedManyWithoutDailyReportInput
 }
 
 export type DailyReportCreateOrConnectWithoutProjectInput = {
@@ -901,6 +933,98 @@ export type DailyReportUpdateWithWhereUniqueWithoutProjectInput = {
 export type DailyReportUpdateManyWithWhereWithoutProjectInput = {
   where: Prisma.DailyReportScalarWhereInput
   data: Prisma.XOR<Prisma.DailyReportUpdateManyMutationInput, Prisma.DailyReportUncheckedUpdateManyWithoutProjectInput>
+}
+
+export type DailyReportCreateWithoutAttendancesInput = {
+  id?: string
+  reportDate: Date | string
+  teamNotes?: string | null
+  servicesExecuted?: string | null
+  materialsReceived?: string | null
+  materialsUsed?: string | null
+  occurrences?: string | null
+  issues?: string | null
+  pendingItems?: string | null
+  weatherNotes?: string | null
+  validatedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  project: Prisma.ProjectCreateNestedOneWithoutDailyReportsInput
+  createdBy: Prisma.UserCreateNestedOneWithoutDailyReportsInput
+  validatedBy?: Prisma.UserCreateNestedOneWithoutValidatedDailyReportsInput
+}
+
+export type DailyReportUncheckedCreateWithoutAttendancesInput = {
+  id?: string
+  projectId: string
+  reportDate: Date | string
+  createdById: string
+  teamNotes?: string | null
+  servicesExecuted?: string | null
+  materialsReceived?: string | null
+  materialsUsed?: string | null
+  occurrences?: string | null
+  issues?: string | null
+  pendingItems?: string | null
+  weatherNotes?: string | null
+  validatedById?: string | null
+  validatedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type DailyReportCreateOrConnectWithoutAttendancesInput = {
+  where: Prisma.DailyReportWhereUniqueInput
+  create: Prisma.XOR<Prisma.DailyReportCreateWithoutAttendancesInput, Prisma.DailyReportUncheckedCreateWithoutAttendancesInput>
+}
+
+export type DailyReportUpsertWithoutAttendancesInput = {
+  update: Prisma.XOR<Prisma.DailyReportUpdateWithoutAttendancesInput, Prisma.DailyReportUncheckedUpdateWithoutAttendancesInput>
+  create: Prisma.XOR<Prisma.DailyReportCreateWithoutAttendancesInput, Prisma.DailyReportUncheckedCreateWithoutAttendancesInput>
+  where?: Prisma.DailyReportWhereInput
+}
+
+export type DailyReportUpdateToOneWithWhereWithoutAttendancesInput = {
+  where?: Prisma.DailyReportWhereInput
+  data: Prisma.XOR<Prisma.DailyReportUpdateWithoutAttendancesInput, Prisma.DailyReportUncheckedUpdateWithoutAttendancesInput>
+}
+
+export type DailyReportUpdateWithoutAttendancesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  reportDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  teamNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  servicesExecuted?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  materialsReceived?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  materialsUsed?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  occurrences?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  issues?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pendingItems?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weatherNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  project?: Prisma.ProjectUpdateOneRequiredWithoutDailyReportsNestedInput
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutDailyReportsNestedInput
+  validatedBy?: Prisma.UserUpdateOneWithoutValidatedDailyReportsNestedInput
+}
+
+export type DailyReportUncheckedUpdateWithoutAttendancesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  reportDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  teamNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  servicesExecuted?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  materialsReceived?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  materialsUsed?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  occurrences?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  issues?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pendingItems?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weatherNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validatedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type DailyReportCreateManyCreatedByInput = {
@@ -955,6 +1079,7 @@ export type DailyReportUpdateWithoutCreatedByInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   project?: Prisma.ProjectUpdateOneRequiredWithoutDailyReportsNestedInput
   validatedBy?: Prisma.UserUpdateOneWithoutValidatedDailyReportsNestedInput
+  attendances?: Prisma.DailyReportAttendanceUpdateManyWithoutDailyReportNestedInput
 }
 
 export type DailyReportUncheckedUpdateWithoutCreatedByInput = {
@@ -973,6 +1098,7 @@ export type DailyReportUncheckedUpdateWithoutCreatedByInput = {
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  attendances?: Prisma.DailyReportAttendanceUncheckedUpdateManyWithoutDailyReportNestedInput
 }
 
 export type DailyReportUncheckedUpdateManyWithoutCreatedByInput = {
@@ -1009,6 +1135,7 @@ export type DailyReportUpdateWithoutValidatedByInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   project?: Prisma.ProjectUpdateOneRequiredWithoutDailyReportsNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutDailyReportsNestedInput
+  attendances?: Prisma.DailyReportAttendanceUpdateManyWithoutDailyReportNestedInput
 }
 
 export type DailyReportUncheckedUpdateWithoutValidatedByInput = {
@@ -1027,6 +1154,7 @@ export type DailyReportUncheckedUpdateWithoutValidatedByInput = {
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  attendances?: Prisma.DailyReportAttendanceUncheckedUpdateManyWithoutDailyReportNestedInput
 }
 
 export type DailyReportUncheckedUpdateManyWithoutValidatedByInput = {
@@ -1081,6 +1209,7 @@ export type DailyReportUpdateWithoutProjectInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.UserUpdateOneRequiredWithoutDailyReportsNestedInput
   validatedBy?: Prisma.UserUpdateOneWithoutValidatedDailyReportsNestedInput
+  attendances?: Prisma.DailyReportAttendanceUpdateManyWithoutDailyReportNestedInput
 }
 
 export type DailyReportUncheckedUpdateWithoutProjectInput = {
@@ -1099,6 +1228,7 @@ export type DailyReportUncheckedUpdateWithoutProjectInput = {
   validatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  attendances?: Prisma.DailyReportAttendanceUncheckedUpdateManyWithoutDailyReportNestedInput
 }
 
 export type DailyReportUncheckedUpdateManyWithoutProjectInput = {
@@ -1119,6 +1249,35 @@ export type DailyReportUncheckedUpdateManyWithoutProjectInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+
+/**
+ * Count Type DailyReportCountOutputType
+ */
+
+export type DailyReportCountOutputType = {
+  attendances: number
+}
+
+export type DailyReportCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  attendances?: boolean | DailyReportCountOutputTypeCountAttendancesArgs
+}
+
+/**
+ * DailyReportCountOutputType without action
+ */
+export type DailyReportCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DailyReportCountOutputType
+   */
+  select?: Prisma.DailyReportCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * DailyReportCountOutputType without action
+ */
+export type DailyReportCountOutputTypeCountAttendancesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DailyReportAttendanceWhereInput
+}
 
 
 export type DailyReportSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1141,6 +1300,8 @@ export type DailyReportSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   validatedBy?: boolean | Prisma.DailyReport$validatedByArgs<ExtArgs>
+  attendances?: boolean | Prisma.DailyReport$attendancesArgs<ExtArgs>
+  _count?: boolean | Prisma.DailyReportCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["dailyReport"]>
 
 export type DailyReportSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1211,6 +1372,8 @@ export type DailyReportInclude<ExtArgs extends runtime.Types.Extensions.Internal
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   validatedBy?: boolean | Prisma.DailyReport$validatedByArgs<ExtArgs>
+  attendances?: boolean | Prisma.DailyReport$attendancesArgs<ExtArgs>
+  _count?: boolean | Prisma.DailyReportCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type DailyReportIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
@@ -1229,6 +1392,7 @@ export type $DailyReportPayload<ExtArgs extends runtime.Types.Extensions.Interna
     project: Prisma.$ProjectPayload<ExtArgs>
     createdBy: Prisma.$UserPayload<ExtArgs>
     validatedBy: Prisma.$UserPayload<ExtArgs> | null
+    attendances: Prisma.$DailyReportAttendancePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1644,6 +1808,7 @@ export interface Prisma__DailyReportClient<T, Null = never, ExtArgs extends runt
   project<T extends Prisma.ProjectDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProjectDefaultArgs<ExtArgs>>): Prisma.Prisma__ProjectClient<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   createdBy<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   validatedBy<T extends Prisma.DailyReport$validatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DailyReport$validatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  attendances<T extends Prisma.DailyReport$attendancesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DailyReport$attendancesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DailyReportAttendancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2106,6 +2271,30 @@ export type DailyReport$validatedByArgs<ExtArgs extends runtime.Types.Extensions
    */
   include?: Prisma.UserInclude<ExtArgs> | null
   where?: Prisma.UserWhereInput
+}
+
+/**
+ * DailyReport.attendances
+ */
+export type DailyReport$attendancesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DailyReportAttendance
+   */
+  select?: Prisma.DailyReportAttendanceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DailyReportAttendance
+   */
+  omit?: Prisma.DailyReportAttendanceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DailyReportAttendanceInclude<ExtArgs> | null
+  where?: Prisma.DailyReportAttendanceWhereInput
+  orderBy?: Prisma.DailyReportAttendanceOrderByWithRelationInput | Prisma.DailyReportAttendanceOrderByWithRelationInput[]
+  cursor?: Prisma.DailyReportAttendanceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DailyReportAttendanceScalarFieldEnum | Prisma.DailyReportAttendanceScalarFieldEnum[]
 }
 
 /**

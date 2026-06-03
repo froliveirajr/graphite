@@ -335,6 +335,7 @@ export type ProjectWhereInput = {
   client?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>
   manager?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   technicalResponsible?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationListRelationFilter
   areas?: Prisma.ProjectAreaListRelationFilter
   tasks?: Prisma.TaskListRelationFilter
   projectContractors?: Prisma.ProjectContractorListRelationFilter
@@ -342,6 +343,7 @@ export type ProjectWhereInput = {
   stockMovements?: Prisma.StockMovementListRelationFilter
   sourceTransfers?: Prisma.StockMovementListRelationFilter
   destinationTransfers?: Prisma.StockMovementListRelationFilter
+  attendanceTransfers?: Prisma.DailyReportAttendanceListRelationFilter
   wasteDisposals?: Prisma.WasteDisposalListRelationFilter
   dailyReports?: Prisma.DailyReportListRelationFilter
   files?: Prisma.FileListRelationFilter
@@ -371,6 +373,7 @@ export type ProjectOrderByWithRelationInput = {
   client?: Prisma.ClientOrderByWithRelationInput
   manager?: Prisma.UserOrderByWithRelationInput
   technicalResponsible?: Prisma.UserOrderByWithRelationInput
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationOrderByRelationAggregateInput
   areas?: Prisma.ProjectAreaOrderByRelationAggregateInput
   tasks?: Prisma.TaskOrderByRelationAggregateInput
   projectContractors?: Prisma.ProjectContractorOrderByRelationAggregateInput
@@ -378,6 +381,7 @@ export type ProjectOrderByWithRelationInput = {
   stockMovements?: Prisma.StockMovementOrderByRelationAggregateInput
   sourceTransfers?: Prisma.StockMovementOrderByRelationAggregateInput
   destinationTransfers?: Prisma.StockMovementOrderByRelationAggregateInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceOrderByRelationAggregateInput
   wasteDisposals?: Prisma.WasteDisposalOrderByRelationAggregateInput
   dailyReports?: Prisma.DailyReportOrderByRelationAggregateInput
   files?: Prisma.FileOrderByRelationAggregateInput
@@ -410,6 +414,7 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   client?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>
   manager?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   technicalResponsible?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationListRelationFilter
   areas?: Prisma.ProjectAreaListRelationFilter
   tasks?: Prisma.TaskListRelationFilter
   projectContractors?: Prisma.ProjectContractorListRelationFilter
@@ -417,6 +422,7 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   stockMovements?: Prisma.StockMovementListRelationFilter
   sourceTransfers?: Prisma.StockMovementListRelationFilter
   destinationTransfers?: Prisma.StockMovementListRelationFilter
+  attendanceTransfers?: Prisma.DailyReportAttendanceListRelationFilter
   wasteDisposals?: Prisma.WasteDisposalListRelationFilter
   dailyReports?: Prisma.DailyReportListRelationFilter
   files?: Prisma.FileListRelationFilter
@@ -495,6 +501,7 @@ export type ProjectCreateInput = {
   client: Prisma.ClientCreateNestedOneWithoutProjectsInput
   manager?: Prisma.UserCreateNestedOneWithoutManagedProjectsInput
   technicalResponsible?: Prisma.UserCreateNestedOneWithoutTechnicalProjectsInput
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationCreateNestedManyWithoutProjectInput
   areas?: Prisma.ProjectAreaCreateNestedManyWithoutProjectInput
   tasks?: Prisma.TaskCreateNestedManyWithoutProjectInput
   projectContractors?: Prisma.ProjectContractorCreateNestedManyWithoutProjectInput
@@ -502,6 +509,7 @@ export type ProjectCreateInput = {
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutProjectInput
   sourceTransfers?: Prisma.StockMovementCreateNestedManyWithoutSourceProjectInput
   destinationTransfers?: Prisma.StockMovementCreateNestedManyWithoutDestinationProjectInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceCreateNestedManyWithoutTransferredToProjectInput
   wasteDisposals?: Prisma.WasteDisposalCreateNestedManyWithoutProjectInput
   dailyReports?: Prisma.DailyReportCreateNestedManyWithoutProjectInput
   files?: Prisma.FileCreateNestedManyWithoutProjectInput
@@ -528,6 +536,7 @@ export type ProjectUncheckedCreateInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUncheckedCreateNestedManyWithoutProjectInput
   areas?: Prisma.ProjectAreaUncheckedCreateNestedManyWithoutProjectInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutProjectInput
   projectContractors?: Prisma.ProjectContractorUncheckedCreateNestedManyWithoutProjectInput
@@ -535,6 +544,7 @@ export type ProjectUncheckedCreateInput = {
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProjectInput
   sourceTransfers?: Prisma.StockMovementUncheckedCreateNestedManyWithoutSourceProjectInput
   destinationTransfers?: Prisma.StockMovementUncheckedCreateNestedManyWithoutDestinationProjectInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUncheckedCreateNestedManyWithoutTransferredToProjectInput
   wasteDisposals?: Prisma.WasteDisposalUncheckedCreateNestedManyWithoutProjectInput
   dailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutProjectInput
   files?: Prisma.FileUncheckedCreateNestedManyWithoutProjectInput
@@ -561,6 +571,7 @@ export type ProjectUpdateInput = {
   client?: Prisma.ClientUpdateOneRequiredWithoutProjectsNestedInput
   manager?: Prisma.UserUpdateOneWithoutManagedProjectsNestedInput
   technicalResponsible?: Prisma.UserUpdateOneWithoutTechnicalProjectsNestedInput
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUpdateManyWithoutProjectNestedInput
   areas?: Prisma.ProjectAreaUpdateManyWithoutProjectNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutProjectNestedInput
   projectContractors?: Prisma.ProjectContractorUpdateManyWithoutProjectNestedInput
@@ -568,6 +579,7 @@ export type ProjectUpdateInput = {
   stockMovements?: Prisma.StockMovementUpdateManyWithoutProjectNestedInput
   sourceTransfers?: Prisma.StockMovementUpdateManyWithoutSourceProjectNestedInput
   destinationTransfers?: Prisma.StockMovementUpdateManyWithoutDestinationProjectNestedInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUpdateManyWithoutTransferredToProjectNestedInput
   wasteDisposals?: Prisma.WasteDisposalUpdateManyWithoutProjectNestedInput
   dailyReports?: Prisma.DailyReportUpdateManyWithoutProjectNestedInput
   files?: Prisma.FileUpdateManyWithoutProjectNestedInput
@@ -594,6 +606,7 @@ export type ProjectUncheckedUpdateInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUncheckedUpdateManyWithoutProjectNestedInput
   areas?: Prisma.ProjectAreaUncheckedUpdateManyWithoutProjectNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutProjectNestedInput
   projectContractors?: Prisma.ProjectContractorUncheckedUpdateManyWithoutProjectNestedInput
@@ -601,6 +614,7 @@ export type ProjectUncheckedUpdateInput = {
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutProjectNestedInput
   sourceTransfers?: Prisma.StockMovementUncheckedUpdateManyWithoutSourceProjectNestedInput
   destinationTransfers?: Prisma.StockMovementUncheckedUpdateManyWithoutDestinationProjectNestedInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUncheckedUpdateManyWithoutTransferredToProjectNestedInput
   wasteDisposals?: Prisma.WasteDisposalUncheckedUpdateManyWithoutProjectNestedInput
   dailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutProjectNestedInput
   files?: Prisma.FileUncheckedUpdateManyWithoutProjectNestedInput
@@ -954,6 +968,20 @@ export type ProjectUpdateOneRequiredWithoutProjectContractorsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutProjectContractorsInput, Prisma.ProjectUpdateWithoutProjectContractorsInput>, Prisma.ProjectUncheckedUpdateWithoutProjectContractorsInput>
 }
 
+export type ProjectCreateNestedOneWithoutEmployeeAllocationsInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutEmployeeAllocationsInput, Prisma.ProjectUncheckedCreateWithoutEmployeeAllocationsInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutEmployeeAllocationsInput
+  connect?: Prisma.ProjectWhereUniqueInput
+}
+
+export type ProjectUpdateOneRequiredWithoutEmployeeAllocationsNestedInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutEmployeeAllocationsInput, Prisma.ProjectUncheckedCreateWithoutEmployeeAllocationsInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutEmployeeAllocationsInput
+  upsert?: Prisma.ProjectUpsertWithoutEmployeeAllocationsInput
+  connect?: Prisma.ProjectWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutEmployeeAllocationsInput, Prisma.ProjectUpdateWithoutEmployeeAllocationsInput>, Prisma.ProjectUncheckedUpdateWithoutEmployeeAllocationsInput>
+}
+
 export type ProjectCreateNestedOneWithoutPurchaseRequestsInput = {
   create?: Prisma.XOR<Prisma.ProjectCreateWithoutPurchaseRequestsInput, Prisma.ProjectUncheckedCreateWithoutPurchaseRequestsInput>
   connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutPurchaseRequestsInput
@@ -1042,6 +1070,22 @@ export type ProjectUpdateOneRequiredWithoutDailyReportsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutDailyReportsInput, Prisma.ProjectUpdateWithoutDailyReportsInput>, Prisma.ProjectUncheckedUpdateWithoutDailyReportsInput>
 }
 
+export type ProjectCreateNestedOneWithoutAttendanceTransfersInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutAttendanceTransfersInput, Prisma.ProjectUncheckedCreateWithoutAttendanceTransfersInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutAttendanceTransfersInput
+  connect?: Prisma.ProjectWhereUniqueInput
+}
+
+export type ProjectUpdateOneWithoutAttendanceTransfersNestedInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutAttendanceTransfersInput, Prisma.ProjectUncheckedCreateWithoutAttendanceTransfersInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutAttendanceTransfersInput
+  upsert?: Prisma.ProjectUpsertWithoutAttendanceTransfersInput
+  disconnect?: Prisma.ProjectWhereInput | boolean
+  delete?: Prisma.ProjectWhereInput | boolean
+  connect?: Prisma.ProjectWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutAttendanceTransfersInput, Prisma.ProjectUpdateWithoutAttendanceTransfersInput>, Prisma.ProjectUncheckedUpdateWithoutAttendanceTransfersInput>
+}
+
 export type ProjectCreateNestedOneWithoutFilesInput = {
   create?: Prisma.XOR<Prisma.ProjectCreateWithoutFilesInput, Prisma.ProjectUncheckedCreateWithoutFilesInput>
   connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutFilesInput
@@ -1091,6 +1135,7 @@ export type ProjectCreateWithoutManagerInput = {
   updatedAt?: Date | string
   client: Prisma.ClientCreateNestedOneWithoutProjectsInput
   technicalResponsible?: Prisma.UserCreateNestedOneWithoutTechnicalProjectsInput
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationCreateNestedManyWithoutProjectInput
   areas?: Prisma.ProjectAreaCreateNestedManyWithoutProjectInput
   tasks?: Prisma.TaskCreateNestedManyWithoutProjectInput
   projectContractors?: Prisma.ProjectContractorCreateNestedManyWithoutProjectInput
@@ -1098,6 +1143,7 @@ export type ProjectCreateWithoutManagerInput = {
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutProjectInput
   sourceTransfers?: Prisma.StockMovementCreateNestedManyWithoutSourceProjectInput
   destinationTransfers?: Prisma.StockMovementCreateNestedManyWithoutDestinationProjectInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceCreateNestedManyWithoutTransferredToProjectInput
   wasteDisposals?: Prisma.WasteDisposalCreateNestedManyWithoutProjectInput
   dailyReports?: Prisma.DailyReportCreateNestedManyWithoutProjectInput
   files?: Prisma.FileCreateNestedManyWithoutProjectInput
@@ -1123,6 +1169,7 @@ export type ProjectUncheckedCreateWithoutManagerInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUncheckedCreateNestedManyWithoutProjectInput
   areas?: Prisma.ProjectAreaUncheckedCreateNestedManyWithoutProjectInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutProjectInput
   projectContractors?: Prisma.ProjectContractorUncheckedCreateNestedManyWithoutProjectInput
@@ -1130,6 +1177,7 @@ export type ProjectUncheckedCreateWithoutManagerInput = {
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProjectInput
   sourceTransfers?: Prisma.StockMovementUncheckedCreateNestedManyWithoutSourceProjectInput
   destinationTransfers?: Prisma.StockMovementUncheckedCreateNestedManyWithoutDestinationProjectInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUncheckedCreateNestedManyWithoutTransferredToProjectInput
   wasteDisposals?: Prisma.WasteDisposalUncheckedCreateNestedManyWithoutProjectInput
   dailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutProjectInput
   files?: Prisma.FileUncheckedCreateNestedManyWithoutProjectInput
@@ -1165,6 +1213,7 @@ export type ProjectCreateWithoutTechnicalResponsibleInput = {
   updatedAt?: Date | string
   client: Prisma.ClientCreateNestedOneWithoutProjectsInput
   manager?: Prisma.UserCreateNestedOneWithoutManagedProjectsInput
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationCreateNestedManyWithoutProjectInput
   areas?: Prisma.ProjectAreaCreateNestedManyWithoutProjectInput
   tasks?: Prisma.TaskCreateNestedManyWithoutProjectInput
   projectContractors?: Prisma.ProjectContractorCreateNestedManyWithoutProjectInput
@@ -1172,6 +1221,7 @@ export type ProjectCreateWithoutTechnicalResponsibleInput = {
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutProjectInput
   sourceTransfers?: Prisma.StockMovementCreateNestedManyWithoutSourceProjectInput
   destinationTransfers?: Prisma.StockMovementCreateNestedManyWithoutDestinationProjectInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceCreateNestedManyWithoutTransferredToProjectInput
   wasteDisposals?: Prisma.WasteDisposalCreateNestedManyWithoutProjectInput
   dailyReports?: Prisma.DailyReportCreateNestedManyWithoutProjectInput
   files?: Prisma.FileCreateNestedManyWithoutProjectInput
@@ -1197,6 +1247,7 @@ export type ProjectUncheckedCreateWithoutTechnicalResponsibleInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUncheckedCreateNestedManyWithoutProjectInput
   areas?: Prisma.ProjectAreaUncheckedCreateNestedManyWithoutProjectInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutProjectInput
   projectContractors?: Prisma.ProjectContractorUncheckedCreateNestedManyWithoutProjectInput
@@ -1204,6 +1255,7 @@ export type ProjectUncheckedCreateWithoutTechnicalResponsibleInput = {
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProjectInput
   sourceTransfers?: Prisma.StockMovementUncheckedCreateNestedManyWithoutSourceProjectInput
   destinationTransfers?: Prisma.StockMovementUncheckedCreateNestedManyWithoutDestinationProjectInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUncheckedCreateNestedManyWithoutTransferredToProjectInput
   wasteDisposals?: Prisma.WasteDisposalUncheckedCreateNestedManyWithoutProjectInput
   dailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutProjectInput
   files?: Prisma.FileUncheckedCreateNestedManyWithoutProjectInput
@@ -1296,6 +1348,7 @@ export type ProjectCreateWithoutClientInput = {
   updatedAt?: Date | string
   manager?: Prisma.UserCreateNestedOneWithoutManagedProjectsInput
   technicalResponsible?: Prisma.UserCreateNestedOneWithoutTechnicalProjectsInput
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationCreateNestedManyWithoutProjectInput
   areas?: Prisma.ProjectAreaCreateNestedManyWithoutProjectInput
   tasks?: Prisma.TaskCreateNestedManyWithoutProjectInput
   projectContractors?: Prisma.ProjectContractorCreateNestedManyWithoutProjectInput
@@ -1303,6 +1356,7 @@ export type ProjectCreateWithoutClientInput = {
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutProjectInput
   sourceTransfers?: Prisma.StockMovementCreateNestedManyWithoutSourceProjectInput
   destinationTransfers?: Prisma.StockMovementCreateNestedManyWithoutDestinationProjectInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceCreateNestedManyWithoutTransferredToProjectInput
   wasteDisposals?: Prisma.WasteDisposalCreateNestedManyWithoutProjectInput
   dailyReports?: Prisma.DailyReportCreateNestedManyWithoutProjectInput
   files?: Prisma.FileCreateNestedManyWithoutProjectInput
@@ -1328,6 +1382,7 @@ export type ProjectUncheckedCreateWithoutClientInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUncheckedCreateNestedManyWithoutProjectInput
   areas?: Prisma.ProjectAreaUncheckedCreateNestedManyWithoutProjectInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutProjectInput
   projectContractors?: Prisma.ProjectContractorUncheckedCreateNestedManyWithoutProjectInput
@@ -1335,6 +1390,7 @@ export type ProjectUncheckedCreateWithoutClientInput = {
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProjectInput
   sourceTransfers?: Prisma.StockMovementUncheckedCreateNestedManyWithoutSourceProjectInput
   destinationTransfers?: Prisma.StockMovementUncheckedCreateNestedManyWithoutDestinationProjectInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUncheckedCreateNestedManyWithoutTransferredToProjectInput
   wasteDisposals?: Prisma.WasteDisposalUncheckedCreateNestedManyWithoutProjectInput
   dailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutProjectInput
   files?: Prisma.FileUncheckedCreateNestedManyWithoutProjectInput
@@ -1387,12 +1443,14 @@ export type ProjectCreateWithoutAreasInput = {
   client: Prisma.ClientCreateNestedOneWithoutProjectsInput
   manager?: Prisma.UserCreateNestedOneWithoutManagedProjectsInput
   technicalResponsible?: Prisma.UserCreateNestedOneWithoutTechnicalProjectsInput
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationCreateNestedManyWithoutProjectInput
   tasks?: Prisma.TaskCreateNestedManyWithoutProjectInput
   projectContractors?: Prisma.ProjectContractorCreateNestedManyWithoutProjectInput
   purchaseRequests?: Prisma.PurchaseRequestCreateNestedManyWithoutProjectInput
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutProjectInput
   sourceTransfers?: Prisma.StockMovementCreateNestedManyWithoutSourceProjectInput
   destinationTransfers?: Prisma.StockMovementCreateNestedManyWithoutDestinationProjectInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceCreateNestedManyWithoutTransferredToProjectInput
   wasteDisposals?: Prisma.WasteDisposalCreateNestedManyWithoutProjectInput
   dailyReports?: Prisma.DailyReportCreateNestedManyWithoutProjectInput
   files?: Prisma.FileCreateNestedManyWithoutProjectInput
@@ -1419,12 +1477,14 @@ export type ProjectUncheckedCreateWithoutAreasInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUncheckedCreateNestedManyWithoutProjectInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutProjectInput
   projectContractors?: Prisma.ProjectContractorUncheckedCreateNestedManyWithoutProjectInput
   purchaseRequests?: Prisma.PurchaseRequestUncheckedCreateNestedManyWithoutProjectInput
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProjectInput
   sourceTransfers?: Prisma.StockMovementUncheckedCreateNestedManyWithoutSourceProjectInput
   destinationTransfers?: Prisma.StockMovementUncheckedCreateNestedManyWithoutDestinationProjectInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUncheckedCreateNestedManyWithoutTransferredToProjectInput
   wasteDisposals?: Prisma.WasteDisposalUncheckedCreateNestedManyWithoutProjectInput
   dailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutProjectInput
   files?: Prisma.FileUncheckedCreateNestedManyWithoutProjectInput
@@ -1467,12 +1527,14 @@ export type ProjectUpdateWithoutAreasInput = {
   client?: Prisma.ClientUpdateOneRequiredWithoutProjectsNestedInput
   manager?: Prisma.UserUpdateOneWithoutManagedProjectsNestedInput
   technicalResponsible?: Prisma.UserUpdateOneWithoutTechnicalProjectsNestedInput
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUpdateManyWithoutProjectNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutProjectNestedInput
   projectContractors?: Prisma.ProjectContractorUpdateManyWithoutProjectNestedInput
   purchaseRequests?: Prisma.PurchaseRequestUpdateManyWithoutProjectNestedInput
   stockMovements?: Prisma.StockMovementUpdateManyWithoutProjectNestedInput
   sourceTransfers?: Prisma.StockMovementUpdateManyWithoutSourceProjectNestedInput
   destinationTransfers?: Prisma.StockMovementUpdateManyWithoutDestinationProjectNestedInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUpdateManyWithoutTransferredToProjectNestedInput
   wasteDisposals?: Prisma.WasteDisposalUpdateManyWithoutProjectNestedInput
   dailyReports?: Prisma.DailyReportUpdateManyWithoutProjectNestedInput
   files?: Prisma.FileUpdateManyWithoutProjectNestedInput
@@ -1499,12 +1561,14 @@ export type ProjectUncheckedUpdateWithoutAreasInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUncheckedUpdateManyWithoutProjectNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutProjectNestedInput
   projectContractors?: Prisma.ProjectContractorUncheckedUpdateManyWithoutProjectNestedInput
   purchaseRequests?: Prisma.PurchaseRequestUncheckedUpdateManyWithoutProjectNestedInput
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutProjectNestedInput
   sourceTransfers?: Prisma.StockMovementUncheckedUpdateManyWithoutSourceProjectNestedInput
   destinationTransfers?: Prisma.StockMovementUncheckedUpdateManyWithoutDestinationProjectNestedInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUncheckedUpdateManyWithoutTransferredToProjectNestedInput
   wasteDisposals?: Prisma.WasteDisposalUncheckedUpdateManyWithoutProjectNestedInput
   dailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutProjectNestedInput
   files?: Prisma.FileUncheckedUpdateManyWithoutProjectNestedInput
@@ -1531,12 +1595,14 @@ export type ProjectCreateWithoutTasksInput = {
   client: Prisma.ClientCreateNestedOneWithoutProjectsInput
   manager?: Prisma.UserCreateNestedOneWithoutManagedProjectsInput
   technicalResponsible?: Prisma.UserCreateNestedOneWithoutTechnicalProjectsInput
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationCreateNestedManyWithoutProjectInput
   areas?: Prisma.ProjectAreaCreateNestedManyWithoutProjectInput
   projectContractors?: Prisma.ProjectContractorCreateNestedManyWithoutProjectInput
   purchaseRequests?: Prisma.PurchaseRequestCreateNestedManyWithoutProjectInput
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutProjectInput
   sourceTransfers?: Prisma.StockMovementCreateNestedManyWithoutSourceProjectInput
   destinationTransfers?: Prisma.StockMovementCreateNestedManyWithoutDestinationProjectInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceCreateNestedManyWithoutTransferredToProjectInput
   wasteDisposals?: Prisma.WasteDisposalCreateNestedManyWithoutProjectInput
   dailyReports?: Prisma.DailyReportCreateNestedManyWithoutProjectInput
   files?: Prisma.FileCreateNestedManyWithoutProjectInput
@@ -1563,12 +1629,14 @@ export type ProjectUncheckedCreateWithoutTasksInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUncheckedCreateNestedManyWithoutProjectInput
   areas?: Prisma.ProjectAreaUncheckedCreateNestedManyWithoutProjectInput
   projectContractors?: Prisma.ProjectContractorUncheckedCreateNestedManyWithoutProjectInput
   purchaseRequests?: Prisma.PurchaseRequestUncheckedCreateNestedManyWithoutProjectInput
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProjectInput
   sourceTransfers?: Prisma.StockMovementUncheckedCreateNestedManyWithoutSourceProjectInput
   destinationTransfers?: Prisma.StockMovementUncheckedCreateNestedManyWithoutDestinationProjectInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUncheckedCreateNestedManyWithoutTransferredToProjectInput
   wasteDisposals?: Prisma.WasteDisposalUncheckedCreateNestedManyWithoutProjectInput
   dailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutProjectInput
   files?: Prisma.FileUncheckedCreateNestedManyWithoutProjectInput
@@ -1611,12 +1679,14 @@ export type ProjectUpdateWithoutTasksInput = {
   client?: Prisma.ClientUpdateOneRequiredWithoutProjectsNestedInput
   manager?: Prisma.UserUpdateOneWithoutManagedProjectsNestedInput
   technicalResponsible?: Prisma.UserUpdateOneWithoutTechnicalProjectsNestedInput
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUpdateManyWithoutProjectNestedInput
   areas?: Prisma.ProjectAreaUpdateManyWithoutProjectNestedInput
   projectContractors?: Prisma.ProjectContractorUpdateManyWithoutProjectNestedInput
   purchaseRequests?: Prisma.PurchaseRequestUpdateManyWithoutProjectNestedInput
   stockMovements?: Prisma.StockMovementUpdateManyWithoutProjectNestedInput
   sourceTransfers?: Prisma.StockMovementUpdateManyWithoutSourceProjectNestedInput
   destinationTransfers?: Prisma.StockMovementUpdateManyWithoutDestinationProjectNestedInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUpdateManyWithoutTransferredToProjectNestedInput
   wasteDisposals?: Prisma.WasteDisposalUpdateManyWithoutProjectNestedInput
   dailyReports?: Prisma.DailyReportUpdateManyWithoutProjectNestedInput
   files?: Prisma.FileUpdateManyWithoutProjectNestedInput
@@ -1643,12 +1713,14 @@ export type ProjectUncheckedUpdateWithoutTasksInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUncheckedUpdateManyWithoutProjectNestedInput
   areas?: Prisma.ProjectAreaUncheckedUpdateManyWithoutProjectNestedInput
   projectContractors?: Prisma.ProjectContractorUncheckedUpdateManyWithoutProjectNestedInput
   purchaseRequests?: Prisma.PurchaseRequestUncheckedUpdateManyWithoutProjectNestedInput
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutProjectNestedInput
   sourceTransfers?: Prisma.StockMovementUncheckedUpdateManyWithoutSourceProjectNestedInput
   destinationTransfers?: Prisma.StockMovementUncheckedUpdateManyWithoutDestinationProjectNestedInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUncheckedUpdateManyWithoutTransferredToProjectNestedInput
   wasteDisposals?: Prisma.WasteDisposalUncheckedUpdateManyWithoutProjectNestedInput
   dailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutProjectNestedInput
   files?: Prisma.FileUncheckedUpdateManyWithoutProjectNestedInput
@@ -1675,12 +1747,14 @@ export type ProjectCreateWithoutProjectContractorsInput = {
   client: Prisma.ClientCreateNestedOneWithoutProjectsInput
   manager?: Prisma.UserCreateNestedOneWithoutManagedProjectsInput
   technicalResponsible?: Prisma.UserCreateNestedOneWithoutTechnicalProjectsInput
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationCreateNestedManyWithoutProjectInput
   areas?: Prisma.ProjectAreaCreateNestedManyWithoutProjectInput
   tasks?: Prisma.TaskCreateNestedManyWithoutProjectInput
   purchaseRequests?: Prisma.PurchaseRequestCreateNestedManyWithoutProjectInput
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutProjectInput
   sourceTransfers?: Prisma.StockMovementCreateNestedManyWithoutSourceProjectInput
   destinationTransfers?: Prisma.StockMovementCreateNestedManyWithoutDestinationProjectInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceCreateNestedManyWithoutTransferredToProjectInput
   wasteDisposals?: Prisma.WasteDisposalCreateNestedManyWithoutProjectInput
   dailyReports?: Prisma.DailyReportCreateNestedManyWithoutProjectInput
   files?: Prisma.FileCreateNestedManyWithoutProjectInput
@@ -1707,12 +1781,14 @@ export type ProjectUncheckedCreateWithoutProjectContractorsInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUncheckedCreateNestedManyWithoutProjectInput
   areas?: Prisma.ProjectAreaUncheckedCreateNestedManyWithoutProjectInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutProjectInput
   purchaseRequests?: Prisma.PurchaseRequestUncheckedCreateNestedManyWithoutProjectInput
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProjectInput
   sourceTransfers?: Prisma.StockMovementUncheckedCreateNestedManyWithoutSourceProjectInput
   destinationTransfers?: Prisma.StockMovementUncheckedCreateNestedManyWithoutDestinationProjectInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUncheckedCreateNestedManyWithoutTransferredToProjectInput
   wasteDisposals?: Prisma.WasteDisposalUncheckedCreateNestedManyWithoutProjectInput
   dailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutProjectInput
   files?: Prisma.FileUncheckedCreateNestedManyWithoutProjectInput
@@ -1755,12 +1831,14 @@ export type ProjectUpdateWithoutProjectContractorsInput = {
   client?: Prisma.ClientUpdateOneRequiredWithoutProjectsNestedInput
   manager?: Prisma.UserUpdateOneWithoutManagedProjectsNestedInput
   technicalResponsible?: Prisma.UserUpdateOneWithoutTechnicalProjectsNestedInput
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUpdateManyWithoutProjectNestedInput
   areas?: Prisma.ProjectAreaUpdateManyWithoutProjectNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutProjectNestedInput
   purchaseRequests?: Prisma.PurchaseRequestUpdateManyWithoutProjectNestedInput
   stockMovements?: Prisma.StockMovementUpdateManyWithoutProjectNestedInput
   sourceTransfers?: Prisma.StockMovementUpdateManyWithoutSourceProjectNestedInput
   destinationTransfers?: Prisma.StockMovementUpdateManyWithoutDestinationProjectNestedInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUpdateManyWithoutTransferredToProjectNestedInput
   wasteDisposals?: Prisma.WasteDisposalUpdateManyWithoutProjectNestedInput
   dailyReports?: Prisma.DailyReportUpdateManyWithoutProjectNestedInput
   files?: Prisma.FileUpdateManyWithoutProjectNestedInput
@@ -1787,12 +1865,166 @@ export type ProjectUncheckedUpdateWithoutProjectContractorsInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUncheckedUpdateManyWithoutProjectNestedInput
   areas?: Prisma.ProjectAreaUncheckedUpdateManyWithoutProjectNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutProjectNestedInput
   purchaseRequests?: Prisma.PurchaseRequestUncheckedUpdateManyWithoutProjectNestedInput
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutProjectNestedInput
   sourceTransfers?: Prisma.StockMovementUncheckedUpdateManyWithoutSourceProjectNestedInput
   destinationTransfers?: Prisma.StockMovementUncheckedUpdateManyWithoutDestinationProjectNestedInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUncheckedUpdateManyWithoutTransferredToProjectNestedInput
+  wasteDisposals?: Prisma.WasteDisposalUncheckedUpdateManyWithoutProjectNestedInput
+  dailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutProjectNestedInput
+  files?: Prisma.FileUncheckedUpdateManyWithoutProjectNestedInput
+  financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectCreateWithoutEmployeeAllocationsInput = {
+  id?: string
+  code: string
+  name: string
+  projectType: string
+  address: string
+  plannedStartDate?: Date | string | null
+  plannedEndDate?: Date | string | null
+  actualStartDate?: Date | string | null
+  actualEndDate?: Date | string | null
+  plannedBudget?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: $Enums.ProjectStatus
+  priority?: $Enums.ProjectPriority
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  client: Prisma.ClientCreateNestedOneWithoutProjectsInput
+  manager?: Prisma.UserCreateNestedOneWithoutManagedProjectsInput
+  technicalResponsible?: Prisma.UserCreateNestedOneWithoutTechnicalProjectsInput
+  areas?: Prisma.ProjectAreaCreateNestedManyWithoutProjectInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutProjectInput
+  projectContractors?: Prisma.ProjectContractorCreateNestedManyWithoutProjectInput
+  purchaseRequests?: Prisma.PurchaseRequestCreateNestedManyWithoutProjectInput
+  stockMovements?: Prisma.StockMovementCreateNestedManyWithoutProjectInput
+  sourceTransfers?: Prisma.StockMovementCreateNestedManyWithoutSourceProjectInput
+  destinationTransfers?: Prisma.StockMovementCreateNestedManyWithoutDestinationProjectInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceCreateNestedManyWithoutTransferredToProjectInput
+  wasteDisposals?: Prisma.WasteDisposalCreateNestedManyWithoutProjectInput
+  dailyReports?: Prisma.DailyReportCreateNestedManyWithoutProjectInput
+  files?: Prisma.FileCreateNestedManyWithoutProjectInput
+  financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectUncheckedCreateWithoutEmployeeAllocationsInput = {
+  id?: string
+  code: string
+  name: string
+  clientId: string
+  projectType: string
+  address: string
+  managerId?: string | null
+  technicalResponsibleId?: string | null
+  plannedStartDate?: Date | string | null
+  plannedEndDate?: Date | string | null
+  actualStartDate?: Date | string | null
+  actualEndDate?: Date | string | null
+  plannedBudget?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: $Enums.ProjectStatus
+  priority?: $Enums.ProjectPriority
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  areas?: Prisma.ProjectAreaUncheckedCreateNestedManyWithoutProjectInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutProjectInput
+  projectContractors?: Prisma.ProjectContractorUncheckedCreateNestedManyWithoutProjectInput
+  purchaseRequests?: Prisma.PurchaseRequestUncheckedCreateNestedManyWithoutProjectInput
+  stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProjectInput
+  sourceTransfers?: Prisma.StockMovementUncheckedCreateNestedManyWithoutSourceProjectInput
+  destinationTransfers?: Prisma.StockMovementUncheckedCreateNestedManyWithoutDestinationProjectInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUncheckedCreateNestedManyWithoutTransferredToProjectInput
+  wasteDisposals?: Prisma.WasteDisposalUncheckedCreateNestedManyWithoutProjectInput
+  dailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutProjectInput
+  files?: Prisma.FileUncheckedCreateNestedManyWithoutProjectInput
+  financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectCreateOrConnectWithoutEmployeeAllocationsInput = {
+  where: Prisma.ProjectWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutEmployeeAllocationsInput, Prisma.ProjectUncheckedCreateWithoutEmployeeAllocationsInput>
+}
+
+export type ProjectUpsertWithoutEmployeeAllocationsInput = {
+  update: Prisma.XOR<Prisma.ProjectUpdateWithoutEmployeeAllocationsInput, Prisma.ProjectUncheckedUpdateWithoutEmployeeAllocationsInput>
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutEmployeeAllocationsInput, Prisma.ProjectUncheckedCreateWithoutEmployeeAllocationsInput>
+  where?: Prisma.ProjectWhereInput
+}
+
+export type ProjectUpdateToOneWithWhereWithoutEmployeeAllocationsInput = {
+  where?: Prisma.ProjectWhereInput
+  data: Prisma.XOR<Prisma.ProjectUpdateWithoutEmployeeAllocationsInput, Prisma.ProjectUncheckedUpdateWithoutEmployeeAllocationsInput>
+}
+
+export type ProjectUpdateWithoutEmployeeAllocationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  projectType?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  plannedStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  plannedEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  actualStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  actualEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  plannedBudget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
+  priority?: Prisma.EnumProjectPriorityFieldUpdateOperationsInput | $Enums.ProjectPriority
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  client?: Prisma.ClientUpdateOneRequiredWithoutProjectsNestedInput
+  manager?: Prisma.UserUpdateOneWithoutManagedProjectsNestedInput
+  technicalResponsible?: Prisma.UserUpdateOneWithoutTechnicalProjectsNestedInput
+  areas?: Prisma.ProjectAreaUpdateManyWithoutProjectNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutProjectNestedInput
+  projectContractors?: Prisma.ProjectContractorUpdateManyWithoutProjectNestedInput
+  purchaseRequests?: Prisma.PurchaseRequestUpdateManyWithoutProjectNestedInput
+  stockMovements?: Prisma.StockMovementUpdateManyWithoutProjectNestedInput
+  sourceTransfers?: Prisma.StockMovementUpdateManyWithoutSourceProjectNestedInput
+  destinationTransfers?: Prisma.StockMovementUpdateManyWithoutDestinationProjectNestedInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUpdateManyWithoutTransferredToProjectNestedInput
+  wasteDisposals?: Prisma.WasteDisposalUpdateManyWithoutProjectNestedInput
+  dailyReports?: Prisma.DailyReportUpdateManyWithoutProjectNestedInput
+  files?: Prisma.FileUpdateManyWithoutProjectNestedInput
+  financialEntries?: Prisma.FinancialEntryUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectUncheckedUpdateWithoutEmployeeAllocationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
+  projectType?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalResponsibleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plannedStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  plannedEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  actualStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  actualEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  plannedBudget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
+  priority?: Prisma.EnumProjectPriorityFieldUpdateOperationsInput | $Enums.ProjectPriority
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  areas?: Prisma.ProjectAreaUncheckedUpdateManyWithoutProjectNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutProjectNestedInput
+  projectContractors?: Prisma.ProjectContractorUncheckedUpdateManyWithoutProjectNestedInput
+  purchaseRequests?: Prisma.PurchaseRequestUncheckedUpdateManyWithoutProjectNestedInput
+  stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutProjectNestedInput
+  sourceTransfers?: Prisma.StockMovementUncheckedUpdateManyWithoutSourceProjectNestedInput
+  destinationTransfers?: Prisma.StockMovementUncheckedUpdateManyWithoutDestinationProjectNestedInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUncheckedUpdateManyWithoutTransferredToProjectNestedInput
   wasteDisposals?: Prisma.WasteDisposalUncheckedUpdateManyWithoutProjectNestedInput
   dailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutProjectNestedInput
   files?: Prisma.FileUncheckedUpdateManyWithoutProjectNestedInput
@@ -1819,12 +2051,14 @@ export type ProjectCreateWithoutPurchaseRequestsInput = {
   client: Prisma.ClientCreateNestedOneWithoutProjectsInput
   manager?: Prisma.UserCreateNestedOneWithoutManagedProjectsInput
   technicalResponsible?: Prisma.UserCreateNestedOneWithoutTechnicalProjectsInput
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationCreateNestedManyWithoutProjectInput
   areas?: Prisma.ProjectAreaCreateNestedManyWithoutProjectInput
   tasks?: Prisma.TaskCreateNestedManyWithoutProjectInput
   projectContractors?: Prisma.ProjectContractorCreateNestedManyWithoutProjectInput
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutProjectInput
   sourceTransfers?: Prisma.StockMovementCreateNestedManyWithoutSourceProjectInput
   destinationTransfers?: Prisma.StockMovementCreateNestedManyWithoutDestinationProjectInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceCreateNestedManyWithoutTransferredToProjectInput
   wasteDisposals?: Prisma.WasteDisposalCreateNestedManyWithoutProjectInput
   dailyReports?: Prisma.DailyReportCreateNestedManyWithoutProjectInput
   files?: Prisma.FileCreateNestedManyWithoutProjectInput
@@ -1851,12 +2085,14 @@ export type ProjectUncheckedCreateWithoutPurchaseRequestsInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUncheckedCreateNestedManyWithoutProjectInput
   areas?: Prisma.ProjectAreaUncheckedCreateNestedManyWithoutProjectInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutProjectInput
   projectContractors?: Prisma.ProjectContractorUncheckedCreateNestedManyWithoutProjectInput
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProjectInput
   sourceTransfers?: Prisma.StockMovementUncheckedCreateNestedManyWithoutSourceProjectInput
   destinationTransfers?: Prisma.StockMovementUncheckedCreateNestedManyWithoutDestinationProjectInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUncheckedCreateNestedManyWithoutTransferredToProjectInput
   wasteDisposals?: Prisma.WasteDisposalUncheckedCreateNestedManyWithoutProjectInput
   dailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutProjectInput
   files?: Prisma.FileUncheckedCreateNestedManyWithoutProjectInput
@@ -1899,12 +2135,14 @@ export type ProjectUpdateWithoutPurchaseRequestsInput = {
   client?: Prisma.ClientUpdateOneRequiredWithoutProjectsNestedInput
   manager?: Prisma.UserUpdateOneWithoutManagedProjectsNestedInput
   technicalResponsible?: Prisma.UserUpdateOneWithoutTechnicalProjectsNestedInput
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUpdateManyWithoutProjectNestedInput
   areas?: Prisma.ProjectAreaUpdateManyWithoutProjectNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutProjectNestedInput
   projectContractors?: Prisma.ProjectContractorUpdateManyWithoutProjectNestedInput
   stockMovements?: Prisma.StockMovementUpdateManyWithoutProjectNestedInput
   sourceTransfers?: Prisma.StockMovementUpdateManyWithoutSourceProjectNestedInput
   destinationTransfers?: Prisma.StockMovementUpdateManyWithoutDestinationProjectNestedInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUpdateManyWithoutTransferredToProjectNestedInput
   wasteDisposals?: Prisma.WasteDisposalUpdateManyWithoutProjectNestedInput
   dailyReports?: Prisma.DailyReportUpdateManyWithoutProjectNestedInput
   files?: Prisma.FileUpdateManyWithoutProjectNestedInput
@@ -1931,12 +2169,14 @@ export type ProjectUncheckedUpdateWithoutPurchaseRequestsInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUncheckedUpdateManyWithoutProjectNestedInput
   areas?: Prisma.ProjectAreaUncheckedUpdateManyWithoutProjectNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutProjectNestedInput
   projectContractors?: Prisma.ProjectContractorUncheckedUpdateManyWithoutProjectNestedInput
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutProjectNestedInput
   sourceTransfers?: Prisma.StockMovementUncheckedUpdateManyWithoutSourceProjectNestedInput
   destinationTransfers?: Prisma.StockMovementUncheckedUpdateManyWithoutDestinationProjectNestedInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUncheckedUpdateManyWithoutTransferredToProjectNestedInput
   wasteDisposals?: Prisma.WasteDisposalUncheckedUpdateManyWithoutProjectNestedInput
   dailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutProjectNestedInput
   files?: Prisma.FileUncheckedUpdateManyWithoutProjectNestedInput
@@ -1963,12 +2203,14 @@ export type ProjectCreateWithoutStockMovementsInput = {
   client: Prisma.ClientCreateNestedOneWithoutProjectsInput
   manager?: Prisma.UserCreateNestedOneWithoutManagedProjectsInput
   technicalResponsible?: Prisma.UserCreateNestedOneWithoutTechnicalProjectsInput
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationCreateNestedManyWithoutProjectInput
   areas?: Prisma.ProjectAreaCreateNestedManyWithoutProjectInput
   tasks?: Prisma.TaskCreateNestedManyWithoutProjectInput
   projectContractors?: Prisma.ProjectContractorCreateNestedManyWithoutProjectInput
   purchaseRequests?: Prisma.PurchaseRequestCreateNestedManyWithoutProjectInput
   sourceTransfers?: Prisma.StockMovementCreateNestedManyWithoutSourceProjectInput
   destinationTransfers?: Prisma.StockMovementCreateNestedManyWithoutDestinationProjectInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceCreateNestedManyWithoutTransferredToProjectInput
   wasteDisposals?: Prisma.WasteDisposalCreateNestedManyWithoutProjectInput
   dailyReports?: Prisma.DailyReportCreateNestedManyWithoutProjectInput
   files?: Prisma.FileCreateNestedManyWithoutProjectInput
@@ -1995,12 +2237,14 @@ export type ProjectUncheckedCreateWithoutStockMovementsInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUncheckedCreateNestedManyWithoutProjectInput
   areas?: Prisma.ProjectAreaUncheckedCreateNestedManyWithoutProjectInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutProjectInput
   projectContractors?: Prisma.ProjectContractorUncheckedCreateNestedManyWithoutProjectInput
   purchaseRequests?: Prisma.PurchaseRequestUncheckedCreateNestedManyWithoutProjectInput
   sourceTransfers?: Prisma.StockMovementUncheckedCreateNestedManyWithoutSourceProjectInput
   destinationTransfers?: Prisma.StockMovementUncheckedCreateNestedManyWithoutDestinationProjectInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUncheckedCreateNestedManyWithoutTransferredToProjectInput
   wasteDisposals?: Prisma.WasteDisposalUncheckedCreateNestedManyWithoutProjectInput
   dailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutProjectInput
   files?: Prisma.FileUncheckedCreateNestedManyWithoutProjectInput
@@ -2032,12 +2276,14 @@ export type ProjectCreateWithoutSourceTransfersInput = {
   client: Prisma.ClientCreateNestedOneWithoutProjectsInput
   manager?: Prisma.UserCreateNestedOneWithoutManagedProjectsInput
   technicalResponsible?: Prisma.UserCreateNestedOneWithoutTechnicalProjectsInput
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationCreateNestedManyWithoutProjectInput
   areas?: Prisma.ProjectAreaCreateNestedManyWithoutProjectInput
   tasks?: Prisma.TaskCreateNestedManyWithoutProjectInput
   projectContractors?: Prisma.ProjectContractorCreateNestedManyWithoutProjectInput
   purchaseRequests?: Prisma.PurchaseRequestCreateNestedManyWithoutProjectInput
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutProjectInput
   destinationTransfers?: Prisma.StockMovementCreateNestedManyWithoutDestinationProjectInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceCreateNestedManyWithoutTransferredToProjectInput
   wasteDisposals?: Prisma.WasteDisposalCreateNestedManyWithoutProjectInput
   dailyReports?: Prisma.DailyReportCreateNestedManyWithoutProjectInput
   files?: Prisma.FileCreateNestedManyWithoutProjectInput
@@ -2064,12 +2310,14 @@ export type ProjectUncheckedCreateWithoutSourceTransfersInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUncheckedCreateNestedManyWithoutProjectInput
   areas?: Prisma.ProjectAreaUncheckedCreateNestedManyWithoutProjectInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutProjectInput
   projectContractors?: Prisma.ProjectContractorUncheckedCreateNestedManyWithoutProjectInput
   purchaseRequests?: Prisma.PurchaseRequestUncheckedCreateNestedManyWithoutProjectInput
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProjectInput
   destinationTransfers?: Prisma.StockMovementUncheckedCreateNestedManyWithoutDestinationProjectInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUncheckedCreateNestedManyWithoutTransferredToProjectInput
   wasteDisposals?: Prisma.WasteDisposalUncheckedCreateNestedManyWithoutProjectInput
   dailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutProjectInput
   files?: Prisma.FileUncheckedCreateNestedManyWithoutProjectInput
@@ -2101,12 +2349,14 @@ export type ProjectCreateWithoutDestinationTransfersInput = {
   client: Prisma.ClientCreateNestedOneWithoutProjectsInput
   manager?: Prisma.UserCreateNestedOneWithoutManagedProjectsInput
   technicalResponsible?: Prisma.UserCreateNestedOneWithoutTechnicalProjectsInput
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationCreateNestedManyWithoutProjectInput
   areas?: Prisma.ProjectAreaCreateNestedManyWithoutProjectInput
   tasks?: Prisma.TaskCreateNestedManyWithoutProjectInput
   projectContractors?: Prisma.ProjectContractorCreateNestedManyWithoutProjectInput
   purchaseRequests?: Prisma.PurchaseRequestCreateNestedManyWithoutProjectInput
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutProjectInput
   sourceTransfers?: Prisma.StockMovementCreateNestedManyWithoutSourceProjectInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceCreateNestedManyWithoutTransferredToProjectInput
   wasteDisposals?: Prisma.WasteDisposalCreateNestedManyWithoutProjectInput
   dailyReports?: Prisma.DailyReportCreateNestedManyWithoutProjectInput
   files?: Prisma.FileCreateNestedManyWithoutProjectInput
@@ -2133,12 +2383,14 @@ export type ProjectUncheckedCreateWithoutDestinationTransfersInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUncheckedCreateNestedManyWithoutProjectInput
   areas?: Prisma.ProjectAreaUncheckedCreateNestedManyWithoutProjectInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutProjectInput
   projectContractors?: Prisma.ProjectContractorUncheckedCreateNestedManyWithoutProjectInput
   purchaseRequests?: Prisma.PurchaseRequestUncheckedCreateNestedManyWithoutProjectInput
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProjectInput
   sourceTransfers?: Prisma.StockMovementUncheckedCreateNestedManyWithoutSourceProjectInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUncheckedCreateNestedManyWithoutTransferredToProjectInput
   wasteDisposals?: Prisma.WasteDisposalUncheckedCreateNestedManyWithoutProjectInput
   dailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutProjectInput
   files?: Prisma.FileUncheckedCreateNestedManyWithoutProjectInput
@@ -2181,12 +2433,14 @@ export type ProjectUpdateWithoutStockMovementsInput = {
   client?: Prisma.ClientUpdateOneRequiredWithoutProjectsNestedInput
   manager?: Prisma.UserUpdateOneWithoutManagedProjectsNestedInput
   technicalResponsible?: Prisma.UserUpdateOneWithoutTechnicalProjectsNestedInput
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUpdateManyWithoutProjectNestedInput
   areas?: Prisma.ProjectAreaUpdateManyWithoutProjectNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutProjectNestedInput
   projectContractors?: Prisma.ProjectContractorUpdateManyWithoutProjectNestedInput
   purchaseRequests?: Prisma.PurchaseRequestUpdateManyWithoutProjectNestedInput
   sourceTransfers?: Prisma.StockMovementUpdateManyWithoutSourceProjectNestedInput
   destinationTransfers?: Prisma.StockMovementUpdateManyWithoutDestinationProjectNestedInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUpdateManyWithoutTransferredToProjectNestedInput
   wasteDisposals?: Prisma.WasteDisposalUpdateManyWithoutProjectNestedInput
   dailyReports?: Prisma.DailyReportUpdateManyWithoutProjectNestedInput
   files?: Prisma.FileUpdateManyWithoutProjectNestedInput
@@ -2213,12 +2467,14 @@ export type ProjectUncheckedUpdateWithoutStockMovementsInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUncheckedUpdateManyWithoutProjectNestedInput
   areas?: Prisma.ProjectAreaUncheckedUpdateManyWithoutProjectNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutProjectNestedInput
   projectContractors?: Prisma.ProjectContractorUncheckedUpdateManyWithoutProjectNestedInput
   purchaseRequests?: Prisma.PurchaseRequestUncheckedUpdateManyWithoutProjectNestedInput
   sourceTransfers?: Prisma.StockMovementUncheckedUpdateManyWithoutSourceProjectNestedInput
   destinationTransfers?: Prisma.StockMovementUncheckedUpdateManyWithoutDestinationProjectNestedInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUncheckedUpdateManyWithoutTransferredToProjectNestedInput
   wasteDisposals?: Prisma.WasteDisposalUncheckedUpdateManyWithoutProjectNestedInput
   dailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutProjectNestedInput
   files?: Prisma.FileUncheckedUpdateManyWithoutProjectNestedInput
@@ -2256,12 +2512,14 @@ export type ProjectUpdateWithoutSourceTransfersInput = {
   client?: Prisma.ClientUpdateOneRequiredWithoutProjectsNestedInput
   manager?: Prisma.UserUpdateOneWithoutManagedProjectsNestedInput
   technicalResponsible?: Prisma.UserUpdateOneWithoutTechnicalProjectsNestedInput
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUpdateManyWithoutProjectNestedInput
   areas?: Prisma.ProjectAreaUpdateManyWithoutProjectNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutProjectNestedInput
   projectContractors?: Prisma.ProjectContractorUpdateManyWithoutProjectNestedInput
   purchaseRequests?: Prisma.PurchaseRequestUpdateManyWithoutProjectNestedInput
   stockMovements?: Prisma.StockMovementUpdateManyWithoutProjectNestedInput
   destinationTransfers?: Prisma.StockMovementUpdateManyWithoutDestinationProjectNestedInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUpdateManyWithoutTransferredToProjectNestedInput
   wasteDisposals?: Prisma.WasteDisposalUpdateManyWithoutProjectNestedInput
   dailyReports?: Prisma.DailyReportUpdateManyWithoutProjectNestedInput
   files?: Prisma.FileUpdateManyWithoutProjectNestedInput
@@ -2288,12 +2546,14 @@ export type ProjectUncheckedUpdateWithoutSourceTransfersInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUncheckedUpdateManyWithoutProjectNestedInput
   areas?: Prisma.ProjectAreaUncheckedUpdateManyWithoutProjectNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutProjectNestedInput
   projectContractors?: Prisma.ProjectContractorUncheckedUpdateManyWithoutProjectNestedInput
   purchaseRequests?: Prisma.PurchaseRequestUncheckedUpdateManyWithoutProjectNestedInput
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutProjectNestedInput
   destinationTransfers?: Prisma.StockMovementUncheckedUpdateManyWithoutDestinationProjectNestedInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUncheckedUpdateManyWithoutTransferredToProjectNestedInput
   wasteDisposals?: Prisma.WasteDisposalUncheckedUpdateManyWithoutProjectNestedInput
   dailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutProjectNestedInput
   files?: Prisma.FileUncheckedUpdateManyWithoutProjectNestedInput
@@ -2331,12 +2591,14 @@ export type ProjectUpdateWithoutDestinationTransfersInput = {
   client?: Prisma.ClientUpdateOneRequiredWithoutProjectsNestedInput
   manager?: Prisma.UserUpdateOneWithoutManagedProjectsNestedInput
   technicalResponsible?: Prisma.UserUpdateOneWithoutTechnicalProjectsNestedInput
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUpdateManyWithoutProjectNestedInput
   areas?: Prisma.ProjectAreaUpdateManyWithoutProjectNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutProjectNestedInput
   projectContractors?: Prisma.ProjectContractorUpdateManyWithoutProjectNestedInput
   purchaseRequests?: Prisma.PurchaseRequestUpdateManyWithoutProjectNestedInput
   stockMovements?: Prisma.StockMovementUpdateManyWithoutProjectNestedInput
   sourceTransfers?: Prisma.StockMovementUpdateManyWithoutSourceProjectNestedInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUpdateManyWithoutTransferredToProjectNestedInput
   wasteDisposals?: Prisma.WasteDisposalUpdateManyWithoutProjectNestedInput
   dailyReports?: Prisma.DailyReportUpdateManyWithoutProjectNestedInput
   files?: Prisma.FileUpdateManyWithoutProjectNestedInput
@@ -2363,12 +2625,14 @@ export type ProjectUncheckedUpdateWithoutDestinationTransfersInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUncheckedUpdateManyWithoutProjectNestedInput
   areas?: Prisma.ProjectAreaUncheckedUpdateManyWithoutProjectNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutProjectNestedInput
   projectContractors?: Prisma.ProjectContractorUncheckedUpdateManyWithoutProjectNestedInput
   purchaseRequests?: Prisma.PurchaseRequestUncheckedUpdateManyWithoutProjectNestedInput
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutProjectNestedInput
   sourceTransfers?: Prisma.StockMovementUncheckedUpdateManyWithoutSourceProjectNestedInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUncheckedUpdateManyWithoutTransferredToProjectNestedInput
   wasteDisposals?: Prisma.WasteDisposalUncheckedUpdateManyWithoutProjectNestedInput
   dailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutProjectNestedInput
   files?: Prisma.FileUncheckedUpdateManyWithoutProjectNestedInput
@@ -2395,6 +2659,7 @@ export type ProjectCreateWithoutWasteDisposalsInput = {
   client: Prisma.ClientCreateNestedOneWithoutProjectsInput
   manager?: Prisma.UserCreateNestedOneWithoutManagedProjectsInput
   technicalResponsible?: Prisma.UserCreateNestedOneWithoutTechnicalProjectsInput
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationCreateNestedManyWithoutProjectInput
   areas?: Prisma.ProjectAreaCreateNestedManyWithoutProjectInput
   tasks?: Prisma.TaskCreateNestedManyWithoutProjectInput
   projectContractors?: Prisma.ProjectContractorCreateNestedManyWithoutProjectInput
@@ -2402,6 +2667,7 @@ export type ProjectCreateWithoutWasteDisposalsInput = {
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutProjectInput
   sourceTransfers?: Prisma.StockMovementCreateNestedManyWithoutSourceProjectInput
   destinationTransfers?: Prisma.StockMovementCreateNestedManyWithoutDestinationProjectInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceCreateNestedManyWithoutTransferredToProjectInput
   dailyReports?: Prisma.DailyReportCreateNestedManyWithoutProjectInput
   files?: Prisma.FileCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutProjectInput
@@ -2427,6 +2693,7 @@ export type ProjectUncheckedCreateWithoutWasteDisposalsInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUncheckedCreateNestedManyWithoutProjectInput
   areas?: Prisma.ProjectAreaUncheckedCreateNestedManyWithoutProjectInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutProjectInput
   projectContractors?: Prisma.ProjectContractorUncheckedCreateNestedManyWithoutProjectInput
@@ -2434,6 +2701,7 @@ export type ProjectUncheckedCreateWithoutWasteDisposalsInput = {
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProjectInput
   sourceTransfers?: Prisma.StockMovementUncheckedCreateNestedManyWithoutSourceProjectInput
   destinationTransfers?: Prisma.StockMovementUncheckedCreateNestedManyWithoutDestinationProjectInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUncheckedCreateNestedManyWithoutTransferredToProjectInput
   dailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutProjectInput
   files?: Prisma.FileUncheckedCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutProjectInput
@@ -2475,6 +2743,7 @@ export type ProjectUpdateWithoutWasteDisposalsInput = {
   client?: Prisma.ClientUpdateOneRequiredWithoutProjectsNestedInput
   manager?: Prisma.UserUpdateOneWithoutManagedProjectsNestedInput
   technicalResponsible?: Prisma.UserUpdateOneWithoutTechnicalProjectsNestedInput
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUpdateManyWithoutProjectNestedInput
   areas?: Prisma.ProjectAreaUpdateManyWithoutProjectNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutProjectNestedInput
   projectContractors?: Prisma.ProjectContractorUpdateManyWithoutProjectNestedInput
@@ -2482,6 +2751,7 @@ export type ProjectUpdateWithoutWasteDisposalsInput = {
   stockMovements?: Prisma.StockMovementUpdateManyWithoutProjectNestedInput
   sourceTransfers?: Prisma.StockMovementUpdateManyWithoutSourceProjectNestedInput
   destinationTransfers?: Prisma.StockMovementUpdateManyWithoutDestinationProjectNestedInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUpdateManyWithoutTransferredToProjectNestedInput
   dailyReports?: Prisma.DailyReportUpdateManyWithoutProjectNestedInput
   files?: Prisma.FileUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUpdateManyWithoutProjectNestedInput
@@ -2507,6 +2777,7 @@ export type ProjectUncheckedUpdateWithoutWasteDisposalsInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUncheckedUpdateManyWithoutProjectNestedInput
   areas?: Prisma.ProjectAreaUncheckedUpdateManyWithoutProjectNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutProjectNestedInput
   projectContractors?: Prisma.ProjectContractorUncheckedUpdateManyWithoutProjectNestedInput
@@ -2514,6 +2785,7 @@ export type ProjectUncheckedUpdateWithoutWasteDisposalsInput = {
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutProjectNestedInput
   sourceTransfers?: Prisma.StockMovementUncheckedUpdateManyWithoutSourceProjectNestedInput
   destinationTransfers?: Prisma.StockMovementUncheckedUpdateManyWithoutDestinationProjectNestedInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUncheckedUpdateManyWithoutTransferredToProjectNestedInput
   dailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutProjectNestedInput
   files?: Prisma.FileUncheckedUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutProjectNestedInput
@@ -2539,6 +2811,7 @@ export type ProjectCreateWithoutDailyReportsInput = {
   client: Prisma.ClientCreateNestedOneWithoutProjectsInput
   manager?: Prisma.UserCreateNestedOneWithoutManagedProjectsInput
   technicalResponsible?: Prisma.UserCreateNestedOneWithoutTechnicalProjectsInput
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationCreateNestedManyWithoutProjectInput
   areas?: Prisma.ProjectAreaCreateNestedManyWithoutProjectInput
   tasks?: Prisma.TaskCreateNestedManyWithoutProjectInput
   projectContractors?: Prisma.ProjectContractorCreateNestedManyWithoutProjectInput
@@ -2546,6 +2819,7 @@ export type ProjectCreateWithoutDailyReportsInput = {
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutProjectInput
   sourceTransfers?: Prisma.StockMovementCreateNestedManyWithoutSourceProjectInput
   destinationTransfers?: Prisma.StockMovementCreateNestedManyWithoutDestinationProjectInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceCreateNestedManyWithoutTransferredToProjectInput
   wasteDisposals?: Prisma.WasteDisposalCreateNestedManyWithoutProjectInput
   files?: Prisma.FileCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutProjectInput
@@ -2571,6 +2845,7 @@ export type ProjectUncheckedCreateWithoutDailyReportsInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUncheckedCreateNestedManyWithoutProjectInput
   areas?: Prisma.ProjectAreaUncheckedCreateNestedManyWithoutProjectInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutProjectInput
   projectContractors?: Prisma.ProjectContractorUncheckedCreateNestedManyWithoutProjectInput
@@ -2578,6 +2853,7 @@ export type ProjectUncheckedCreateWithoutDailyReportsInput = {
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProjectInput
   sourceTransfers?: Prisma.StockMovementUncheckedCreateNestedManyWithoutSourceProjectInput
   destinationTransfers?: Prisma.StockMovementUncheckedCreateNestedManyWithoutDestinationProjectInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUncheckedCreateNestedManyWithoutTransferredToProjectInput
   wasteDisposals?: Prisma.WasteDisposalUncheckedCreateNestedManyWithoutProjectInput
   files?: Prisma.FileUncheckedCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutProjectInput
@@ -2619,6 +2895,7 @@ export type ProjectUpdateWithoutDailyReportsInput = {
   client?: Prisma.ClientUpdateOneRequiredWithoutProjectsNestedInput
   manager?: Prisma.UserUpdateOneWithoutManagedProjectsNestedInput
   technicalResponsible?: Prisma.UserUpdateOneWithoutTechnicalProjectsNestedInput
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUpdateManyWithoutProjectNestedInput
   areas?: Prisma.ProjectAreaUpdateManyWithoutProjectNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutProjectNestedInput
   projectContractors?: Prisma.ProjectContractorUpdateManyWithoutProjectNestedInput
@@ -2626,6 +2903,7 @@ export type ProjectUpdateWithoutDailyReportsInput = {
   stockMovements?: Prisma.StockMovementUpdateManyWithoutProjectNestedInput
   sourceTransfers?: Prisma.StockMovementUpdateManyWithoutSourceProjectNestedInput
   destinationTransfers?: Prisma.StockMovementUpdateManyWithoutDestinationProjectNestedInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUpdateManyWithoutTransferredToProjectNestedInput
   wasteDisposals?: Prisma.WasteDisposalUpdateManyWithoutProjectNestedInput
   files?: Prisma.FileUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUpdateManyWithoutProjectNestedInput
@@ -2651,6 +2929,159 @@ export type ProjectUncheckedUpdateWithoutDailyReportsInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUncheckedUpdateManyWithoutProjectNestedInput
+  areas?: Prisma.ProjectAreaUncheckedUpdateManyWithoutProjectNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutProjectNestedInput
+  projectContractors?: Prisma.ProjectContractorUncheckedUpdateManyWithoutProjectNestedInput
+  purchaseRequests?: Prisma.PurchaseRequestUncheckedUpdateManyWithoutProjectNestedInput
+  stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutProjectNestedInput
+  sourceTransfers?: Prisma.StockMovementUncheckedUpdateManyWithoutSourceProjectNestedInput
+  destinationTransfers?: Prisma.StockMovementUncheckedUpdateManyWithoutDestinationProjectNestedInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUncheckedUpdateManyWithoutTransferredToProjectNestedInput
+  wasteDisposals?: Prisma.WasteDisposalUncheckedUpdateManyWithoutProjectNestedInput
+  files?: Prisma.FileUncheckedUpdateManyWithoutProjectNestedInput
+  financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectCreateWithoutAttendanceTransfersInput = {
+  id?: string
+  code: string
+  name: string
+  projectType: string
+  address: string
+  plannedStartDate?: Date | string | null
+  plannedEndDate?: Date | string | null
+  actualStartDate?: Date | string | null
+  actualEndDate?: Date | string | null
+  plannedBudget?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: $Enums.ProjectStatus
+  priority?: $Enums.ProjectPriority
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  client: Prisma.ClientCreateNestedOneWithoutProjectsInput
+  manager?: Prisma.UserCreateNestedOneWithoutManagedProjectsInput
+  technicalResponsible?: Prisma.UserCreateNestedOneWithoutTechnicalProjectsInput
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationCreateNestedManyWithoutProjectInput
+  areas?: Prisma.ProjectAreaCreateNestedManyWithoutProjectInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutProjectInput
+  projectContractors?: Prisma.ProjectContractorCreateNestedManyWithoutProjectInput
+  purchaseRequests?: Prisma.PurchaseRequestCreateNestedManyWithoutProjectInput
+  stockMovements?: Prisma.StockMovementCreateNestedManyWithoutProjectInput
+  sourceTransfers?: Prisma.StockMovementCreateNestedManyWithoutSourceProjectInput
+  destinationTransfers?: Prisma.StockMovementCreateNestedManyWithoutDestinationProjectInput
+  wasteDisposals?: Prisma.WasteDisposalCreateNestedManyWithoutProjectInput
+  dailyReports?: Prisma.DailyReportCreateNestedManyWithoutProjectInput
+  files?: Prisma.FileCreateNestedManyWithoutProjectInput
+  financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectUncheckedCreateWithoutAttendanceTransfersInput = {
+  id?: string
+  code: string
+  name: string
+  clientId: string
+  projectType: string
+  address: string
+  managerId?: string | null
+  technicalResponsibleId?: string | null
+  plannedStartDate?: Date | string | null
+  plannedEndDate?: Date | string | null
+  actualStartDate?: Date | string | null
+  actualEndDate?: Date | string | null
+  plannedBudget?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: $Enums.ProjectStatus
+  priority?: $Enums.ProjectPriority
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUncheckedCreateNestedManyWithoutProjectInput
+  areas?: Prisma.ProjectAreaUncheckedCreateNestedManyWithoutProjectInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutProjectInput
+  projectContractors?: Prisma.ProjectContractorUncheckedCreateNestedManyWithoutProjectInput
+  purchaseRequests?: Prisma.PurchaseRequestUncheckedCreateNestedManyWithoutProjectInput
+  stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProjectInput
+  sourceTransfers?: Prisma.StockMovementUncheckedCreateNestedManyWithoutSourceProjectInput
+  destinationTransfers?: Prisma.StockMovementUncheckedCreateNestedManyWithoutDestinationProjectInput
+  wasteDisposals?: Prisma.WasteDisposalUncheckedCreateNestedManyWithoutProjectInput
+  dailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutProjectInput
+  files?: Prisma.FileUncheckedCreateNestedManyWithoutProjectInput
+  financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectCreateOrConnectWithoutAttendanceTransfersInput = {
+  where: Prisma.ProjectWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutAttendanceTransfersInput, Prisma.ProjectUncheckedCreateWithoutAttendanceTransfersInput>
+}
+
+export type ProjectUpsertWithoutAttendanceTransfersInput = {
+  update: Prisma.XOR<Prisma.ProjectUpdateWithoutAttendanceTransfersInput, Prisma.ProjectUncheckedUpdateWithoutAttendanceTransfersInput>
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutAttendanceTransfersInput, Prisma.ProjectUncheckedCreateWithoutAttendanceTransfersInput>
+  where?: Prisma.ProjectWhereInput
+}
+
+export type ProjectUpdateToOneWithWhereWithoutAttendanceTransfersInput = {
+  where?: Prisma.ProjectWhereInput
+  data: Prisma.XOR<Prisma.ProjectUpdateWithoutAttendanceTransfersInput, Prisma.ProjectUncheckedUpdateWithoutAttendanceTransfersInput>
+}
+
+export type ProjectUpdateWithoutAttendanceTransfersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  projectType?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  plannedStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  plannedEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  actualStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  actualEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  plannedBudget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
+  priority?: Prisma.EnumProjectPriorityFieldUpdateOperationsInput | $Enums.ProjectPriority
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  client?: Prisma.ClientUpdateOneRequiredWithoutProjectsNestedInput
+  manager?: Prisma.UserUpdateOneWithoutManagedProjectsNestedInput
+  technicalResponsible?: Prisma.UserUpdateOneWithoutTechnicalProjectsNestedInput
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUpdateManyWithoutProjectNestedInput
+  areas?: Prisma.ProjectAreaUpdateManyWithoutProjectNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutProjectNestedInput
+  projectContractors?: Prisma.ProjectContractorUpdateManyWithoutProjectNestedInput
+  purchaseRequests?: Prisma.PurchaseRequestUpdateManyWithoutProjectNestedInput
+  stockMovements?: Prisma.StockMovementUpdateManyWithoutProjectNestedInput
+  sourceTransfers?: Prisma.StockMovementUpdateManyWithoutSourceProjectNestedInput
+  destinationTransfers?: Prisma.StockMovementUpdateManyWithoutDestinationProjectNestedInput
+  wasteDisposals?: Prisma.WasteDisposalUpdateManyWithoutProjectNestedInput
+  dailyReports?: Prisma.DailyReportUpdateManyWithoutProjectNestedInput
+  files?: Prisma.FileUpdateManyWithoutProjectNestedInput
+  financialEntries?: Prisma.FinancialEntryUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectUncheckedUpdateWithoutAttendanceTransfersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
+  projectType?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalResponsibleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plannedStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  plannedEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  actualStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  actualEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  plannedBudget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
+  priority?: Prisma.EnumProjectPriorityFieldUpdateOperationsInput | $Enums.ProjectPriority
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUncheckedUpdateManyWithoutProjectNestedInput
   areas?: Prisma.ProjectAreaUncheckedUpdateManyWithoutProjectNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutProjectNestedInput
   projectContractors?: Prisma.ProjectContractorUncheckedUpdateManyWithoutProjectNestedInput
@@ -2659,6 +3090,7 @@ export type ProjectUncheckedUpdateWithoutDailyReportsInput = {
   sourceTransfers?: Prisma.StockMovementUncheckedUpdateManyWithoutSourceProjectNestedInput
   destinationTransfers?: Prisma.StockMovementUncheckedUpdateManyWithoutDestinationProjectNestedInput
   wasteDisposals?: Prisma.WasteDisposalUncheckedUpdateManyWithoutProjectNestedInput
+  dailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutProjectNestedInput
   files?: Prisma.FileUncheckedUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutProjectNestedInput
 }
@@ -2683,6 +3115,7 @@ export type ProjectCreateWithoutFilesInput = {
   client: Prisma.ClientCreateNestedOneWithoutProjectsInput
   manager?: Prisma.UserCreateNestedOneWithoutManagedProjectsInput
   technicalResponsible?: Prisma.UserCreateNestedOneWithoutTechnicalProjectsInput
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationCreateNestedManyWithoutProjectInput
   areas?: Prisma.ProjectAreaCreateNestedManyWithoutProjectInput
   tasks?: Prisma.TaskCreateNestedManyWithoutProjectInput
   projectContractors?: Prisma.ProjectContractorCreateNestedManyWithoutProjectInput
@@ -2690,6 +3123,7 @@ export type ProjectCreateWithoutFilesInput = {
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutProjectInput
   sourceTransfers?: Prisma.StockMovementCreateNestedManyWithoutSourceProjectInput
   destinationTransfers?: Prisma.StockMovementCreateNestedManyWithoutDestinationProjectInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceCreateNestedManyWithoutTransferredToProjectInput
   wasteDisposals?: Prisma.WasteDisposalCreateNestedManyWithoutProjectInput
   dailyReports?: Prisma.DailyReportCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutProjectInput
@@ -2715,6 +3149,7 @@ export type ProjectUncheckedCreateWithoutFilesInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUncheckedCreateNestedManyWithoutProjectInput
   areas?: Prisma.ProjectAreaUncheckedCreateNestedManyWithoutProjectInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutProjectInput
   projectContractors?: Prisma.ProjectContractorUncheckedCreateNestedManyWithoutProjectInput
@@ -2722,6 +3157,7 @@ export type ProjectUncheckedCreateWithoutFilesInput = {
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProjectInput
   sourceTransfers?: Prisma.StockMovementUncheckedCreateNestedManyWithoutSourceProjectInput
   destinationTransfers?: Prisma.StockMovementUncheckedCreateNestedManyWithoutDestinationProjectInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUncheckedCreateNestedManyWithoutTransferredToProjectInput
   wasteDisposals?: Prisma.WasteDisposalUncheckedCreateNestedManyWithoutProjectInput
   dailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutProjectInput
@@ -2763,6 +3199,7 @@ export type ProjectUpdateWithoutFilesInput = {
   client?: Prisma.ClientUpdateOneRequiredWithoutProjectsNestedInput
   manager?: Prisma.UserUpdateOneWithoutManagedProjectsNestedInput
   technicalResponsible?: Prisma.UserUpdateOneWithoutTechnicalProjectsNestedInput
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUpdateManyWithoutProjectNestedInput
   areas?: Prisma.ProjectAreaUpdateManyWithoutProjectNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutProjectNestedInput
   projectContractors?: Prisma.ProjectContractorUpdateManyWithoutProjectNestedInput
@@ -2770,6 +3207,7 @@ export type ProjectUpdateWithoutFilesInput = {
   stockMovements?: Prisma.StockMovementUpdateManyWithoutProjectNestedInput
   sourceTransfers?: Prisma.StockMovementUpdateManyWithoutSourceProjectNestedInput
   destinationTransfers?: Prisma.StockMovementUpdateManyWithoutDestinationProjectNestedInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUpdateManyWithoutTransferredToProjectNestedInput
   wasteDisposals?: Prisma.WasteDisposalUpdateManyWithoutProjectNestedInput
   dailyReports?: Prisma.DailyReportUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUpdateManyWithoutProjectNestedInput
@@ -2795,6 +3233,7 @@ export type ProjectUncheckedUpdateWithoutFilesInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUncheckedUpdateManyWithoutProjectNestedInput
   areas?: Prisma.ProjectAreaUncheckedUpdateManyWithoutProjectNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutProjectNestedInput
   projectContractors?: Prisma.ProjectContractorUncheckedUpdateManyWithoutProjectNestedInput
@@ -2802,6 +3241,7 @@ export type ProjectUncheckedUpdateWithoutFilesInput = {
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutProjectNestedInput
   sourceTransfers?: Prisma.StockMovementUncheckedUpdateManyWithoutSourceProjectNestedInput
   destinationTransfers?: Prisma.StockMovementUncheckedUpdateManyWithoutDestinationProjectNestedInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUncheckedUpdateManyWithoutTransferredToProjectNestedInput
   wasteDisposals?: Prisma.WasteDisposalUncheckedUpdateManyWithoutProjectNestedInput
   dailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutProjectNestedInput
@@ -2827,6 +3267,7 @@ export type ProjectCreateWithoutFinancialEntriesInput = {
   client: Prisma.ClientCreateNestedOneWithoutProjectsInput
   manager?: Prisma.UserCreateNestedOneWithoutManagedProjectsInput
   technicalResponsible?: Prisma.UserCreateNestedOneWithoutTechnicalProjectsInput
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationCreateNestedManyWithoutProjectInput
   areas?: Prisma.ProjectAreaCreateNestedManyWithoutProjectInput
   tasks?: Prisma.TaskCreateNestedManyWithoutProjectInput
   projectContractors?: Prisma.ProjectContractorCreateNestedManyWithoutProjectInput
@@ -2834,6 +3275,7 @@ export type ProjectCreateWithoutFinancialEntriesInput = {
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutProjectInput
   sourceTransfers?: Prisma.StockMovementCreateNestedManyWithoutSourceProjectInput
   destinationTransfers?: Prisma.StockMovementCreateNestedManyWithoutDestinationProjectInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceCreateNestedManyWithoutTransferredToProjectInput
   wasteDisposals?: Prisma.WasteDisposalCreateNestedManyWithoutProjectInput
   dailyReports?: Prisma.DailyReportCreateNestedManyWithoutProjectInput
   files?: Prisma.FileCreateNestedManyWithoutProjectInput
@@ -2859,6 +3301,7 @@ export type ProjectUncheckedCreateWithoutFinancialEntriesInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUncheckedCreateNestedManyWithoutProjectInput
   areas?: Prisma.ProjectAreaUncheckedCreateNestedManyWithoutProjectInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutProjectInput
   projectContractors?: Prisma.ProjectContractorUncheckedCreateNestedManyWithoutProjectInput
@@ -2866,6 +3309,7 @@ export type ProjectUncheckedCreateWithoutFinancialEntriesInput = {
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProjectInput
   sourceTransfers?: Prisma.StockMovementUncheckedCreateNestedManyWithoutSourceProjectInput
   destinationTransfers?: Prisma.StockMovementUncheckedCreateNestedManyWithoutDestinationProjectInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUncheckedCreateNestedManyWithoutTransferredToProjectInput
   wasteDisposals?: Prisma.WasteDisposalUncheckedCreateNestedManyWithoutProjectInput
   dailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutProjectInput
   files?: Prisma.FileUncheckedCreateNestedManyWithoutProjectInput
@@ -2907,6 +3351,7 @@ export type ProjectUpdateWithoutFinancialEntriesInput = {
   client?: Prisma.ClientUpdateOneRequiredWithoutProjectsNestedInput
   manager?: Prisma.UserUpdateOneWithoutManagedProjectsNestedInput
   technicalResponsible?: Prisma.UserUpdateOneWithoutTechnicalProjectsNestedInput
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUpdateManyWithoutProjectNestedInput
   areas?: Prisma.ProjectAreaUpdateManyWithoutProjectNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutProjectNestedInput
   projectContractors?: Prisma.ProjectContractorUpdateManyWithoutProjectNestedInput
@@ -2914,6 +3359,7 @@ export type ProjectUpdateWithoutFinancialEntriesInput = {
   stockMovements?: Prisma.StockMovementUpdateManyWithoutProjectNestedInput
   sourceTransfers?: Prisma.StockMovementUpdateManyWithoutSourceProjectNestedInput
   destinationTransfers?: Prisma.StockMovementUpdateManyWithoutDestinationProjectNestedInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUpdateManyWithoutTransferredToProjectNestedInput
   wasteDisposals?: Prisma.WasteDisposalUpdateManyWithoutProjectNestedInput
   dailyReports?: Prisma.DailyReportUpdateManyWithoutProjectNestedInput
   files?: Prisma.FileUpdateManyWithoutProjectNestedInput
@@ -2939,6 +3385,7 @@ export type ProjectUncheckedUpdateWithoutFinancialEntriesInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUncheckedUpdateManyWithoutProjectNestedInput
   areas?: Prisma.ProjectAreaUncheckedUpdateManyWithoutProjectNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutProjectNestedInput
   projectContractors?: Prisma.ProjectContractorUncheckedUpdateManyWithoutProjectNestedInput
@@ -2946,6 +3393,7 @@ export type ProjectUncheckedUpdateWithoutFinancialEntriesInput = {
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutProjectNestedInput
   sourceTransfers?: Prisma.StockMovementUncheckedUpdateManyWithoutSourceProjectNestedInput
   destinationTransfers?: Prisma.StockMovementUncheckedUpdateManyWithoutDestinationProjectNestedInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUncheckedUpdateManyWithoutTransferredToProjectNestedInput
   wasteDisposals?: Prisma.WasteDisposalUncheckedUpdateManyWithoutProjectNestedInput
   dailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutProjectNestedInput
   files?: Prisma.FileUncheckedUpdateManyWithoutProjectNestedInput
@@ -3012,6 +3460,7 @@ export type ProjectUpdateWithoutManagerInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   client?: Prisma.ClientUpdateOneRequiredWithoutProjectsNestedInput
   technicalResponsible?: Prisma.UserUpdateOneWithoutTechnicalProjectsNestedInput
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUpdateManyWithoutProjectNestedInput
   areas?: Prisma.ProjectAreaUpdateManyWithoutProjectNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutProjectNestedInput
   projectContractors?: Prisma.ProjectContractorUpdateManyWithoutProjectNestedInput
@@ -3019,6 +3468,7 @@ export type ProjectUpdateWithoutManagerInput = {
   stockMovements?: Prisma.StockMovementUpdateManyWithoutProjectNestedInput
   sourceTransfers?: Prisma.StockMovementUpdateManyWithoutSourceProjectNestedInput
   destinationTransfers?: Prisma.StockMovementUpdateManyWithoutDestinationProjectNestedInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUpdateManyWithoutTransferredToProjectNestedInput
   wasteDisposals?: Prisma.WasteDisposalUpdateManyWithoutProjectNestedInput
   dailyReports?: Prisma.DailyReportUpdateManyWithoutProjectNestedInput
   files?: Prisma.FileUpdateManyWithoutProjectNestedInput
@@ -3044,6 +3494,7 @@ export type ProjectUncheckedUpdateWithoutManagerInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUncheckedUpdateManyWithoutProjectNestedInput
   areas?: Prisma.ProjectAreaUncheckedUpdateManyWithoutProjectNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutProjectNestedInput
   projectContractors?: Prisma.ProjectContractorUncheckedUpdateManyWithoutProjectNestedInput
@@ -3051,6 +3502,7 @@ export type ProjectUncheckedUpdateWithoutManagerInput = {
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutProjectNestedInput
   sourceTransfers?: Prisma.StockMovementUncheckedUpdateManyWithoutSourceProjectNestedInput
   destinationTransfers?: Prisma.StockMovementUncheckedUpdateManyWithoutDestinationProjectNestedInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUncheckedUpdateManyWithoutTransferredToProjectNestedInput
   wasteDisposals?: Prisma.WasteDisposalUncheckedUpdateManyWithoutProjectNestedInput
   dailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutProjectNestedInput
   files?: Prisma.FileUncheckedUpdateManyWithoutProjectNestedInput
@@ -3097,6 +3549,7 @@ export type ProjectUpdateWithoutTechnicalResponsibleInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   client?: Prisma.ClientUpdateOneRequiredWithoutProjectsNestedInput
   manager?: Prisma.UserUpdateOneWithoutManagedProjectsNestedInput
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUpdateManyWithoutProjectNestedInput
   areas?: Prisma.ProjectAreaUpdateManyWithoutProjectNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutProjectNestedInput
   projectContractors?: Prisma.ProjectContractorUpdateManyWithoutProjectNestedInput
@@ -3104,6 +3557,7 @@ export type ProjectUpdateWithoutTechnicalResponsibleInput = {
   stockMovements?: Prisma.StockMovementUpdateManyWithoutProjectNestedInput
   sourceTransfers?: Prisma.StockMovementUpdateManyWithoutSourceProjectNestedInput
   destinationTransfers?: Prisma.StockMovementUpdateManyWithoutDestinationProjectNestedInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUpdateManyWithoutTransferredToProjectNestedInput
   wasteDisposals?: Prisma.WasteDisposalUpdateManyWithoutProjectNestedInput
   dailyReports?: Prisma.DailyReportUpdateManyWithoutProjectNestedInput
   files?: Prisma.FileUpdateManyWithoutProjectNestedInput
@@ -3129,6 +3583,7 @@ export type ProjectUncheckedUpdateWithoutTechnicalResponsibleInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUncheckedUpdateManyWithoutProjectNestedInput
   areas?: Prisma.ProjectAreaUncheckedUpdateManyWithoutProjectNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutProjectNestedInput
   projectContractors?: Prisma.ProjectContractorUncheckedUpdateManyWithoutProjectNestedInput
@@ -3136,6 +3591,7 @@ export type ProjectUncheckedUpdateWithoutTechnicalResponsibleInput = {
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutProjectNestedInput
   sourceTransfers?: Prisma.StockMovementUncheckedUpdateManyWithoutSourceProjectNestedInput
   destinationTransfers?: Prisma.StockMovementUncheckedUpdateManyWithoutDestinationProjectNestedInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUncheckedUpdateManyWithoutTransferredToProjectNestedInput
   wasteDisposals?: Prisma.WasteDisposalUncheckedUpdateManyWithoutProjectNestedInput
   dailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutProjectNestedInput
   files?: Prisma.FileUncheckedUpdateManyWithoutProjectNestedInput
@@ -3203,6 +3659,7 @@ export type ProjectUpdateWithoutClientInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   manager?: Prisma.UserUpdateOneWithoutManagedProjectsNestedInput
   technicalResponsible?: Prisma.UserUpdateOneWithoutTechnicalProjectsNestedInput
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUpdateManyWithoutProjectNestedInput
   areas?: Prisma.ProjectAreaUpdateManyWithoutProjectNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutProjectNestedInput
   projectContractors?: Prisma.ProjectContractorUpdateManyWithoutProjectNestedInput
@@ -3210,6 +3667,7 @@ export type ProjectUpdateWithoutClientInput = {
   stockMovements?: Prisma.StockMovementUpdateManyWithoutProjectNestedInput
   sourceTransfers?: Prisma.StockMovementUpdateManyWithoutSourceProjectNestedInput
   destinationTransfers?: Prisma.StockMovementUpdateManyWithoutDestinationProjectNestedInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUpdateManyWithoutTransferredToProjectNestedInput
   wasteDisposals?: Prisma.WasteDisposalUpdateManyWithoutProjectNestedInput
   dailyReports?: Prisma.DailyReportUpdateManyWithoutProjectNestedInput
   files?: Prisma.FileUpdateManyWithoutProjectNestedInput
@@ -3235,6 +3693,7 @@ export type ProjectUncheckedUpdateWithoutClientInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUncheckedUpdateManyWithoutProjectNestedInput
   areas?: Prisma.ProjectAreaUncheckedUpdateManyWithoutProjectNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutProjectNestedInput
   projectContractors?: Prisma.ProjectContractorUncheckedUpdateManyWithoutProjectNestedInput
@@ -3242,6 +3701,7 @@ export type ProjectUncheckedUpdateWithoutClientInput = {
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutProjectNestedInput
   sourceTransfers?: Prisma.StockMovementUncheckedUpdateManyWithoutSourceProjectNestedInput
   destinationTransfers?: Prisma.StockMovementUncheckedUpdateManyWithoutDestinationProjectNestedInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUncheckedUpdateManyWithoutTransferredToProjectNestedInput
   wasteDisposals?: Prisma.WasteDisposalUncheckedUpdateManyWithoutProjectNestedInput
   dailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutProjectNestedInput
   files?: Prisma.FileUncheckedUpdateManyWithoutProjectNestedInput
@@ -3275,6 +3735,7 @@ export type ProjectUncheckedUpdateManyWithoutClientInput = {
  */
 
 export type ProjectCountOutputType = {
+  employeeAllocations: number
   areas: number
   tasks: number
   projectContractors: number
@@ -3282,6 +3743,7 @@ export type ProjectCountOutputType = {
   stockMovements: number
   sourceTransfers: number
   destinationTransfers: number
+  attendanceTransfers: number
   wasteDisposals: number
   dailyReports: number
   files: number
@@ -3289,6 +3751,7 @@ export type ProjectCountOutputType = {
 }
 
 export type ProjectCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  employeeAllocations?: boolean | ProjectCountOutputTypeCountEmployeeAllocationsArgs
   areas?: boolean | ProjectCountOutputTypeCountAreasArgs
   tasks?: boolean | ProjectCountOutputTypeCountTasksArgs
   projectContractors?: boolean | ProjectCountOutputTypeCountProjectContractorsArgs
@@ -3296,6 +3759,7 @@ export type ProjectCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   stockMovements?: boolean | ProjectCountOutputTypeCountStockMovementsArgs
   sourceTransfers?: boolean | ProjectCountOutputTypeCountSourceTransfersArgs
   destinationTransfers?: boolean | ProjectCountOutputTypeCountDestinationTransfersArgs
+  attendanceTransfers?: boolean | ProjectCountOutputTypeCountAttendanceTransfersArgs
   wasteDisposals?: boolean | ProjectCountOutputTypeCountWasteDisposalsArgs
   dailyReports?: boolean | ProjectCountOutputTypeCountDailyReportsArgs
   files?: boolean | ProjectCountOutputTypeCountFilesArgs
@@ -3310,6 +3774,13 @@ export type ProjectCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exte
    * Select specific fields to fetch from the ProjectCountOutputType
    */
   select?: Prisma.ProjectCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ProjectCountOutputType without action
+ */
+export type ProjectCountOutputTypeCountEmployeeAllocationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProjectEmployeeAllocationWhereInput
 }
 
 /**
@@ -3364,6 +3835,13 @@ export type ProjectCountOutputTypeCountDestinationTransfersArgs<ExtArgs extends 
 /**
  * ProjectCountOutputType without action
  */
+export type ProjectCountOutputTypeCountAttendanceTransfersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DailyReportAttendanceWhereInput
+}
+
+/**
+ * ProjectCountOutputType without action
+ */
 export type ProjectCountOutputTypeCountWasteDisposalsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.WasteDisposalWhereInput
 }
@@ -3413,6 +3891,7 @@ export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   manager?: boolean | Prisma.Project$managerArgs<ExtArgs>
   technicalResponsible?: boolean | Prisma.Project$technicalResponsibleArgs<ExtArgs>
+  employeeAllocations?: boolean | Prisma.Project$employeeAllocationsArgs<ExtArgs>
   areas?: boolean | Prisma.Project$areasArgs<ExtArgs>
   tasks?: boolean | Prisma.Project$tasksArgs<ExtArgs>
   projectContractors?: boolean | Prisma.Project$projectContractorsArgs<ExtArgs>
@@ -3420,6 +3899,7 @@ export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   stockMovements?: boolean | Prisma.Project$stockMovementsArgs<ExtArgs>
   sourceTransfers?: boolean | Prisma.Project$sourceTransfersArgs<ExtArgs>
   destinationTransfers?: boolean | Prisma.Project$destinationTransfersArgs<ExtArgs>
+  attendanceTransfers?: boolean | Prisma.Project$attendanceTransfersArgs<ExtArgs>
   wasteDisposals?: boolean | Prisma.Project$wasteDisposalsArgs<ExtArgs>
   dailyReports?: boolean | Prisma.Project$dailyReportsArgs<ExtArgs>
   files?: boolean | Prisma.Project$filesArgs<ExtArgs>
@@ -3504,6 +3984,7 @@ export type ProjectInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   manager?: boolean | Prisma.Project$managerArgs<ExtArgs>
   technicalResponsible?: boolean | Prisma.Project$technicalResponsibleArgs<ExtArgs>
+  employeeAllocations?: boolean | Prisma.Project$employeeAllocationsArgs<ExtArgs>
   areas?: boolean | Prisma.Project$areasArgs<ExtArgs>
   tasks?: boolean | Prisma.Project$tasksArgs<ExtArgs>
   projectContractors?: boolean | Prisma.Project$projectContractorsArgs<ExtArgs>
@@ -3511,6 +3992,7 @@ export type ProjectInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   stockMovements?: boolean | Prisma.Project$stockMovementsArgs<ExtArgs>
   sourceTransfers?: boolean | Prisma.Project$sourceTransfersArgs<ExtArgs>
   destinationTransfers?: boolean | Prisma.Project$destinationTransfersArgs<ExtArgs>
+  attendanceTransfers?: boolean | Prisma.Project$attendanceTransfersArgs<ExtArgs>
   wasteDisposals?: boolean | Prisma.Project$wasteDisposalsArgs<ExtArgs>
   dailyReports?: boolean | Prisma.Project$dailyReportsArgs<ExtArgs>
   files?: boolean | Prisma.Project$filesArgs<ExtArgs>
@@ -3534,6 +4016,7 @@ export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     client: Prisma.$ClientPayload<ExtArgs>
     manager: Prisma.$UserPayload<ExtArgs> | null
     technicalResponsible: Prisma.$UserPayload<ExtArgs> | null
+    employeeAllocations: Prisma.$ProjectEmployeeAllocationPayload<ExtArgs>[]
     areas: Prisma.$ProjectAreaPayload<ExtArgs>[]
     tasks: Prisma.$TaskPayload<ExtArgs>[]
     projectContractors: Prisma.$ProjectContractorPayload<ExtArgs>[]
@@ -3541,6 +4024,7 @@ export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     stockMovements: Prisma.$StockMovementPayload<ExtArgs>[]
     sourceTransfers: Prisma.$StockMovementPayload<ExtArgs>[]
     destinationTransfers: Prisma.$StockMovementPayload<ExtArgs>[]
+    attendanceTransfers: Prisma.$DailyReportAttendancePayload<ExtArgs>[]
     wasteDisposals: Prisma.$WasteDisposalPayload<ExtArgs>[]
     dailyReports: Prisma.$DailyReportPayload<ExtArgs>[]
     files: Prisma.$FilePayload<ExtArgs>[]
@@ -3963,6 +4447,7 @@ export interface Prisma__ProjectClient<T, Null = never, ExtArgs extends runtime.
   client<T extends Prisma.ClientDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ClientDefaultArgs<ExtArgs>>): Prisma.Prisma__ClientClient<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   manager<T extends Prisma.Project$managerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$managerArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   technicalResponsible<T extends Prisma.Project$technicalResponsibleArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$technicalResponsibleArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  employeeAllocations<T extends Prisma.Project$employeeAllocationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$employeeAllocationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectEmployeeAllocationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   areas<T extends Prisma.Project$areasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$areasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectAreaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   tasks<T extends Prisma.Project$tasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   projectContractors<T extends Prisma.Project$projectContractorsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$projectContractorsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectContractorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -3970,6 +4455,7 @@ export interface Prisma__ProjectClient<T, Null = never, ExtArgs extends runtime.
   stockMovements<T extends Prisma.Project$stockMovementsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$stockMovementsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StockMovementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   sourceTransfers<T extends Prisma.Project$sourceTransfersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$sourceTransfersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StockMovementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   destinationTransfers<T extends Prisma.Project$destinationTransfersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$destinationTransfersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StockMovementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  attendanceTransfers<T extends Prisma.Project$attendanceTransfersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$attendanceTransfersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DailyReportAttendancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   wasteDisposals<T extends Prisma.Project$wasteDisposalsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$wasteDisposalsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WasteDisposalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   dailyReports<T extends Prisma.Project$dailyReportsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$dailyReportsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DailyReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   files<T extends Prisma.Project$filesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$filesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -4461,6 +4947,30 @@ export type Project$technicalResponsibleArgs<ExtArgs extends runtime.Types.Exten
 }
 
 /**
+ * Project.employeeAllocations
+ */
+export type Project$employeeAllocationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProjectEmployeeAllocation
+   */
+  select?: Prisma.ProjectEmployeeAllocationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProjectEmployeeAllocation
+   */
+  omit?: Prisma.ProjectEmployeeAllocationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProjectEmployeeAllocationInclude<ExtArgs> | null
+  where?: Prisma.ProjectEmployeeAllocationWhereInput
+  orderBy?: Prisma.ProjectEmployeeAllocationOrderByWithRelationInput | Prisma.ProjectEmployeeAllocationOrderByWithRelationInput[]
+  cursor?: Prisma.ProjectEmployeeAllocationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProjectEmployeeAllocationScalarFieldEnum | Prisma.ProjectEmployeeAllocationScalarFieldEnum[]
+}
+
+/**
  * Project.areas
  */
 export type Project$areasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -4626,6 +5136,30 @@ export type Project$destinationTransfersArgs<ExtArgs extends runtime.Types.Exten
   take?: number
   skip?: number
   distinct?: Prisma.StockMovementScalarFieldEnum | Prisma.StockMovementScalarFieldEnum[]
+}
+
+/**
+ * Project.attendanceTransfers
+ */
+export type Project$attendanceTransfersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DailyReportAttendance
+   */
+  select?: Prisma.DailyReportAttendanceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DailyReportAttendance
+   */
+  omit?: Prisma.DailyReportAttendanceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DailyReportAttendanceInclude<ExtArgs> | null
+  where?: Prisma.DailyReportAttendanceWhereInput
+  orderBy?: Prisma.DailyReportAttendanceOrderByWithRelationInput | Prisma.DailyReportAttendanceOrderByWithRelationInput[]
+  cursor?: Prisma.DailyReportAttendanceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DailyReportAttendanceScalarFieldEnum | Prisma.DailyReportAttendanceScalarFieldEnum[]
 }
 
 /**

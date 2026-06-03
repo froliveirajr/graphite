@@ -92,8 +92,21 @@ export const dailyReportSchema = z.object({
   weatherNotes: z.string().optional(),
 });
 
+export const employeeAllocationSchema = z.object({
+  projectId: z.string().min(1, "Selecione uma obra."),
+  employeeId: z.string().min(1, "Selecione um funcionario."),
+  role: z.string().min(2, "Informe a funcao na obra."),
+  serviceDescription: z.string().optional(),
+  startDate: z.string().min(1, "Informe a data de inicio."),
+  endDate: z.string().optional(),
+  dailyRate: z.coerce.number().nonnegative("Informe um custo diario valido.").optional(),
+  status: z.enum(["Planejada", "Ativa", "Pausada", "Finalizada", "Cancelada"]),
+  notes: z.string().optional(),
+});
+
 export type ClientInput = z.infer<typeof clientSchema>;
 export type ProjectInput = z.infer<typeof projectSchema>;
 export type TaskInput = z.infer<typeof taskSchema>;
 export type MaterialInput = z.infer<typeof materialSchema>;
 export type DailyReportInput = z.infer<typeof dailyReportSchema>;
+export type EmployeeAllocationInput = z.infer<typeof employeeAllocationSchema>;

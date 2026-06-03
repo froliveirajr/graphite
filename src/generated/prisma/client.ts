@@ -87,6 +87,11 @@ export type Contractor = Prisma.ContractorModel
  */
 export type ProjectContractor = Prisma.ProjectContractorModel
 /**
+ * Model ProjectEmployeeAllocation
+ * 
+ */
+export type ProjectEmployeeAllocation = Prisma.ProjectEmployeeAllocationModel
+/**
  * Model Supplier
  * 
  */
@@ -121,6 +126,11 @@ export type WasteDisposal = Prisma.WasteDisposalModel
  * 
  */
 export type DailyReport = Prisma.DailyReportModel
+/**
+ * Model DailyReportAttendance
+ * 
+ */
+export type DailyReportAttendance = Prisma.DailyReportAttendanceModel
 /**
  * Model File
  * 

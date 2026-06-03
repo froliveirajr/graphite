@@ -314,6 +314,23 @@ export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedIntNullableFilter<$PrismaModel>
 }
 
+export type EnumAllocationStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.AllocationStatus | Prisma.EnumAllocationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.AllocationStatus[] | Prisma.ListEnumAllocationStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AllocationStatus[] | Prisma.ListEnumAllocationStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAllocationStatusFilter<$PrismaModel> | $Enums.AllocationStatus
+}
+
+export type EnumAllocationStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AllocationStatus | Prisma.EnumAllocationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.AllocationStatus[] | Prisma.ListEnumAllocationStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AllocationStatus[] | Prisma.ListEnumAllocationStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAllocationStatusWithAggregatesFilter<$PrismaModel> | $Enums.AllocationStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAllocationStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAllocationStatusFilter<$PrismaModel>
+}
+
 export type EnumPurchaseStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.PurchaseStatus | Prisma.EnumPurchaseStatusFieldRefInput<$PrismaModel>
   in?: $Enums.PurchaseStatus[] | Prisma.ListEnumPurchaseStatusFieldRefInput<$PrismaModel>
@@ -363,6 +380,23 @@ export type EnumDisposalStatusWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumDisposalStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumDisposalStatusFilter<$PrismaModel>
+}
+
+export type EnumDailyAttendanceStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.DailyAttendanceStatus | Prisma.EnumDailyAttendanceStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.DailyAttendanceStatus[] | Prisma.ListEnumDailyAttendanceStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DailyAttendanceStatus[] | Prisma.ListEnumDailyAttendanceStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDailyAttendanceStatusFilter<$PrismaModel> | $Enums.DailyAttendanceStatus
+}
+
+export type EnumDailyAttendanceStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DailyAttendanceStatus | Prisma.EnumDailyAttendanceStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.DailyAttendanceStatus[] | Prisma.ListEnumDailyAttendanceStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DailyAttendanceStatus[] | Prisma.ListEnumDailyAttendanceStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDailyAttendanceStatusWithAggregatesFilter<$PrismaModel> | $Enums.DailyAttendanceStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDailyAttendanceStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDailyAttendanceStatusFilter<$PrismaModel>
 }
 
 export type IntFilter<$PrismaModel = never> = {
@@ -790,6 +824,23 @@ export type NestedFloatNullableFilter<$PrismaModel = never> = {
   not?: Prisma.NestedFloatNullableFilter<$PrismaModel> | number | null
 }
 
+export type NestedEnumAllocationStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.AllocationStatus | Prisma.EnumAllocationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.AllocationStatus[] | Prisma.ListEnumAllocationStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AllocationStatus[] | Prisma.ListEnumAllocationStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAllocationStatusFilter<$PrismaModel> | $Enums.AllocationStatus
+}
+
+export type NestedEnumAllocationStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AllocationStatus | Prisma.EnumAllocationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.AllocationStatus[] | Prisma.ListEnumAllocationStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AllocationStatus[] | Prisma.ListEnumAllocationStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAllocationStatusWithAggregatesFilter<$PrismaModel> | $Enums.AllocationStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAllocationStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAllocationStatusFilter<$PrismaModel>
+}
+
 export type NestedEnumPurchaseStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.PurchaseStatus | Prisma.EnumPurchaseStatusFieldRefInput<$PrismaModel>
   in?: $Enums.PurchaseStatus[] | Prisma.ListEnumPurchaseStatusFieldRefInput<$PrismaModel>
@@ -839,6 +890,23 @@ export type NestedEnumDisposalStatusWithAggregatesFilter<$PrismaModel = never> =
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumDisposalStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumDisposalStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumDailyAttendanceStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.DailyAttendanceStatus | Prisma.EnumDailyAttendanceStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.DailyAttendanceStatus[] | Prisma.ListEnumDailyAttendanceStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DailyAttendanceStatus[] | Prisma.ListEnumDailyAttendanceStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDailyAttendanceStatusFilter<$PrismaModel> | $Enums.DailyAttendanceStatus
+}
+
+export type NestedEnumDailyAttendanceStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DailyAttendanceStatus | Prisma.EnumDailyAttendanceStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.DailyAttendanceStatus[] | Prisma.ListEnumDailyAttendanceStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DailyAttendanceStatus[] | Prisma.ListEnumDailyAttendanceStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDailyAttendanceStatusWithAggregatesFilter<$PrismaModel> | $Enums.DailyAttendanceStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDailyAttendanceStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDailyAttendanceStatusFilter<$PrismaModel>
 }
 
 export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {

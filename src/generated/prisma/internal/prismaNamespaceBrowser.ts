@@ -60,6 +60,7 @@ export const ModelName = {
   Employee: 'Employee',
   Contractor: 'Contractor',
   ProjectContractor: 'ProjectContractor',
+  ProjectEmployeeAllocation: 'ProjectEmployeeAllocation',
   Supplier: 'Supplier',
   Material: 'Material',
   PurchaseRequest: 'PurchaseRequest',
@@ -67,6 +68,7 @@ export const ModelName = {
   StockMovement: 'StockMovement',
   WasteDisposal: 'WasteDisposal',
   DailyReport: 'DailyReport',
+  DailyReportAttendance: 'DailyReportAttendance',
   File: 'File',
   FinancialEntry: 'FinancialEntry',
   Approval: 'Approval',
@@ -253,6 +255,24 @@ export const ProjectContractorScalarFieldEnum = {
 export type ProjectContractorScalarFieldEnum = (typeof ProjectContractorScalarFieldEnum)[keyof typeof ProjectContractorScalarFieldEnum]
 
 
+export const ProjectEmployeeAllocationScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  employeeId: 'employeeId',
+  role: 'role',
+  serviceDescription: 'serviceDescription',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  dailyRate: 'dailyRate',
+  status: 'status',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProjectEmployeeAllocationScalarFieldEnum = (typeof ProjectEmployeeAllocationScalarFieldEnum)[keyof typeof ProjectEmployeeAllocationScalarFieldEnum]
+
+
 export const SupplierScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -386,6 +406,21 @@ export const DailyReportScalarFieldEnum = {
 } as const
 
 export type DailyReportScalarFieldEnum = (typeof DailyReportScalarFieldEnum)[keyof typeof DailyReportScalarFieldEnum]
+
+
+export const DailyReportAttendanceScalarFieldEnum = {
+  id: 'id',
+  dailyReportId: 'dailyReportId',
+  employeeId: 'employeeId',
+  allocationId: 'allocationId',
+  status: 'status',
+  hoursWorked: 'hoursWorked',
+  transferredToProjectId: 'transferredToProjectId',
+  notes: 'notes',
+  createdAt: 'createdAt'
+} as const
+
+export type DailyReportAttendanceScalarFieldEnum = (typeof DailyReportAttendanceScalarFieldEnum)[keyof typeof DailyReportAttendanceScalarFieldEnum]
 
 
 export const FileScalarFieldEnum = {

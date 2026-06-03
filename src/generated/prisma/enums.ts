@@ -126,3 +126,24 @@ export const ApprovalStatus = {
 } as const
 
 export type ApprovalStatus = (typeof ApprovalStatus)[keyof typeof ApprovalStatus]
+
+
+export const AllocationStatus = {
+  PLANNED: 'PLANNED',
+  ACTIVE: 'ACTIVE',
+  PAUSED: 'PAUSED',
+  FINISHED: 'FINISHED',
+  CANCELED: 'CANCELED'
+} as const
+
+export type AllocationStatus = (typeof AllocationStatus)[keyof typeof AllocationStatus]
+
+
+export const DailyAttendanceStatus = {
+  PRESENT: 'PRESENT',
+  PARTIAL: 'PARTIAL',
+  ABSENT: 'ABSENT',
+  TRANSFERRED: 'TRANSFERRED'
+} as const
+
+export type DailyAttendanceStatus = (typeof DailyAttendanceStatus)[keyof typeof DailyAttendanceStatus]

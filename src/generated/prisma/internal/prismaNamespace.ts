@@ -393,6 +393,7 @@ export const ModelName = {
   Employee: 'Employee',
   Contractor: 'Contractor',
   ProjectContractor: 'ProjectContractor',
+  ProjectEmployeeAllocation: 'ProjectEmployeeAllocation',
   Supplier: 'Supplier',
   Material: 'Material',
   PurchaseRequest: 'PurchaseRequest',
@@ -400,6 +401,7 @@ export const ModelName = {
   StockMovement: 'StockMovement',
   WasteDisposal: 'WasteDisposal',
   DailyReport: 'DailyReport',
+  DailyReportAttendance: 'DailyReportAttendance',
   File: 'File',
   FinancialEntry: 'FinancialEntry',
   Approval: 'Approval',
@@ -419,7 +421,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "client" | "project" | "projectArea" | "task" | "taskChecklistItem" | "employee" | "contractor" | "projectContractor" | "supplier" | "material" | "purchaseRequest" | "purchaseRequestItem" | "stockMovement" | "wasteDisposal" | "dailyReport" | "file" | "financialEntry" | "approval" | "auditLog"
+    modelProps: "user" | "client" | "project" | "projectArea" | "task" | "taskChecklistItem" | "employee" | "contractor" | "projectContractor" | "projectEmployeeAllocation" | "supplier" | "material" | "purchaseRequest" | "purchaseRequestItem" | "stockMovement" | "wasteDisposal" | "dailyReport" | "dailyReportAttendance" | "file" | "financialEntry" | "approval" | "auditLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1089,6 +1091,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ProjectEmployeeAllocation: {
+      payload: Prisma.$ProjectEmployeeAllocationPayload<ExtArgs>
+      fields: Prisma.ProjectEmployeeAllocationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ProjectEmployeeAllocationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeeAllocationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ProjectEmployeeAllocationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeeAllocationPayload>
+        }
+        findFirst: {
+          args: Prisma.ProjectEmployeeAllocationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeeAllocationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ProjectEmployeeAllocationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeeAllocationPayload>
+        }
+        findMany: {
+          args: Prisma.ProjectEmployeeAllocationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeeAllocationPayload>[]
+        }
+        create: {
+          args: Prisma.ProjectEmployeeAllocationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeeAllocationPayload>
+        }
+        createMany: {
+          args: Prisma.ProjectEmployeeAllocationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ProjectEmployeeAllocationCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeeAllocationPayload>[]
+        }
+        delete: {
+          args: Prisma.ProjectEmployeeAllocationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeeAllocationPayload>
+        }
+        update: {
+          args: Prisma.ProjectEmployeeAllocationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeeAllocationPayload>
+        }
+        deleteMany: {
+          args: Prisma.ProjectEmployeeAllocationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ProjectEmployeeAllocationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ProjectEmployeeAllocationUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeeAllocationPayload>[]
+        }
+        upsert: {
+          args: Prisma.ProjectEmployeeAllocationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectEmployeeAllocationPayload>
+        }
+        aggregate: {
+          args: Prisma.ProjectEmployeeAllocationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateProjectEmployeeAllocation>
+        }
+        groupBy: {
+          args: Prisma.ProjectEmployeeAllocationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProjectEmployeeAllocationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ProjectEmployeeAllocationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProjectEmployeeAllocationCountAggregateOutputType> | number
+        }
+      }
+    }
     Supplier: {
       payload: Prisma.$SupplierPayload<ExtArgs>
       fields: Prisma.SupplierFieldRefs
@@ -1607,6 +1683,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    DailyReportAttendance: {
+      payload: Prisma.$DailyReportAttendancePayload<ExtArgs>
+      fields: Prisma.DailyReportAttendanceFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DailyReportAttendanceFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyReportAttendancePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DailyReportAttendanceFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyReportAttendancePayload>
+        }
+        findFirst: {
+          args: Prisma.DailyReportAttendanceFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyReportAttendancePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DailyReportAttendanceFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyReportAttendancePayload>
+        }
+        findMany: {
+          args: Prisma.DailyReportAttendanceFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyReportAttendancePayload>[]
+        }
+        create: {
+          args: Prisma.DailyReportAttendanceCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyReportAttendancePayload>
+        }
+        createMany: {
+          args: Prisma.DailyReportAttendanceCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DailyReportAttendanceCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyReportAttendancePayload>[]
+        }
+        delete: {
+          args: Prisma.DailyReportAttendanceDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyReportAttendancePayload>
+        }
+        update: {
+          args: Prisma.DailyReportAttendanceUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyReportAttendancePayload>
+        }
+        deleteMany: {
+          args: Prisma.DailyReportAttendanceDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DailyReportAttendanceUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DailyReportAttendanceUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyReportAttendancePayload>[]
+        }
+        upsert: {
+          args: Prisma.DailyReportAttendanceUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyReportAttendancePayload>
+        }
+        aggregate: {
+          args: Prisma.DailyReportAttendanceAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDailyReportAttendance>
+        }
+        groupBy: {
+          args: Prisma.DailyReportAttendanceGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DailyReportAttendanceGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DailyReportAttendanceCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DailyReportAttendanceCountAggregateOutputType> | number
+        }
+      }
+    }
     File: {
       payload: Prisma.$FilePayload<ExtArgs>
       fields: Prisma.FileFieldRefs
@@ -2106,6 +2256,24 @@ export const ProjectContractorScalarFieldEnum = {
 export type ProjectContractorScalarFieldEnum = (typeof ProjectContractorScalarFieldEnum)[keyof typeof ProjectContractorScalarFieldEnum]
 
 
+export const ProjectEmployeeAllocationScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  employeeId: 'employeeId',
+  role: 'role',
+  serviceDescription: 'serviceDescription',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  dailyRate: 'dailyRate',
+  status: 'status',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProjectEmployeeAllocationScalarFieldEnum = (typeof ProjectEmployeeAllocationScalarFieldEnum)[keyof typeof ProjectEmployeeAllocationScalarFieldEnum]
+
+
 export const SupplierScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -2239,6 +2407,21 @@ export const DailyReportScalarFieldEnum = {
 } as const
 
 export type DailyReportScalarFieldEnum = (typeof DailyReportScalarFieldEnum)[keyof typeof DailyReportScalarFieldEnum]
+
+
+export const DailyReportAttendanceScalarFieldEnum = {
+  id: 'id',
+  dailyReportId: 'dailyReportId',
+  employeeId: 'employeeId',
+  allocationId: 'allocationId',
+  status: 'status',
+  hoursWorked: 'hoursWorked',
+  transferredToProjectId: 'transferredToProjectId',
+  notes: 'notes',
+  createdAt: 'createdAt'
+} as const
+
+export type DailyReportAttendanceScalarFieldEnum = (typeof DailyReportAttendanceScalarFieldEnum)[keyof typeof DailyReportAttendanceScalarFieldEnum]
 
 
 export const FileScalarFieldEnum = {
@@ -2497,6 +2680,20 @@ export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
 
 
 /**
+ * Reference to a field of type 'AllocationStatus'
+ */
+export type EnumAllocationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AllocationStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'AllocationStatus[]'
+ */
+export type ListEnumAllocationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AllocationStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'PurchaseStatus'
  */
 export type EnumPurchaseStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PurchaseStatus'>
@@ -2535,6 +2732,20 @@ export type EnumDisposalStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$P
  * Reference to a field of type 'DisposalStatus[]'
  */
 export type ListEnumDisposalStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DisposalStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'DailyAttendanceStatus'
+ */
+export type EnumDailyAttendanceStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DailyAttendanceStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'DailyAttendanceStatus[]'
+ */
+export type ListEnumDailyAttendanceStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DailyAttendanceStatus[]'>
     
 
 
@@ -2712,6 +2923,7 @@ export type GlobalOmitConfig = {
   employee?: Prisma.EmployeeOmit
   contractor?: Prisma.ContractorOmit
   projectContractor?: Prisma.ProjectContractorOmit
+  projectEmployeeAllocation?: Prisma.ProjectEmployeeAllocationOmit
   supplier?: Prisma.SupplierOmit
   material?: Prisma.MaterialOmit
   purchaseRequest?: Prisma.PurchaseRequestOmit
@@ -2719,6 +2931,7 @@ export type GlobalOmitConfig = {
   stockMovement?: Prisma.StockMovementOmit
   wasteDisposal?: Prisma.WasteDisposalOmit
   dailyReport?: Prisma.DailyReportOmit
+  dailyReportAttendance?: Prisma.DailyReportAttendanceOmit
   file?: Prisma.FileOmit
   financialEntry?: Prisma.FinancialEntryOmit
   approval?: Prisma.ApprovalOmit

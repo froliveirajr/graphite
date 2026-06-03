@@ -233,10 +233,11 @@ export default async function ProjectDetailsPage({
 
         {activeTab === "team" ? (
           <section className="rounded-lg border border-zinc-200 bg-white shadow-sm">
-            <div className="border-b border-zinc-200 p-4">
+            <div className="flex items-center justify-between border-b border-zinc-200 p-4">
               <h2 className="font-semibold">Equipe locada</h2>
+              <Link href="/employee-allocations/new" className="text-sm font-semibold text-zinc-900 hover:underline">Nova locacao</Link>
             </div>
-            <div className="grid gap-3 p-4 md:grid-cols-3">
+            <div className="grid gap-3 p-4 md:grid-cols-2 xl:grid-cols-3">
               <div className="rounded-md border border-zinc-200 p-4">
                 <p className="text-sm text-zinc-500">Gestor</p>
                 <strong className="mt-2 block">{project.manager}</strong>
@@ -245,11 +246,26 @@ export default async function ProjectDetailsPage({
                 <p className="text-sm text-zinc-500">Tecnico responsavel</p>
                 <strong className="mt-2 block">{project.technicalResponsible}</strong>
               </div>
-              <div className="rounded-md border border-zinc-200 p-4">
-                <p className="text-sm text-zinc-500">Proxima entrega</p>
-                <strong className="mt-2 block">CRUD de locacao de funcionarios</strong>
-              </div>
+              {project.employeeAllocations.map((allocation) => (
+                <div key={allocation.id} className="rounded-md border border-zinc-200 p-4">
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <p className="font-semibold">{allocation.employee}</p>
+                      <p className="mt-1 text-xs text-zinc-500">{allocation.role} - {allocation.jobTitle}</p>
+                    </div>
+                    <StatusBadge value={allocation.status} />
+                  </div>
+                  <p className="mt-3 text-sm text-zinc-700">{allocation.serviceDescription}</p>
+                  <div className="mt-4 flex items-center justify-between gap-3 text-xs text-zinc-500">
+                    <span>{allocation.startDate} ate {allocation.endDate}</span>
+                    <Link href={`/employee-allocations/${allocation.id}/edit`} className="font-semibold text-zinc-900 hover:underline">
+                      Editar
+                    </Link>
+                  </div>
+                </div>
+              ))}
             </div>
+            {project.employeeAllocations.length === 0 ? emptyState("Nenhum funcionario locado diretamente para esta obra.") : null}
           </section>
         ) : null}
 

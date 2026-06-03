@@ -2,14 +2,21 @@ import Link from "next/link";
 import { AppShell } from "@/components/layout/app-shell";
 import { PageHeader } from "@/components/ui/page-header";
 import { createDailyReportAction } from "@/lib/actions/daily-reports";
-import { getProjectTaskOptions } from "@/lib/repositories/graphite";
+import { getEmployeeOptions, getProjectTaskOptions } from "@/lib/repositories/graphite";
+
+const attendanceStatuses = ["Presente", "Parcial", "Ausente", "Deslocado"];
 
 export default async function NewDailyReportPage({
   searchParams,
 }: {
   searchParams: Promise<{ error?: string }>;
 }) {
-  const [{ error }, projects] = await Promise.all([searchParams, getProjectTaskOptions()]);
+  const [{ error }, projects, employees] = await Promise.all([
+    searchParams,
+    getProjectTaskOptions(),
+    getEmployeeOptions(),
+  ]);
+  const attendanceRows = Array.from({ length: 8 });
 
   return (
     <AppShell>
@@ -44,6 +51,64 @@ export default async function NewDailyReportPage({
               Equipe no dia
               <textarea name="teamNotes" rows={3} className="mt-2 w-full rounded-md border border-zinc-200 px-3 py-2 text-sm" />
             </label>
+            <div className="md:col-span-2">
+              <div className="mb-2 flex items-center justify-between">
+                <h2 className="text-sm font-semibold text-zinc-900">Presenca e deslocamento de mao de obra</h2>
+                <span className="text-xs text-zinc-500">Preencha somente as linhas usadas</span>
+              </div>
+              <div className="overflow-x-auto rounded-md border border-zinc-200">
+                <table className="w-full min-w-[920px] text-left text-sm">
+                  <thead className="bg-zinc-50 text-xs uppercase tracking-wide text-zinc-500">
+                    <tr>
+                      <th className="px-3 py-2">Funcionario</th>
+                      <th className="px-3 py-2">Status</th>
+                      <th className="px-3 py-2">Horas</th>
+                      <th className="px-3 py-2">Deslocado para</th>
+                      <th className="px-3 py-2">Observacao</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-zinc-100">
+                    {attendanceRows.map((_, index) => (
+                      <tr key={index}>
+                        <td className="px-3 py-2">
+                          <select name="attendanceEmployeeId" className="h-10 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm">
+                            <option value="">Selecione</option>
+                            {employees.map((employee) => (
+                              <option key={employee.id} value={employee.id}>
+                                {employee.name} - {employee.jobTitle}
+                              </option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-3 py-2">
+                          <select name="attendanceStatus" defaultValue="Presente" className="h-10 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm">
+                            {attendanceStatuses.map((status) => (
+                              <option key={status} value={status}>{status}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-3 py-2">
+                          <input name="attendanceHours" type="number" min="0" step="0.25" className="h-10 w-full rounded-md border border-zinc-200 px-3 text-sm" />
+                        </td>
+                        <td className="px-3 py-2">
+                          <select name="attendanceTransferredToProjectId" className="h-10 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm">
+                            <option value="">Nao se aplica</option>
+                            {projects.map((project) => (
+                              <option key={project.id} value={project.id}>
+                                {project.code} - {project.name}
+                              </option>
+                            ))}
+                          </select>
+                        </td>
+                        <td className="px-3 py-2">
+                          <input name="attendanceNotes" className="h-10 w-full rounded-md border border-zinc-200 px-3 text-sm" />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
             <label className="text-sm font-medium text-zinc-800 md:col-span-2">
               Servicos executados
               <textarea name="servicesExecuted" rows={4} className="mt-2 w-full rounded-md border border-zinc-200 px-3 py-2 text-sm" />

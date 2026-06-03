@@ -284,6 +284,8 @@ export type EmployeeWhereInput = {
   notes?: Prisma.StringNullableFilter<"Employee"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Employee"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Employee"> | Date | string
+  projectAllocations?: Prisma.ProjectEmployeeAllocationListRelationFilter
+  dailyAttendances?: Prisma.DailyReportAttendanceListRelationFilter
   financialEntries?: Prisma.FinancialEntryListRelationFilter
 }
 
@@ -301,6 +303,8 @@ export type EmployeeOrderByWithRelationInput = {
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  projectAllocations?: Prisma.ProjectEmployeeAllocationOrderByRelationAggregateInput
+  dailyAttendances?: Prisma.DailyReportAttendanceOrderByRelationAggregateInput
   financialEntries?: Prisma.FinancialEntryOrderByRelationAggregateInput
 }
 
@@ -321,6 +325,8 @@ export type EmployeeWhereUniqueInput = Prisma.AtLeast<{
   notes?: Prisma.StringNullableFilter<"Employee"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Employee"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Employee"> | Date | string
+  projectAllocations?: Prisma.ProjectEmployeeAllocationListRelationFilter
+  dailyAttendances?: Prisma.DailyReportAttendanceListRelationFilter
   financialEntries?: Prisma.FinancialEntryListRelationFilter
 }, "id">
 
@@ -378,6 +384,8 @@ export type EmployeeCreateInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  projectAllocations?: Prisma.ProjectEmployeeAllocationCreateNestedManyWithoutEmployeeInput
+  dailyAttendances?: Prisma.DailyReportAttendanceCreateNestedManyWithoutEmployeeInput
   financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutEmployeeInput
 }
 
@@ -395,6 +403,8 @@ export type EmployeeUncheckedCreateInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  projectAllocations?: Prisma.ProjectEmployeeAllocationUncheckedCreateNestedManyWithoutEmployeeInput
+  dailyAttendances?: Prisma.DailyReportAttendanceUncheckedCreateNestedManyWithoutEmployeeInput
   financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutEmployeeInput
 }
 
@@ -412,6 +422,8 @@ export type EmployeeUpdateInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  projectAllocations?: Prisma.ProjectEmployeeAllocationUpdateManyWithoutEmployeeNestedInput
+  dailyAttendances?: Prisma.DailyReportAttendanceUpdateManyWithoutEmployeeNestedInput
   financialEntries?: Prisma.FinancialEntryUpdateManyWithoutEmployeeNestedInput
 }
 
@@ -429,6 +441,8 @@ export type EmployeeUncheckedUpdateInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  projectAllocations?: Prisma.ProjectEmployeeAllocationUncheckedUpdateManyWithoutEmployeeNestedInput
+  dailyAttendances?: Prisma.DailyReportAttendanceUncheckedUpdateManyWithoutEmployeeNestedInput
   financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutEmployeeNestedInput
 }
 
@@ -538,9 +552,42 @@ export type EmployeeSumOrderByAggregateInput = {
   salary?: Prisma.SortOrder
 }
 
+export type EmployeeScalarRelationFilter = {
+  is?: Prisma.EmployeeWhereInput
+  isNot?: Prisma.EmployeeWhereInput
+}
+
 export type EmployeeNullableScalarRelationFilter = {
   is?: Prisma.EmployeeWhereInput | null
   isNot?: Prisma.EmployeeWhereInput | null
+}
+
+export type EmployeeCreateNestedOneWithoutProjectAllocationsInput = {
+  create?: Prisma.XOR<Prisma.EmployeeCreateWithoutProjectAllocationsInput, Prisma.EmployeeUncheckedCreateWithoutProjectAllocationsInput>
+  connectOrCreate?: Prisma.EmployeeCreateOrConnectWithoutProjectAllocationsInput
+  connect?: Prisma.EmployeeWhereUniqueInput
+}
+
+export type EmployeeUpdateOneRequiredWithoutProjectAllocationsNestedInput = {
+  create?: Prisma.XOR<Prisma.EmployeeCreateWithoutProjectAllocationsInput, Prisma.EmployeeUncheckedCreateWithoutProjectAllocationsInput>
+  connectOrCreate?: Prisma.EmployeeCreateOrConnectWithoutProjectAllocationsInput
+  upsert?: Prisma.EmployeeUpsertWithoutProjectAllocationsInput
+  connect?: Prisma.EmployeeWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.EmployeeUpdateToOneWithWhereWithoutProjectAllocationsInput, Prisma.EmployeeUpdateWithoutProjectAllocationsInput>, Prisma.EmployeeUncheckedUpdateWithoutProjectAllocationsInput>
+}
+
+export type EmployeeCreateNestedOneWithoutDailyAttendancesInput = {
+  create?: Prisma.XOR<Prisma.EmployeeCreateWithoutDailyAttendancesInput, Prisma.EmployeeUncheckedCreateWithoutDailyAttendancesInput>
+  connectOrCreate?: Prisma.EmployeeCreateOrConnectWithoutDailyAttendancesInput
+  connect?: Prisma.EmployeeWhereUniqueInput
+}
+
+export type EmployeeUpdateOneRequiredWithoutDailyAttendancesNestedInput = {
+  create?: Prisma.XOR<Prisma.EmployeeCreateWithoutDailyAttendancesInput, Prisma.EmployeeUncheckedCreateWithoutDailyAttendancesInput>
+  connectOrCreate?: Prisma.EmployeeCreateOrConnectWithoutDailyAttendancesInput
+  upsert?: Prisma.EmployeeUpsertWithoutDailyAttendancesInput
+  connect?: Prisma.EmployeeWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.EmployeeUpdateToOneWithWhereWithoutDailyAttendancesInput, Prisma.EmployeeUpdateWithoutDailyAttendancesInput>, Prisma.EmployeeUncheckedUpdateWithoutDailyAttendancesInput>
 }
 
 export type EmployeeCreateNestedOneWithoutFinancialEntriesInput = {
@@ -559,6 +606,182 @@ export type EmployeeUpdateOneWithoutFinancialEntriesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.EmployeeUpdateToOneWithWhereWithoutFinancialEntriesInput, Prisma.EmployeeUpdateWithoutFinancialEntriesInput>, Prisma.EmployeeUncheckedUpdateWithoutFinancialEntriesInput>
 }
 
+export type EmployeeCreateWithoutProjectAllocationsInput = {
+  id?: string
+  name: string
+  documentNumber?: string | null
+  phone?: string | null
+  jobTitle: string
+  specialty?: string | null
+  employmentType?: string | null
+  dailyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  salary?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: $Enums.RecordStatus
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  dailyAttendances?: Prisma.DailyReportAttendanceCreateNestedManyWithoutEmployeeInput
+  financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutEmployeeInput
+}
+
+export type EmployeeUncheckedCreateWithoutProjectAllocationsInput = {
+  id?: string
+  name: string
+  documentNumber?: string | null
+  phone?: string | null
+  jobTitle: string
+  specialty?: string | null
+  employmentType?: string | null
+  dailyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  salary?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: $Enums.RecordStatus
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  dailyAttendances?: Prisma.DailyReportAttendanceUncheckedCreateNestedManyWithoutEmployeeInput
+  financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutEmployeeInput
+}
+
+export type EmployeeCreateOrConnectWithoutProjectAllocationsInput = {
+  where: Prisma.EmployeeWhereUniqueInput
+  create: Prisma.XOR<Prisma.EmployeeCreateWithoutProjectAllocationsInput, Prisma.EmployeeUncheckedCreateWithoutProjectAllocationsInput>
+}
+
+export type EmployeeUpsertWithoutProjectAllocationsInput = {
+  update: Prisma.XOR<Prisma.EmployeeUpdateWithoutProjectAllocationsInput, Prisma.EmployeeUncheckedUpdateWithoutProjectAllocationsInput>
+  create: Prisma.XOR<Prisma.EmployeeCreateWithoutProjectAllocationsInput, Prisma.EmployeeUncheckedCreateWithoutProjectAllocationsInput>
+  where?: Prisma.EmployeeWhereInput
+}
+
+export type EmployeeUpdateToOneWithWhereWithoutProjectAllocationsInput = {
+  where?: Prisma.EmployeeWhereInput
+  data: Prisma.XOR<Prisma.EmployeeUpdateWithoutProjectAllocationsInput, Prisma.EmployeeUncheckedUpdateWithoutProjectAllocationsInput>
+}
+
+export type EmployeeUpdateWithoutProjectAllocationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  documentNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
+  specialty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employmentType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dailyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  salary?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: Prisma.EnumRecordStatusFieldUpdateOperationsInput | $Enums.RecordStatus
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dailyAttendances?: Prisma.DailyReportAttendanceUpdateManyWithoutEmployeeNestedInput
+  financialEntries?: Prisma.FinancialEntryUpdateManyWithoutEmployeeNestedInput
+}
+
+export type EmployeeUncheckedUpdateWithoutProjectAllocationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  documentNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
+  specialty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employmentType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dailyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  salary?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: Prisma.EnumRecordStatusFieldUpdateOperationsInput | $Enums.RecordStatus
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dailyAttendances?: Prisma.DailyReportAttendanceUncheckedUpdateManyWithoutEmployeeNestedInput
+  financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutEmployeeNestedInput
+}
+
+export type EmployeeCreateWithoutDailyAttendancesInput = {
+  id?: string
+  name: string
+  documentNumber?: string | null
+  phone?: string | null
+  jobTitle: string
+  specialty?: string | null
+  employmentType?: string | null
+  dailyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  salary?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: $Enums.RecordStatus
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  projectAllocations?: Prisma.ProjectEmployeeAllocationCreateNestedManyWithoutEmployeeInput
+  financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutEmployeeInput
+}
+
+export type EmployeeUncheckedCreateWithoutDailyAttendancesInput = {
+  id?: string
+  name: string
+  documentNumber?: string | null
+  phone?: string | null
+  jobTitle: string
+  specialty?: string | null
+  employmentType?: string | null
+  dailyRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  salary?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: $Enums.RecordStatus
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  projectAllocations?: Prisma.ProjectEmployeeAllocationUncheckedCreateNestedManyWithoutEmployeeInput
+  financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutEmployeeInput
+}
+
+export type EmployeeCreateOrConnectWithoutDailyAttendancesInput = {
+  where: Prisma.EmployeeWhereUniqueInput
+  create: Prisma.XOR<Prisma.EmployeeCreateWithoutDailyAttendancesInput, Prisma.EmployeeUncheckedCreateWithoutDailyAttendancesInput>
+}
+
+export type EmployeeUpsertWithoutDailyAttendancesInput = {
+  update: Prisma.XOR<Prisma.EmployeeUpdateWithoutDailyAttendancesInput, Prisma.EmployeeUncheckedUpdateWithoutDailyAttendancesInput>
+  create: Prisma.XOR<Prisma.EmployeeCreateWithoutDailyAttendancesInput, Prisma.EmployeeUncheckedCreateWithoutDailyAttendancesInput>
+  where?: Prisma.EmployeeWhereInput
+}
+
+export type EmployeeUpdateToOneWithWhereWithoutDailyAttendancesInput = {
+  where?: Prisma.EmployeeWhereInput
+  data: Prisma.XOR<Prisma.EmployeeUpdateWithoutDailyAttendancesInput, Prisma.EmployeeUncheckedUpdateWithoutDailyAttendancesInput>
+}
+
+export type EmployeeUpdateWithoutDailyAttendancesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  documentNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
+  specialty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employmentType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dailyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  salary?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: Prisma.EnumRecordStatusFieldUpdateOperationsInput | $Enums.RecordStatus
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  projectAllocations?: Prisma.ProjectEmployeeAllocationUpdateManyWithoutEmployeeNestedInput
+  financialEntries?: Prisma.FinancialEntryUpdateManyWithoutEmployeeNestedInput
+}
+
+export type EmployeeUncheckedUpdateWithoutDailyAttendancesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  documentNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
+  specialty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employmentType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dailyRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  salary?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: Prisma.EnumRecordStatusFieldUpdateOperationsInput | $Enums.RecordStatus
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  projectAllocations?: Prisma.ProjectEmployeeAllocationUncheckedUpdateManyWithoutEmployeeNestedInput
+  financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutEmployeeNestedInput
+}
+
 export type EmployeeCreateWithoutFinancialEntriesInput = {
   id?: string
   name: string
@@ -573,6 +796,8 @@ export type EmployeeCreateWithoutFinancialEntriesInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  projectAllocations?: Prisma.ProjectEmployeeAllocationCreateNestedManyWithoutEmployeeInput
+  dailyAttendances?: Prisma.DailyReportAttendanceCreateNestedManyWithoutEmployeeInput
 }
 
 export type EmployeeUncheckedCreateWithoutFinancialEntriesInput = {
@@ -589,6 +814,8 @@ export type EmployeeUncheckedCreateWithoutFinancialEntriesInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  projectAllocations?: Prisma.ProjectEmployeeAllocationUncheckedCreateNestedManyWithoutEmployeeInput
+  dailyAttendances?: Prisma.DailyReportAttendanceUncheckedCreateNestedManyWithoutEmployeeInput
 }
 
 export type EmployeeCreateOrConnectWithoutFinancialEntriesInput = {
@@ -621,6 +848,8 @@ export type EmployeeUpdateWithoutFinancialEntriesInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  projectAllocations?: Prisma.ProjectEmployeeAllocationUpdateManyWithoutEmployeeNestedInput
+  dailyAttendances?: Prisma.DailyReportAttendanceUpdateManyWithoutEmployeeNestedInput
 }
 
 export type EmployeeUncheckedUpdateWithoutFinancialEntriesInput = {
@@ -637,6 +866,8 @@ export type EmployeeUncheckedUpdateWithoutFinancialEntriesInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  projectAllocations?: Prisma.ProjectEmployeeAllocationUncheckedUpdateManyWithoutEmployeeNestedInput
+  dailyAttendances?: Prisma.DailyReportAttendanceUncheckedUpdateManyWithoutEmployeeNestedInput
 }
 
 
@@ -645,10 +876,14 @@ export type EmployeeUncheckedUpdateWithoutFinancialEntriesInput = {
  */
 
 export type EmployeeCountOutputType = {
+  projectAllocations: number
+  dailyAttendances: number
   financialEntries: number
 }
 
 export type EmployeeCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  projectAllocations?: boolean | EmployeeCountOutputTypeCountProjectAllocationsArgs
+  dailyAttendances?: boolean | EmployeeCountOutputTypeCountDailyAttendancesArgs
   financialEntries?: boolean | EmployeeCountOutputTypeCountFinancialEntriesArgs
 }
 
@@ -660,6 +895,20 @@ export type EmployeeCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Ext
    * Select specific fields to fetch from the EmployeeCountOutputType
    */
   select?: Prisma.EmployeeCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * EmployeeCountOutputType without action
+ */
+export type EmployeeCountOutputTypeCountProjectAllocationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProjectEmployeeAllocationWhereInput
+}
+
+/**
+ * EmployeeCountOutputType without action
+ */
+export type EmployeeCountOutputTypeCountDailyAttendancesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DailyReportAttendanceWhereInput
 }
 
 /**
@@ -684,6 +933,8 @@ export type EmployeeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   notes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  projectAllocations?: boolean | Prisma.Employee$projectAllocationsArgs<ExtArgs>
+  dailyAttendances?: boolean | Prisma.Employee$dailyAttendancesArgs<ExtArgs>
   financialEntries?: boolean | Prisma.Employee$financialEntriesArgs<ExtArgs>
   _count?: boolean | Prisma.EmployeeCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["employee"]>
@@ -738,6 +989,8 @@ export type EmployeeSelectScalar = {
 
 export type EmployeeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "documentNumber" | "phone" | "jobTitle" | "specialty" | "employmentType" | "dailyRate" | "salary" | "status" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["employee"]>
 export type EmployeeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  projectAllocations?: boolean | Prisma.Employee$projectAllocationsArgs<ExtArgs>
+  dailyAttendances?: boolean | Prisma.Employee$dailyAttendancesArgs<ExtArgs>
   financialEntries?: boolean | Prisma.Employee$financialEntriesArgs<ExtArgs>
   _count?: boolean | Prisma.EmployeeCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -747,6 +1000,8 @@ export type EmployeeIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
 export type $EmployeePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Employee"
   objects: {
+    projectAllocations: Prisma.$ProjectEmployeeAllocationPayload<ExtArgs>[]
+    dailyAttendances: Prisma.$DailyReportAttendancePayload<ExtArgs>[]
     financialEntries: Prisma.$FinancialEntryPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1157,6 +1412,8 @@ readonly fields: EmployeeFieldRefs;
  */
 export interface Prisma__EmployeeClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  projectAllocations<T extends Prisma.Employee$projectAllocationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Employee$projectAllocationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectEmployeeAllocationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  dailyAttendances<T extends Prisma.Employee$dailyAttendancesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Employee$dailyAttendancesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DailyReportAttendancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   financialEntries<T extends Prisma.Employee$financialEntriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Employee$financialEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FinancialEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1590,6 +1847,54 @@ export type EmployeeDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Limit how many Employees to delete.
    */
   limit?: number
+}
+
+/**
+ * Employee.projectAllocations
+ */
+export type Employee$projectAllocationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProjectEmployeeAllocation
+   */
+  select?: Prisma.ProjectEmployeeAllocationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProjectEmployeeAllocation
+   */
+  omit?: Prisma.ProjectEmployeeAllocationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProjectEmployeeAllocationInclude<ExtArgs> | null
+  where?: Prisma.ProjectEmployeeAllocationWhereInput
+  orderBy?: Prisma.ProjectEmployeeAllocationOrderByWithRelationInput | Prisma.ProjectEmployeeAllocationOrderByWithRelationInput[]
+  cursor?: Prisma.ProjectEmployeeAllocationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProjectEmployeeAllocationScalarFieldEnum | Prisma.ProjectEmployeeAllocationScalarFieldEnum[]
+}
+
+/**
+ * Employee.dailyAttendances
+ */
+export type Employee$dailyAttendancesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DailyReportAttendance
+   */
+  select?: Prisma.DailyReportAttendanceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DailyReportAttendance
+   */
+  omit?: Prisma.DailyReportAttendanceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DailyReportAttendanceInclude<ExtArgs> | null
+  where?: Prisma.DailyReportAttendanceWhereInput
+  orderBy?: Prisma.DailyReportAttendanceOrderByWithRelationInput | Prisma.DailyReportAttendanceOrderByWithRelationInput[]
+  cursor?: Prisma.DailyReportAttendanceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DailyReportAttendanceScalarFieldEnum | Prisma.DailyReportAttendanceScalarFieldEnum[]
 }
 
 /**

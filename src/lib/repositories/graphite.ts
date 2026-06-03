@@ -56,6 +56,21 @@ const taskStatusLabels: Record<string, string> = {
   CANCELED: "Cancelada",
 };
 
+const allocationStatusLabels: Record<string, string> = {
+  PLANNED: "Planejada",
+  ACTIVE: "Ativa",
+  PAUSED: "Pausada",
+  FINISHED: "Finalizada",
+  CANCELED: "Cancelada",
+};
+
+const attendanceStatusLabels: Record<string, string> = {
+  PRESENT: "Presente",
+  PARTIAL: "Parcial",
+  ABSENT: "Ausente",
+  TRANSFERRED: "Deslocado",
+};
+
 export type ClientListItem = (typeof demoClients)[number];
 export type ProjectListItem = (typeof demoProjects)[number];
 export type ProjectAreaItem = (typeof demoProjectAreas)[number];
@@ -78,6 +93,7 @@ export type ProjectDetails = ProjectListItem & {
   tasks: TaskItem[];
   materialRequests: PurchaseListItem[];
   stockMovements: StockMovementListItem[];
+  employeeAllocations: EmployeeAllocationListItem[];
   contractors: ProjectContractorItem[];
   financialEntries: ProjectFinancialEntryItem[];
   files: ProjectFileItem[];
@@ -182,6 +198,24 @@ export type EmployeeListItem = {
   salary: number;
 };
 
+export type EmployeeAllocationListItem = {
+  id: string;
+  projectId: string;
+  project: string;
+  employeeId: string;
+  employee: string;
+  jobTitle: string;
+  role: string;
+  serviceDescription: string;
+  startDate: string;
+  endDate: string;
+  dailyRate: number;
+  status: string;
+  notes: string;
+};
+
+export type EmployeeAllocationDetails = EmployeeAllocationListItem;
+
 export type ContractorListItem = {
   id: string;
   name: string;
@@ -235,6 +269,18 @@ export type DailyReportDetails = DailyReportListItem & {
   materialsReceived: string;
   materialsUsed: string;
   weatherNotes: string;
+  attendances: DailyReportAttendanceItem[];
+};
+
+export type DailyReportAttendanceItem = {
+  id: string;
+  employeeId: string;
+  employee: string;
+  status: string;
+  hoursWorked: number;
+  transferredToProjectId: string;
+  transferredToProject: string;
+  notes: string;
 };
 
 function hasDatabaseUrl() {
@@ -275,6 +321,7 @@ function demoProjectDetails(id: string): ProjectDetails | null {
     tasks: demoTasks,
     materialRequests: [],
     stockMovements: [],
+    employeeAllocations: [],
     contractors: [],
     financialEntries: [],
     files: [],
@@ -549,6 +596,14 @@ export async function getProjectDetails(id: string): Promise<ProjectDetails | nu
           },
           take: 40,
         },
+        employeeAllocations: {
+          include: {
+            employee: true,
+          },
+          orderBy: {
+            startDate: "desc",
+          },
+        },
         financialEntries: {
           orderBy: {
             dueDate: "asc",
@@ -644,6 +699,21 @@ export async function getProjectDetails(id: string): Promise<ProjectDetails | nu
         totalCost: toNumber(movement.totalCost),
         createdBy: movement.createdBy.name,
         createdAt: formatDate(movement.createdAt),
+      })),
+      employeeAllocations: project.employeeAllocations.map((allocation) => ({
+        id: allocation.id,
+        projectId: allocation.projectId,
+        project: project.name,
+        employeeId: allocation.employeeId,
+        employee: allocation.employee.name,
+        jobTitle: allocation.employee.jobTitle,
+        role: allocation.role,
+        serviceDescription: allocation.serviceDescription ?? "-",
+        startDate: formatDate(allocation.startDate),
+        endDate: formatDate(allocation.endDate),
+        dailyRate: toNumber(allocation.dailyRate),
+        status: allocationStatusLabels[allocation.status] ?? allocation.status,
+        notes: allocation.notes ?? "",
       })),
       contractors: project.projectContractors.map((contract) => ({
         id: contract.id,
@@ -975,6 +1045,15 @@ export async function getDailyReports(): Promise<DailyReportListItem[]> {
       include: {
         project: true,
         createdBy: true,
+        attendances: {
+          include: {
+            employee: true,
+            transferredToProject: true,
+          },
+          orderBy: {
+            createdAt: "asc",
+          },
+        },
       },
       orderBy: {
         reportDate: "desc",
@@ -1021,6 +1100,19 @@ export async function getDailyReportDetails(id: string): Promise<DailyReportDeta
       return null;
     }
 
+    const attendances = await prisma.dailyReportAttendance.findMany({
+      where: {
+        dailyReportId: id,
+      },
+      include: {
+        employee: true,
+        transferredToProject: true,
+      },
+      orderBy: {
+        createdAt: "asc",
+      },
+    });
+
     return {
       id: report.id,
       project: report.project.name,
@@ -1036,6 +1128,16 @@ export async function getDailyReportDetails(id: string): Promise<DailyReportDeta
       materialsReceived: report.materialsReceived ?? "",
       materialsUsed: report.materialsUsed ?? "",
       weatherNotes: report.weatherNotes ?? "",
+      attendances: attendances.map((attendance) => ({
+        id: attendance.id,
+        employeeId: attendance.employeeId,
+        employee: attendance.employee.name,
+        status: attendanceStatusLabels[attendance.status] ?? attendance.status,
+        hoursWorked: toNumber(attendance.hoursWorked),
+        transferredToProjectId: attendance.transferredToProjectId ?? "",
+        transferredToProject: attendance.transferredToProject?.name ?? "-",
+        notes: attendance.notes ?? "",
+      })),
     };
   } catch (error) {
     console.warn("Falha ao buscar diario de obra no banco.", error);
@@ -1069,6 +1171,122 @@ export async function getEmployees(): Promise<EmployeeListItem[]> {
     }));
   } catch (error) {
     console.warn("Falha ao buscar funcionarios no banco.", error);
+    return [];
+  }
+}
+
+export async function getEmployeeAllocations(): Promise<EmployeeAllocationListItem[]> {
+  if (!hasDatabaseUrl()) {
+    return [];
+  }
+
+  try {
+    const { prisma } = await import("@/lib/db/prisma");
+    const allocations = await prisma.projectEmployeeAllocation.findMany({
+      include: {
+        project: true,
+        employee: true,
+      },
+      orderBy: [
+        {
+          startDate: "desc",
+        },
+        {
+          updatedAt: "desc",
+        },
+      ],
+    });
+
+    return allocations.map((allocation) => ({
+      id: allocation.id,
+      projectId: allocation.projectId,
+      project: allocation.project.name,
+      employeeId: allocation.employeeId,
+      employee: allocation.employee.name,
+      jobTitle: allocation.employee.jobTitle,
+      role: allocation.role,
+      serviceDescription: allocation.serviceDescription ?? "-",
+      startDate: formatDate(allocation.startDate),
+      endDate: formatDate(allocation.endDate),
+      dailyRate: toNumber(allocation.dailyRate),
+      status: allocationStatusLabels[allocation.status] ?? allocation.status,
+      notes: allocation.notes ?? "",
+    }));
+  } catch (error) {
+    console.warn("Falha ao buscar locacoes de funcionarios no banco.", error);
+    return [];
+  }
+}
+
+export async function getEmployeeAllocationDetails(id: string): Promise<EmployeeAllocationDetails | null> {
+  if (!hasDatabaseUrl()) {
+    return null;
+  }
+
+  try {
+    const { prisma } = await import("@/lib/db/prisma");
+    const allocation = await prisma.projectEmployeeAllocation.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        project: true,
+        employee: true,
+      },
+    });
+
+    if (!allocation) {
+      return null;
+    }
+
+    return {
+      id: allocation.id,
+      projectId: allocation.projectId,
+      project: allocation.project.name,
+      employeeId: allocation.employeeId,
+      employee: allocation.employee.name,
+      jobTitle: allocation.employee.jobTitle,
+      role: allocation.role,
+      serviceDescription: allocation.serviceDescription ?? "",
+      startDate: formatDate(allocation.startDate),
+      endDate: allocation.endDate ? formatDate(allocation.endDate) : "",
+      dailyRate: toNumber(allocation.dailyRate),
+      status: allocationStatusLabels[allocation.status] ?? allocation.status,
+      notes: allocation.notes ?? "",
+    };
+  } catch (error) {
+    console.warn("Falha ao buscar locacao de funcionario no banco.", error);
+    return null;
+  }
+}
+
+export async function getEmployeeOptions(): Promise<Array<{ id: string; name: string; jobTitle: string; dailyRate: number }>> {
+  if (!hasDatabaseUrl()) {
+    return [];
+  }
+
+  try {
+    const { prisma } = await import("@/lib/db/prisma");
+    const employees = await prisma.employee.findMany({
+      select: {
+        id: true,
+        name: true,
+        jobTitle: true,
+        dailyRate: true,
+      },
+      orderBy: {
+        name: "asc",
+      },
+    });
+
+    return employees.map((employee) => ({
+      id: employee.id,
+      name: employee.name,
+      jobTitle: employee.jobTitle,
+      dailyRate: toNumber(employee.dailyRate),
+    }));
+  } catch (error) {
+    console.warn("Falha ao buscar funcionarios para locacao.", error);
     return [];
   }
 }
