@@ -215,6 +215,7 @@ model Project {
   files                    File[]
   financialEntries         FinancialEntry[]
   budgetItems              BudgetItem[]
+  serviceCompositions      ServiceComposition[]
   serviceMeasurements      ServiceMeasurement[]
   materialRequirements     ProjectMaterialRequirement[]
   createdAt                DateTime             @default(now())
@@ -286,6 +287,8 @@ model BudgetItem {
   project            Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
   taskId             String?
   task               Task?            @relation(fields: [taskId], references: [id])
+  compositionId      String?
+  composition        ServiceComposition? @relation(fields: [compositionId], references: [id])
   code               String?
   phase              String
   description        String
@@ -307,9 +310,46 @@ model BudgetItem {
 
   @@index([projectId])
   @@index([taskId])
+  @@index([compositionId])
   @@index([phase])
   @@index([status])
   @@index([plannedStartDate])
+}
+
+model ServiceComposition {
+  id              String                       @id @default(cuid())
+  projectId       String?
+  project         Project?                     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  code            String?
+  name            String
+  serviceType     String
+  unit            String
+  unitPrice       Decimal?                     @db.Decimal(14, 2)
+  notes           String?
+  materials       ServiceCompositionMaterial[]
+  budgetItems     BudgetItem[]
+  createdAt       DateTime                     @default(now())
+  updatedAt       DateTime                     @updatedAt
+
+  @@index([projectId])
+  @@index([name])
+  @@index([serviceType])
+}
+
+model ServiceCompositionMaterial {
+  id              String             @id @default(cuid())
+  compositionId   String
+  composition     ServiceComposition @relation(fields: [compositionId], references: [id], onDelete: Cascade)
+  materialId      String
+  material        Material           @relation(fields: [materialId], references: [id])
+  quantityPerUnit Decimal            @db.Decimal(12, 4)
+  unit            String
+  wastePercent    Decimal            @default(0) @db.Decimal(5, 2)
+  notes           String?
+  createdAt       DateTime           @default(now())
+
+  @@index([compositionId])
+  @@index([materialId])
 }
 
 model TaskChecklistItem {
@@ -450,6 +490,7 @@ model Material {
   minimumStock        Decimal?              @db.Decimal(12, 3)
   notes               String?
   projectRequirements ProjectMaterialRequirement[]
+  compositionMaterials ServiceCompositionMaterial[]
   purchaseItems       PurchaseRequestItem[]
   stockMovements      StockMovement[]
   createdAt           DateTime              @default(now())

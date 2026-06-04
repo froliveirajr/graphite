@@ -390,6 +390,8 @@ export const ModelName = {
   ProjectArea: 'ProjectArea',
   Task: 'Task',
   BudgetItem: 'BudgetItem',
+  ServiceComposition: 'ServiceComposition',
+  ServiceCompositionMaterial: 'ServiceCompositionMaterial',
   TaskChecklistItem: 'TaskChecklistItem',
   Employee: 'Employee',
   Contractor: 'Contractor',
@@ -425,7 +427,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "client" | "project" | "projectArea" | "task" | "budgetItem" | "taskChecklistItem" | "employee" | "contractor" | "projectContractor" | "projectEmployeeAllocation" | "supplier" | "material" | "projectMaterialRequirement" | "purchaseRequest" | "purchaseRequestItem" | "stockMovement" | "wasteDisposal" | "dailyReport" | "dailyReportAttendance" | "file" | "financialEntry" | "serviceMeasurement" | "serviceMeasurementEmployee" | "approval" | "auditLog"
+    modelProps: "user" | "client" | "project" | "projectArea" | "task" | "budgetItem" | "serviceComposition" | "serviceCompositionMaterial" | "taskChecklistItem" | "employee" | "contractor" | "projectContractor" | "projectEmployeeAllocation" | "supplier" | "material" | "projectMaterialRequirement" | "purchaseRequest" | "purchaseRequestItem" | "stockMovement" | "wasteDisposal" | "dailyReport" | "dailyReportAttendance" | "file" | "financialEntry" | "serviceMeasurement" | "serviceMeasurementEmployee" | "approval" | "auditLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -870,6 +872,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.BudgetItemCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.BudgetItemCountAggregateOutputType> | number
+        }
+      }
+    }
+    ServiceComposition: {
+      payload: Prisma.$ServiceCompositionPayload<ExtArgs>
+      fields: Prisma.ServiceCompositionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ServiceCompositionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceCompositionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ServiceCompositionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceCompositionPayload>
+        }
+        findFirst: {
+          args: Prisma.ServiceCompositionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceCompositionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ServiceCompositionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceCompositionPayload>
+        }
+        findMany: {
+          args: Prisma.ServiceCompositionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceCompositionPayload>[]
+        }
+        create: {
+          args: Prisma.ServiceCompositionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceCompositionPayload>
+        }
+        createMany: {
+          args: Prisma.ServiceCompositionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ServiceCompositionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceCompositionPayload>[]
+        }
+        delete: {
+          args: Prisma.ServiceCompositionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceCompositionPayload>
+        }
+        update: {
+          args: Prisma.ServiceCompositionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceCompositionPayload>
+        }
+        deleteMany: {
+          args: Prisma.ServiceCompositionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ServiceCompositionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ServiceCompositionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceCompositionPayload>[]
+        }
+        upsert: {
+          args: Prisma.ServiceCompositionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceCompositionPayload>
+        }
+        aggregate: {
+          args: Prisma.ServiceCompositionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateServiceComposition>
+        }
+        groupBy: {
+          args: Prisma.ServiceCompositionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceCompositionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ServiceCompositionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceCompositionCountAggregateOutputType> | number
+        }
+      }
+    }
+    ServiceCompositionMaterial: {
+      payload: Prisma.$ServiceCompositionMaterialPayload<ExtArgs>
+      fields: Prisma.ServiceCompositionMaterialFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ServiceCompositionMaterialFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceCompositionMaterialPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ServiceCompositionMaterialFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceCompositionMaterialPayload>
+        }
+        findFirst: {
+          args: Prisma.ServiceCompositionMaterialFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceCompositionMaterialPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ServiceCompositionMaterialFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceCompositionMaterialPayload>
+        }
+        findMany: {
+          args: Prisma.ServiceCompositionMaterialFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceCompositionMaterialPayload>[]
+        }
+        create: {
+          args: Prisma.ServiceCompositionMaterialCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceCompositionMaterialPayload>
+        }
+        createMany: {
+          args: Prisma.ServiceCompositionMaterialCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ServiceCompositionMaterialCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceCompositionMaterialPayload>[]
+        }
+        delete: {
+          args: Prisma.ServiceCompositionMaterialDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceCompositionMaterialPayload>
+        }
+        update: {
+          args: Prisma.ServiceCompositionMaterialUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceCompositionMaterialPayload>
+        }
+        deleteMany: {
+          args: Prisma.ServiceCompositionMaterialDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ServiceCompositionMaterialUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ServiceCompositionMaterialUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceCompositionMaterialPayload>[]
+        }
+        upsert: {
+          args: Prisma.ServiceCompositionMaterialUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceCompositionMaterialPayload>
+        }
+        aggregate: {
+          args: Prisma.ServiceCompositionMaterialAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateServiceCompositionMaterial>
+        }
+        groupBy: {
+          args: Prisma.ServiceCompositionMaterialGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceCompositionMaterialGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ServiceCompositionMaterialCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceCompositionMaterialCountAggregateOutputType> | number
         }
       }
     }
@@ -2493,6 +2643,7 @@ export const BudgetItemScalarFieldEnum = {
   id: 'id',
   projectId: 'projectId',
   taskId: 'taskId',
+  compositionId: 'compositionId',
   code: 'code',
   phase: 'phase',
   description: 'description',
@@ -2513,6 +2664,36 @@ export const BudgetItemScalarFieldEnum = {
 } as const
 
 export type BudgetItemScalarFieldEnum = (typeof BudgetItemScalarFieldEnum)[keyof typeof BudgetItemScalarFieldEnum]
+
+
+export const ServiceCompositionScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  code: 'code',
+  name: 'name',
+  serviceType: 'serviceType',
+  unit: 'unit',
+  unitPrice: 'unitPrice',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ServiceCompositionScalarFieldEnum = (typeof ServiceCompositionScalarFieldEnum)[keyof typeof ServiceCompositionScalarFieldEnum]
+
+
+export const ServiceCompositionMaterialScalarFieldEnum = {
+  id: 'id',
+  compositionId: 'compositionId',
+  materialId: 'materialId',
+  quantityPerUnit: 'quantityPerUnit',
+  unit: 'unit',
+  wastePercent: 'wastePercent',
+  notes: 'notes',
+  createdAt: 'createdAt'
+} as const
+
+export type ServiceCompositionMaterialScalarFieldEnum = (typeof ServiceCompositionMaterialScalarFieldEnum)[keyof typeof ServiceCompositionMaterialScalarFieldEnum]
 
 
 export const TaskChecklistItemScalarFieldEnum = {
@@ -3322,6 +3503,8 @@ export type GlobalOmitConfig = {
   projectArea?: Prisma.ProjectAreaOmit
   task?: Prisma.TaskOmit
   budgetItem?: Prisma.BudgetItemOmit
+  serviceComposition?: Prisma.ServiceCompositionOmit
+  serviceCompositionMaterial?: Prisma.ServiceCompositionMaterialOmit
   taskChecklistItem?: Prisma.TaskChecklistItemOmit
   employee?: Prisma.EmployeeOmit
   contractor?: Prisma.ContractorOmit

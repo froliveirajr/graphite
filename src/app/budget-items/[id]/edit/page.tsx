@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { AppShell } from "@/components/layout/app-shell";
 import { PageHeader } from "@/components/ui/page-header";
 import { updateBudgetItemAction } from "@/lib/actions/budget-items";
-import { getBudgetItemDetails, getProjectTaskOptions } from "@/lib/repositories/graphite";
+import { getBudgetItemDetails, getProjectTaskOptions, getServiceCompositionOptions } from "@/lib/repositories/graphite";
 
 const statuses = ["Planejado", "Em andamento", "Concluido", "Cancelado"];
 
@@ -14,7 +14,7 @@ export default async function EditBudgetItemPage({
   params: Promise<{ id: string }>;
   searchParams: Promise<{ error?: string }>;
 }) {
-  const [{ id }, { error }, projects] = await Promise.all([params, searchParams, getProjectTaskOptions()]);
+  const [{ id }, { error }, projects, compositions] = await Promise.all([params, searchParams, getProjectTaskOptions(), getServiceCompositionOptions()]);
   const item = await getBudgetItemDetails(id);
 
   if (!item) {
@@ -37,6 +37,12 @@ export default async function EditBudgetItemPage({
             </label>
             <label className="text-sm font-medium text-zinc-800">Codigo
               <input name="code" defaultValue={item.code === "-" ? "" : item.code} className="mt-2 h-11 w-full rounded-md border border-zinc-200 px-3 text-sm" />
+            </label>
+            <label className="text-sm font-medium text-zinc-800">Composicao
+              <select name="compositionId" defaultValue={item.compositionId} className="mt-2 h-11 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm">
+                <option value="">Sem composicao</option>
+                {compositions.map((composition) => <option key={composition.id} value={composition.id}>{composition.label}</option>)}
+              </select>
             </label>
             <label className="text-sm font-medium text-zinc-800">Etapa
               <input name="phase" required defaultValue={item.phase} className="mt-2 h-11 w-full rounded-md border border-zinc-200 px-3 text-sm" />

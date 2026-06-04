@@ -278,6 +278,7 @@ export type MaterialWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Material"> | Date | string
   preferredSupplier?: Prisma.XOR<Prisma.SupplierNullableScalarRelationFilter, Prisma.SupplierWhereInput> | null
   projectRequirements?: Prisma.ProjectMaterialRequirementListRelationFilter
+  compositionMaterials?: Prisma.ServiceCompositionMaterialListRelationFilter
   purchaseItems?: Prisma.PurchaseRequestItemListRelationFilter
   stockMovements?: Prisma.StockMovementListRelationFilter
 }
@@ -297,6 +298,7 @@ export type MaterialOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   preferredSupplier?: Prisma.SupplierOrderByWithRelationInput
   projectRequirements?: Prisma.ProjectMaterialRequirementOrderByRelationAggregateInput
+  compositionMaterials?: Prisma.ServiceCompositionMaterialOrderByRelationAggregateInput
   purchaseItems?: Prisma.PurchaseRequestItemOrderByRelationAggregateInput
   stockMovements?: Prisma.StockMovementOrderByRelationAggregateInput
 }
@@ -319,6 +321,7 @@ export type MaterialWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Material"> | Date | string
   preferredSupplier?: Prisma.XOR<Prisma.SupplierNullableScalarRelationFilter, Prisma.SupplierWhereInput> | null
   projectRequirements?: Prisma.ProjectMaterialRequirementListRelationFilter
+  compositionMaterials?: Prisma.ServiceCompositionMaterialListRelationFilter
   purchaseItems?: Prisma.PurchaseRequestItemListRelationFilter
   stockMovements?: Prisma.StockMovementListRelationFilter
 }, "id" | "internalCode">
@@ -375,6 +378,7 @@ export type MaterialCreateInput = {
   updatedAt?: Date | string
   preferredSupplier?: Prisma.SupplierCreateNestedOneWithoutPreferredMaterialsInput
   projectRequirements?: Prisma.ProjectMaterialRequirementCreateNestedManyWithoutMaterialInput
+  compositionMaterials?: Prisma.ServiceCompositionMaterialCreateNestedManyWithoutMaterialInput
   purchaseItems?: Prisma.PurchaseRequestItemCreateNestedManyWithoutMaterialInput
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutMaterialInput
 }
@@ -393,6 +397,7 @@ export type MaterialUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   projectRequirements?: Prisma.ProjectMaterialRequirementUncheckedCreateNestedManyWithoutMaterialInput
+  compositionMaterials?: Prisma.ServiceCompositionMaterialUncheckedCreateNestedManyWithoutMaterialInput
   purchaseItems?: Prisma.PurchaseRequestItemUncheckedCreateNestedManyWithoutMaterialInput
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutMaterialInput
 }
@@ -411,6 +416,7 @@ export type MaterialUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   preferredSupplier?: Prisma.SupplierUpdateOneWithoutPreferredMaterialsNestedInput
   projectRequirements?: Prisma.ProjectMaterialRequirementUpdateManyWithoutMaterialNestedInput
+  compositionMaterials?: Prisma.ServiceCompositionMaterialUpdateManyWithoutMaterialNestedInput
   purchaseItems?: Prisma.PurchaseRequestItemUpdateManyWithoutMaterialNestedInput
   stockMovements?: Prisma.StockMovementUpdateManyWithoutMaterialNestedInput
 }
@@ -429,6 +435,7 @@ export type MaterialUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   projectRequirements?: Prisma.ProjectMaterialRequirementUncheckedUpdateManyWithoutMaterialNestedInput
+  compositionMaterials?: Prisma.ServiceCompositionMaterialUncheckedUpdateManyWithoutMaterialNestedInput
   purchaseItems?: Prisma.PurchaseRequestItemUncheckedUpdateManyWithoutMaterialNestedInput
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutMaterialNestedInput
 }
@@ -475,6 +482,11 @@ export type MaterialUncheckedUpdateManyInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type MaterialScalarRelationFilter = {
+  is?: Prisma.MaterialWhereInput
+  isNot?: Prisma.MaterialWhereInput
 }
 
 export type MaterialListRelationFilter = {
@@ -542,14 +554,23 @@ export type MaterialSumOrderByAggregateInput = {
   minimumStock?: Prisma.SortOrder
 }
 
-export type MaterialScalarRelationFilter = {
-  is?: Prisma.MaterialWhereInput
-  isNot?: Prisma.MaterialWhereInput
-}
-
 export type MaterialNullableScalarRelationFilter = {
   is?: Prisma.MaterialWhereInput | null
   isNot?: Prisma.MaterialWhereInput | null
+}
+
+export type MaterialCreateNestedOneWithoutCompositionMaterialsInput = {
+  create?: Prisma.XOR<Prisma.MaterialCreateWithoutCompositionMaterialsInput, Prisma.MaterialUncheckedCreateWithoutCompositionMaterialsInput>
+  connectOrCreate?: Prisma.MaterialCreateOrConnectWithoutCompositionMaterialsInput
+  connect?: Prisma.MaterialWhereUniqueInput
+}
+
+export type MaterialUpdateOneRequiredWithoutCompositionMaterialsNestedInput = {
+  create?: Prisma.XOR<Prisma.MaterialCreateWithoutCompositionMaterialsInput, Prisma.MaterialUncheckedCreateWithoutCompositionMaterialsInput>
+  connectOrCreate?: Prisma.MaterialCreateOrConnectWithoutCompositionMaterialsInput
+  upsert?: Prisma.MaterialUpsertWithoutCompositionMaterialsInput
+  connect?: Prisma.MaterialWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.MaterialUpdateToOneWithWhereWithoutCompositionMaterialsInput, Prisma.MaterialUpdateWithoutCompositionMaterialsInput>, Prisma.MaterialUncheckedUpdateWithoutCompositionMaterialsInput>
 }
 
 export type MaterialCreateNestedManyWithoutPreferredSupplierInput = {
@@ -638,6 +659,94 @@ export type MaterialUpdateOneRequiredWithoutStockMovementsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.MaterialUpdateToOneWithWhereWithoutStockMovementsInput, Prisma.MaterialUpdateWithoutStockMovementsInput>, Prisma.MaterialUncheckedUpdateWithoutStockMovementsInput>
 }
 
+export type MaterialCreateWithoutCompositionMaterialsInput = {
+  id?: string
+  name: string
+  category: string
+  unit: string
+  brand?: string | null
+  internalCode?: string | null
+  averagePrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  minimumStock?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  preferredSupplier?: Prisma.SupplierCreateNestedOneWithoutPreferredMaterialsInput
+  projectRequirements?: Prisma.ProjectMaterialRequirementCreateNestedManyWithoutMaterialInput
+  purchaseItems?: Prisma.PurchaseRequestItemCreateNestedManyWithoutMaterialInput
+  stockMovements?: Prisma.StockMovementCreateNestedManyWithoutMaterialInput
+}
+
+export type MaterialUncheckedCreateWithoutCompositionMaterialsInput = {
+  id?: string
+  name: string
+  category: string
+  unit: string
+  brand?: string | null
+  internalCode?: string | null
+  preferredSupplierId?: string | null
+  averagePrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  minimumStock?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  projectRequirements?: Prisma.ProjectMaterialRequirementUncheckedCreateNestedManyWithoutMaterialInput
+  purchaseItems?: Prisma.PurchaseRequestItemUncheckedCreateNestedManyWithoutMaterialInput
+  stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutMaterialInput
+}
+
+export type MaterialCreateOrConnectWithoutCompositionMaterialsInput = {
+  where: Prisma.MaterialWhereUniqueInput
+  create: Prisma.XOR<Prisma.MaterialCreateWithoutCompositionMaterialsInput, Prisma.MaterialUncheckedCreateWithoutCompositionMaterialsInput>
+}
+
+export type MaterialUpsertWithoutCompositionMaterialsInput = {
+  update: Prisma.XOR<Prisma.MaterialUpdateWithoutCompositionMaterialsInput, Prisma.MaterialUncheckedUpdateWithoutCompositionMaterialsInput>
+  create: Prisma.XOR<Prisma.MaterialCreateWithoutCompositionMaterialsInput, Prisma.MaterialUncheckedCreateWithoutCompositionMaterialsInput>
+  where?: Prisma.MaterialWhereInput
+}
+
+export type MaterialUpdateToOneWithWhereWithoutCompositionMaterialsInput = {
+  where?: Prisma.MaterialWhereInput
+  data: Prisma.XOR<Prisma.MaterialUpdateWithoutCompositionMaterialsInput, Prisma.MaterialUncheckedUpdateWithoutCompositionMaterialsInput>
+}
+
+export type MaterialUpdateWithoutCompositionMaterialsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
+  brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  averagePrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  minimumStock?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  preferredSupplier?: Prisma.SupplierUpdateOneWithoutPreferredMaterialsNestedInput
+  projectRequirements?: Prisma.ProjectMaterialRequirementUpdateManyWithoutMaterialNestedInput
+  purchaseItems?: Prisma.PurchaseRequestItemUpdateManyWithoutMaterialNestedInput
+  stockMovements?: Prisma.StockMovementUpdateManyWithoutMaterialNestedInput
+}
+
+export type MaterialUncheckedUpdateWithoutCompositionMaterialsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
+  brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  internalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredSupplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  averagePrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  minimumStock?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  projectRequirements?: Prisma.ProjectMaterialRequirementUncheckedUpdateManyWithoutMaterialNestedInput
+  purchaseItems?: Prisma.PurchaseRequestItemUncheckedUpdateManyWithoutMaterialNestedInput
+  stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutMaterialNestedInput
+}
+
 export type MaterialCreateWithoutPreferredSupplierInput = {
   id?: string
   name: string
@@ -651,6 +760,7 @@ export type MaterialCreateWithoutPreferredSupplierInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   projectRequirements?: Prisma.ProjectMaterialRequirementCreateNestedManyWithoutMaterialInput
+  compositionMaterials?: Prisma.ServiceCompositionMaterialCreateNestedManyWithoutMaterialInput
   purchaseItems?: Prisma.PurchaseRequestItemCreateNestedManyWithoutMaterialInput
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutMaterialInput
 }
@@ -668,6 +778,7 @@ export type MaterialUncheckedCreateWithoutPreferredSupplierInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   projectRequirements?: Prisma.ProjectMaterialRequirementUncheckedCreateNestedManyWithoutMaterialInput
+  compositionMaterials?: Prisma.ServiceCompositionMaterialUncheckedCreateNestedManyWithoutMaterialInput
   purchaseItems?: Prisma.PurchaseRequestItemUncheckedCreateNestedManyWithoutMaterialInput
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutMaterialInput
 }
@@ -729,6 +840,7 @@ export type MaterialCreateWithoutProjectRequirementsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   preferredSupplier?: Prisma.SupplierCreateNestedOneWithoutPreferredMaterialsInput
+  compositionMaterials?: Prisma.ServiceCompositionMaterialCreateNestedManyWithoutMaterialInput
   purchaseItems?: Prisma.PurchaseRequestItemCreateNestedManyWithoutMaterialInput
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutMaterialInput
 }
@@ -746,6 +858,7 @@ export type MaterialUncheckedCreateWithoutProjectRequirementsInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  compositionMaterials?: Prisma.ServiceCompositionMaterialUncheckedCreateNestedManyWithoutMaterialInput
   purchaseItems?: Prisma.PurchaseRequestItemUncheckedCreateNestedManyWithoutMaterialInput
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutMaterialInput
 }
@@ -779,6 +892,7 @@ export type MaterialUpdateWithoutProjectRequirementsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   preferredSupplier?: Prisma.SupplierUpdateOneWithoutPreferredMaterialsNestedInput
+  compositionMaterials?: Prisma.ServiceCompositionMaterialUpdateManyWithoutMaterialNestedInput
   purchaseItems?: Prisma.PurchaseRequestItemUpdateManyWithoutMaterialNestedInput
   stockMovements?: Prisma.StockMovementUpdateManyWithoutMaterialNestedInput
 }
@@ -796,6 +910,7 @@ export type MaterialUncheckedUpdateWithoutProjectRequirementsInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  compositionMaterials?: Prisma.ServiceCompositionMaterialUncheckedUpdateManyWithoutMaterialNestedInput
   purchaseItems?: Prisma.PurchaseRequestItemUncheckedUpdateManyWithoutMaterialNestedInput
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutMaterialNestedInput
 }
@@ -814,6 +929,7 @@ export type MaterialCreateWithoutPurchaseItemsInput = {
   updatedAt?: Date | string
   preferredSupplier?: Prisma.SupplierCreateNestedOneWithoutPreferredMaterialsInput
   projectRequirements?: Prisma.ProjectMaterialRequirementCreateNestedManyWithoutMaterialInput
+  compositionMaterials?: Prisma.ServiceCompositionMaterialCreateNestedManyWithoutMaterialInput
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutMaterialInput
 }
 
@@ -831,6 +947,7 @@ export type MaterialUncheckedCreateWithoutPurchaseItemsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   projectRequirements?: Prisma.ProjectMaterialRequirementUncheckedCreateNestedManyWithoutMaterialInput
+  compositionMaterials?: Prisma.ServiceCompositionMaterialUncheckedCreateNestedManyWithoutMaterialInput
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutMaterialInput
 }
 
@@ -864,6 +981,7 @@ export type MaterialUpdateWithoutPurchaseItemsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   preferredSupplier?: Prisma.SupplierUpdateOneWithoutPreferredMaterialsNestedInput
   projectRequirements?: Prisma.ProjectMaterialRequirementUpdateManyWithoutMaterialNestedInput
+  compositionMaterials?: Prisma.ServiceCompositionMaterialUpdateManyWithoutMaterialNestedInput
   stockMovements?: Prisma.StockMovementUpdateManyWithoutMaterialNestedInput
 }
 
@@ -881,6 +999,7 @@ export type MaterialUncheckedUpdateWithoutPurchaseItemsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   projectRequirements?: Prisma.ProjectMaterialRequirementUncheckedUpdateManyWithoutMaterialNestedInput
+  compositionMaterials?: Prisma.ServiceCompositionMaterialUncheckedUpdateManyWithoutMaterialNestedInput
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutMaterialNestedInput
 }
 
@@ -898,6 +1017,7 @@ export type MaterialCreateWithoutStockMovementsInput = {
   updatedAt?: Date | string
   preferredSupplier?: Prisma.SupplierCreateNestedOneWithoutPreferredMaterialsInput
   projectRequirements?: Prisma.ProjectMaterialRequirementCreateNestedManyWithoutMaterialInput
+  compositionMaterials?: Prisma.ServiceCompositionMaterialCreateNestedManyWithoutMaterialInput
   purchaseItems?: Prisma.PurchaseRequestItemCreateNestedManyWithoutMaterialInput
 }
 
@@ -915,6 +1035,7 @@ export type MaterialUncheckedCreateWithoutStockMovementsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   projectRequirements?: Prisma.ProjectMaterialRequirementUncheckedCreateNestedManyWithoutMaterialInput
+  compositionMaterials?: Prisma.ServiceCompositionMaterialUncheckedCreateNestedManyWithoutMaterialInput
   purchaseItems?: Prisma.PurchaseRequestItemUncheckedCreateNestedManyWithoutMaterialInput
 }
 
@@ -948,6 +1069,7 @@ export type MaterialUpdateWithoutStockMovementsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   preferredSupplier?: Prisma.SupplierUpdateOneWithoutPreferredMaterialsNestedInput
   projectRequirements?: Prisma.ProjectMaterialRequirementUpdateManyWithoutMaterialNestedInput
+  compositionMaterials?: Prisma.ServiceCompositionMaterialUpdateManyWithoutMaterialNestedInput
   purchaseItems?: Prisma.PurchaseRequestItemUpdateManyWithoutMaterialNestedInput
 }
 
@@ -965,6 +1087,7 @@ export type MaterialUncheckedUpdateWithoutStockMovementsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   projectRequirements?: Prisma.ProjectMaterialRequirementUncheckedUpdateManyWithoutMaterialNestedInput
+  compositionMaterials?: Prisma.ServiceCompositionMaterialUncheckedUpdateManyWithoutMaterialNestedInput
   purchaseItems?: Prisma.PurchaseRequestItemUncheckedUpdateManyWithoutMaterialNestedInput
 }
 
@@ -995,6 +1118,7 @@ export type MaterialUpdateWithoutPreferredSupplierInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   projectRequirements?: Prisma.ProjectMaterialRequirementUpdateManyWithoutMaterialNestedInput
+  compositionMaterials?: Prisma.ServiceCompositionMaterialUpdateManyWithoutMaterialNestedInput
   purchaseItems?: Prisma.PurchaseRequestItemUpdateManyWithoutMaterialNestedInput
   stockMovements?: Prisma.StockMovementUpdateManyWithoutMaterialNestedInput
 }
@@ -1012,6 +1136,7 @@ export type MaterialUncheckedUpdateWithoutPreferredSupplierInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   projectRequirements?: Prisma.ProjectMaterialRequirementUncheckedUpdateManyWithoutMaterialNestedInput
+  compositionMaterials?: Prisma.ServiceCompositionMaterialUncheckedUpdateManyWithoutMaterialNestedInput
   purchaseItems?: Prisma.PurchaseRequestItemUncheckedUpdateManyWithoutMaterialNestedInput
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutMaterialNestedInput
 }
@@ -1037,12 +1162,14 @@ export type MaterialUncheckedUpdateManyWithoutPreferredSupplierInput = {
 
 export type MaterialCountOutputType = {
   projectRequirements: number
+  compositionMaterials: number
   purchaseItems: number
   stockMovements: number
 }
 
 export type MaterialCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   projectRequirements?: boolean | MaterialCountOutputTypeCountProjectRequirementsArgs
+  compositionMaterials?: boolean | MaterialCountOutputTypeCountCompositionMaterialsArgs
   purchaseItems?: boolean | MaterialCountOutputTypeCountPurchaseItemsArgs
   stockMovements?: boolean | MaterialCountOutputTypeCountStockMovementsArgs
 }
@@ -1062,6 +1189,13 @@ export type MaterialCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Ext
  */
 export type MaterialCountOutputTypeCountProjectRequirementsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.ProjectMaterialRequirementWhereInput
+}
+
+/**
+ * MaterialCountOutputType without action
+ */
+export type MaterialCountOutputTypeCountCompositionMaterialsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ServiceCompositionMaterialWhereInput
 }
 
 /**
@@ -1094,6 +1228,7 @@ export type MaterialSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   updatedAt?: boolean
   preferredSupplier?: boolean | Prisma.Material$preferredSupplierArgs<ExtArgs>
   projectRequirements?: boolean | Prisma.Material$projectRequirementsArgs<ExtArgs>
+  compositionMaterials?: boolean | Prisma.Material$compositionMaterialsArgs<ExtArgs>
   purchaseItems?: boolean | Prisma.Material$purchaseItemsArgs<ExtArgs>
   stockMovements?: boolean | Prisma.Material$stockMovementsArgs<ExtArgs>
   _count?: boolean | Prisma.MaterialCountOutputTypeDefaultArgs<ExtArgs>
@@ -1150,6 +1285,7 @@ export type MaterialOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 export type MaterialInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   preferredSupplier?: boolean | Prisma.Material$preferredSupplierArgs<ExtArgs>
   projectRequirements?: boolean | Prisma.Material$projectRequirementsArgs<ExtArgs>
+  compositionMaterials?: boolean | Prisma.Material$compositionMaterialsArgs<ExtArgs>
   purchaseItems?: boolean | Prisma.Material$purchaseItemsArgs<ExtArgs>
   stockMovements?: boolean | Prisma.Material$stockMovementsArgs<ExtArgs>
   _count?: boolean | Prisma.MaterialCountOutputTypeDefaultArgs<ExtArgs>
@@ -1166,6 +1302,7 @@ export type $MaterialPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   objects: {
     preferredSupplier: Prisma.$SupplierPayload<ExtArgs> | null
     projectRequirements: Prisma.$ProjectMaterialRequirementPayload<ExtArgs>[]
+    compositionMaterials: Prisma.$ServiceCompositionMaterialPayload<ExtArgs>[]
     purchaseItems: Prisma.$PurchaseRequestItemPayload<ExtArgs>[]
     stockMovements: Prisma.$StockMovementPayload<ExtArgs>[]
   }
@@ -1578,6 +1715,7 @@ export interface Prisma__MaterialClient<T, Null = never, ExtArgs extends runtime
   readonly [Symbol.toStringTag]: "PrismaPromise"
   preferredSupplier<T extends Prisma.Material$preferredSupplierArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Material$preferredSupplierArgs<ExtArgs>>): Prisma.Prisma__SupplierClient<runtime.Types.Result.GetResult<Prisma.$SupplierPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   projectRequirements<T extends Prisma.Material$projectRequirementsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Material$projectRequirementsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectMaterialRequirementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  compositionMaterials<T extends Prisma.Material$compositionMaterialsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Material$compositionMaterialsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceCompositionMaterialPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   purchaseItems<T extends Prisma.Material$purchaseItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Material$purchaseItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchaseRequestItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   stockMovements<T extends Prisma.Material$stockMovementsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Material$stockMovementsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StockMovementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -2062,6 +2200,30 @@ export type Material$projectRequirementsArgs<ExtArgs extends runtime.Types.Exten
   take?: number
   skip?: number
   distinct?: Prisma.ProjectMaterialRequirementScalarFieldEnum | Prisma.ProjectMaterialRequirementScalarFieldEnum[]
+}
+
+/**
+ * Material.compositionMaterials
+ */
+export type Material$compositionMaterialsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ServiceCompositionMaterial
+   */
+  select?: Prisma.ServiceCompositionMaterialSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ServiceCompositionMaterial
+   */
+  omit?: Prisma.ServiceCompositionMaterialOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ServiceCompositionMaterialInclude<ExtArgs> | null
+  where?: Prisma.ServiceCompositionMaterialWhereInput
+  orderBy?: Prisma.ServiceCompositionMaterialOrderByWithRelationInput | Prisma.ServiceCompositionMaterialOrderByWithRelationInput[]
+  cursor?: Prisma.ServiceCompositionMaterialWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ServiceCompositionMaterialScalarFieldEnum | Prisma.ServiceCompositionMaterialScalarFieldEnum[]
 }
 
 /**

@@ -57,6 +57,8 @@ export const ModelName = {
   ProjectArea: 'ProjectArea',
   Task: 'Task',
   BudgetItem: 'BudgetItem',
+  ServiceComposition: 'ServiceComposition',
+  ServiceCompositionMaterial: 'ServiceCompositionMaterial',
   TaskChecklistItem: 'TaskChecklistItem',
   Employee: 'Employee',
   Contractor: 'Contractor',
@@ -196,6 +198,7 @@ export const BudgetItemScalarFieldEnum = {
   id: 'id',
   projectId: 'projectId',
   taskId: 'taskId',
+  compositionId: 'compositionId',
   code: 'code',
   phase: 'phase',
   description: 'description',
@@ -216,6 +219,36 @@ export const BudgetItemScalarFieldEnum = {
 } as const
 
 export type BudgetItemScalarFieldEnum = (typeof BudgetItemScalarFieldEnum)[keyof typeof BudgetItemScalarFieldEnum]
+
+
+export const ServiceCompositionScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  code: 'code',
+  name: 'name',
+  serviceType: 'serviceType',
+  unit: 'unit',
+  unitPrice: 'unitPrice',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ServiceCompositionScalarFieldEnum = (typeof ServiceCompositionScalarFieldEnum)[keyof typeof ServiceCompositionScalarFieldEnum]
+
+
+export const ServiceCompositionMaterialScalarFieldEnum = {
+  id: 'id',
+  compositionId: 'compositionId',
+  materialId: 'materialId',
+  quantityPerUnit: 'quantityPerUnit',
+  unit: 'unit',
+  wastePercent: 'wastePercent',
+  notes: 'notes',
+  createdAt: 'createdAt'
+} as const
+
+export type ServiceCompositionMaterialScalarFieldEnum = (typeof ServiceCompositionMaterialScalarFieldEnum)[keyof typeof ServiceCompositionMaterialScalarFieldEnum]
 
 
 export const TaskChecklistItemScalarFieldEnum = {

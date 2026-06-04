@@ -46,6 +46,7 @@ export type BudgetItemMinAggregateOutputType = {
   id: string | null
   projectId: string | null
   taskId: string | null
+  compositionId: string | null
   code: string | null
   phase: string | null
   description: string | null
@@ -69,6 +70,7 @@ export type BudgetItemMaxAggregateOutputType = {
   id: string | null
   projectId: string | null
   taskId: string | null
+  compositionId: string | null
   code: string | null
   phase: string | null
   description: string | null
@@ -92,6 +94,7 @@ export type BudgetItemCountAggregateOutputType = {
   id: number
   projectId: number
   taskId: number
+  compositionId: number
   code: number
   phase: number
   description: number
@@ -133,6 +136,7 @@ export type BudgetItemMinAggregateInputType = {
   id?: true
   projectId?: true
   taskId?: true
+  compositionId?: true
   code?: true
   phase?: true
   description?: true
@@ -156,6 +160,7 @@ export type BudgetItemMaxAggregateInputType = {
   id?: true
   projectId?: true
   taskId?: true
+  compositionId?: true
   code?: true
   phase?: true
   description?: true
@@ -179,6 +184,7 @@ export type BudgetItemCountAggregateInputType = {
   id?: true
   projectId?: true
   taskId?: true
+  compositionId?: true
   code?: true
   phase?: true
   description?: true
@@ -289,6 +295,7 @@ export type BudgetItemGroupByOutputType = {
   id: string
   projectId: string
   taskId: string | null
+  compositionId: string | null
   code: string | null
   phase: string
   description: string
@@ -335,6 +342,7 @@ export type BudgetItemWhereInput = {
   id?: Prisma.StringFilter<"BudgetItem"> | string
   projectId?: Prisma.StringFilter<"BudgetItem"> | string
   taskId?: Prisma.StringNullableFilter<"BudgetItem"> | string | null
+  compositionId?: Prisma.StringNullableFilter<"BudgetItem"> | string | null
   code?: Prisma.StringNullableFilter<"BudgetItem"> | string | null
   phase?: Prisma.StringFilter<"BudgetItem"> | string
   description?: Prisma.StringFilter<"BudgetItem"> | string
@@ -354,6 +362,7 @@ export type BudgetItemWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"BudgetItem"> | Date | string
   project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
   task?: Prisma.XOR<Prisma.TaskNullableScalarRelationFilter, Prisma.TaskWhereInput> | null
+  composition?: Prisma.XOR<Prisma.ServiceCompositionNullableScalarRelationFilter, Prisma.ServiceCompositionWhereInput> | null
   measurements?: Prisma.ServiceMeasurementListRelationFilter
 }
 
@@ -361,6 +370,7 @@ export type BudgetItemOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   projectId?: Prisma.SortOrder
   taskId?: Prisma.SortOrderInput | Prisma.SortOrder
+  compositionId?: Prisma.SortOrderInput | Prisma.SortOrder
   code?: Prisma.SortOrderInput | Prisma.SortOrder
   phase?: Prisma.SortOrder
   description?: Prisma.SortOrder
@@ -380,6 +390,7 @@ export type BudgetItemOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   project?: Prisma.ProjectOrderByWithRelationInput
   task?: Prisma.TaskOrderByWithRelationInput
+  composition?: Prisma.ServiceCompositionOrderByWithRelationInput
   measurements?: Prisma.ServiceMeasurementOrderByRelationAggregateInput
 }
 
@@ -390,6 +401,7 @@ export type BudgetItemWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.BudgetItemWhereInput | Prisma.BudgetItemWhereInput[]
   projectId?: Prisma.StringFilter<"BudgetItem"> | string
   taskId?: Prisma.StringNullableFilter<"BudgetItem"> | string | null
+  compositionId?: Prisma.StringNullableFilter<"BudgetItem"> | string | null
   code?: Prisma.StringNullableFilter<"BudgetItem"> | string | null
   phase?: Prisma.StringFilter<"BudgetItem"> | string
   description?: Prisma.StringFilter<"BudgetItem"> | string
@@ -409,6 +421,7 @@ export type BudgetItemWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"BudgetItem"> | Date | string
   project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
   task?: Prisma.XOR<Prisma.TaskNullableScalarRelationFilter, Prisma.TaskWhereInput> | null
+  composition?: Prisma.XOR<Prisma.ServiceCompositionNullableScalarRelationFilter, Prisma.ServiceCompositionWhereInput> | null
   measurements?: Prisma.ServiceMeasurementListRelationFilter
 }, "id">
 
@@ -416,6 +429,7 @@ export type BudgetItemOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   projectId?: Prisma.SortOrder
   taskId?: Prisma.SortOrderInput | Prisma.SortOrder
+  compositionId?: Prisma.SortOrderInput | Prisma.SortOrder
   code?: Prisma.SortOrderInput | Prisma.SortOrder
   phase?: Prisma.SortOrder
   description?: Prisma.SortOrder
@@ -447,6 +461,7 @@ export type BudgetItemScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"BudgetItem"> | string
   projectId?: Prisma.StringWithAggregatesFilter<"BudgetItem"> | string
   taskId?: Prisma.StringNullableWithAggregatesFilter<"BudgetItem"> | string | null
+  compositionId?: Prisma.StringNullableWithAggregatesFilter<"BudgetItem"> | string | null
   code?: Prisma.StringNullableWithAggregatesFilter<"BudgetItem"> | string | null
   phase?: Prisma.StringWithAggregatesFilter<"BudgetItem"> | string
   description?: Prisma.StringWithAggregatesFilter<"BudgetItem"> | string
@@ -487,6 +502,7 @@ export type BudgetItemCreateInput = {
   updatedAt?: Date | string
   project: Prisma.ProjectCreateNestedOneWithoutBudgetItemsInput
   task?: Prisma.TaskCreateNestedOneWithoutBudgetItemsInput
+  composition?: Prisma.ServiceCompositionCreateNestedOneWithoutBudgetItemsInput
   measurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutBudgetItemInput
 }
 
@@ -494,6 +510,7 @@ export type BudgetItemUncheckedCreateInput = {
   id?: string
   projectId: string
   taskId?: string | null
+  compositionId?: string | null
   code?: string | null
   phase: string
   description: string
@@ -535,6 +552,7 @@ export type BudgetItemUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   project?: Prisma.ProjectUpdateOneRequiredWithoutBudgetItemsNestedInput
   task?: Prisma.TaskUpdateOneWithoutBudgetItemsNestedInput
+  composition?: Prisma.ServiceCompositionUpdateOneWithoutBudgetItemsNestedInput
   measurements?: Prisma.ServiceMeasurementUpdateManyWithoutBudgetItemNestedInput
 }
 
@@ -542,6 +560,7 @@ export type BudgetItemUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   projectId?: Prisma.StringFieldUpdateOperationsInput | string
   taskId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  compositionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phase?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
@@ -566,6 +585,7 @@ export type BudgetItemCreateManyInput = {
   id?: string
   projectId: string
   taskId?: string | null
+  compositionId?: string | null
   code?: string | null
   phase: string
   description: string
@@ -610,6 +630,7 @@ export type BudgetItemUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   projectId?: Prisma.StringFieldUpdateOperationsInput | string
   taskId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  compositionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phase?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
@@ -643,6 +664,7 @@ export type BudgetItemCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   projectId?: Prisma.SortOrder
   taskId?: Prisma.SortOrder
+  compositionId?: Prisma.SortOrder
   code?: Prisma.SortOrder
   phase?: Prisma.SortOrder
   description?: Prisma.SortOrder
@@ -674,6 +696,7 @@ export type BudgetItemMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   projectId?: Prisma.SortOrder
   taskId?: Prisma.SortOrder
+  compositionId?: Prisma.SortOrder
   code?: Prisma.SortOrder
   phase?: Prisma.SortOrder
   description?: Prisma.SortOrder
@@ -697,6 +720,7 @@ export type BudgetItemMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   projectId?: Prisma.SortOrder
   taskId?: Prisma.SortOrder
+  compositionId?: Prisma.SortOrder
   code?: Prisma.SortOrder
   phase?: Prisma.SortOrder
   description?: Prisma.SortOrder
@@ -817,6 +841,48 @@ export type EnumBudgetItemStatusFieldUpdateOperationsInput = {
   set?: $Enums.BudgetItemStatus
 }
 
+export type BudgetItemCreateNestedManyWithoutCompositionInput = {
+  create?: Prisma.XOR<Prisma.BudgetItemCreateWithoutCompositionInput, Prisma.BudgetItemUncheckedCreateWithoutCompositionInput> | Prisma.BudgetItemCreateWithoutCompositionInput[] | Prisma.BudgetItemUncheckedCreateWithoutCompositionInput[]
+  connectOrCreate?: Prisma.BudgetItemCreateOrConnectWithoutCompositionInput | Prisma.BudgetItemCreateOrConnectWithoutCompositionInput[]
+  createMany?: Prisma.BudgetItemCreateManyCompositionInputEnvelope
+  connect?: Prisma.BudgetItemWhereUniqueInput | Prisma.BudgetItemWhereUniqueInput[]
+}
+
+export type BudgetItemUncheckedCreateNestedManyWithoutCompositionInput = {
+  create?: Prisma.XOR<Prisma.BudgetItemCreateWithoutCompositionInput, Prisma.BudgetItemUncheckedCreateWithoutCompositionInput> | Prisma.BudgetItemCreateWithoutCompositionInput[] | Prisma.BudgetItemUncheckedCreateWithoutCompositionInput[]
+  connectOrCreate?: Prisma.BudgetItemCreateOrConnectWithoutCompositionInput | Prisma.BudgetItemCreateOrConnectWithoutCompositionInput[]
+  createMany?: Prisma.BudgetItemCreateManyCompositionInputEnvelope
+  connect?: Prisma.BudgetItemWhereUniqueInput | Prisma.BudgetItemWhereUniqueInput[]
+}
+
+export type BudgetItemUpdateManyWithoutCompositionNestedInput = {
+  create?: Prisma.XOR<Prisma.BudgetItemCreateWithoutCompositionInput, Prisma.BudgetItemUncheckedCreateWithoutCompositionInput> | Prisma.BudgetItemCreateWithoutCompositionInput[] | Prisma.BudgetItemUncheckedCreateWithoutCompositionInput[]
+  connectOrCreate?: Prisma.BudgetItemCreateOrConnectWithoutCompositionInput | Prisma.BudgetItemCreateOrConnectWithoutCompositionInput[]
+  upsert?: Prisma.BudgetItemUpsertWithWhereUniqueWithoutCompositionInput | Prisma.BudgetItemUpsertWithWhereUniqueWithoutCompositionInput[]
+  createMany?: Prisma.BudgetItemCreateManyCompositionInputEnvelope
+  set?: Prisma.BudgetItemWhereUniqueInput | Prisma.BudgetItemWhereUniqueInput[]
+  disconnect?: Prisma.BudgetItemWhereUniqueInput | Prisma.BudgetItemWhereUniqueInput[]
+  delete?: Prisma.BudgetItemWhereUniqueInput | Prisma.BudgetItemWhereUniqueInput[]
+  connect?: Prisma.BudgetItemWhereUniqueInput | Prisma.BudgetItemWhereUniqueInput[]
+  update?: Prisma.BudgetItemUpdateWithWhereUniqueWithoutCompositionInput | Prisma.BudgetItemUpdateWithWhereUniqueWithoutCompositionInput[]
+  updateMany?: Prisma.BudgetItemUpdateManyWithWhereWithoutCompositionInput | Prisma.BudgetItemUpdateManyWithWhereWithoutCompositionInput[]
+  deleteMany?: Prisma.BudgetItemScalarWhereInput | Prisma.BudgetItemScalarWhereInput[]
+}
+
+export type BudgetItemUncheckedUpdateManyWithoutCompositionNestedInput = {
+  create?: Prisma.XOR<Prisma.BudgetItemCreateWithoutCompositionInput, Prisma.BudgetItemUncheckedCreateWithoutCompositionInput> | Prisma.BudgetItemCreateWithoutCompositionInput[] | Prisma.BudgetItemUncheckedCreateWithoutCompositionInput[]
+  connectOrCreate?: Prisma.BudgetItemCreateOrConnectWithoutCompositionInput | Prisma.BudgetItemCreateOrConnectWithoutCompositionInput[]
+  upsert?: Prisma.BudgetItemUpsertWithWhereUniqueWithoutCompositionInput | Prisma.BudgetItemUpsertWithWhereUniqueWithoutCompositionInput[]
+  createMany?: Prisma.BudgetItemCreateManyCompositionInputEnvelope
+  set?: Prisma.BudgetItemWhereUniqueInput | Prisma.BudgetItemWhereUniqueInput[]
+  disconnect?: Prisma.BudgetItemWhereUniqueInput | Prisma.BudgetItemWhereUniqueInput[]
+  delete?: Prisma.BudgetItemWhereUniqueInput | Prisma.BudgetItemWhereUniqueInput[]
+  connect?: Prisma.BudgetItemWhereUniqueInput | Prisma.BudgetItemWhereUniqueInput[]
+  update?: Prisma.BudgetItemUpdateWithWhereUniqueWithoutCompositionInput | Prisma.BudgetItemUpdateWithWhereUniqueWithoutCompositionInput[]
+  updateMany?: Prisma.BudgetItemUpdateManyWithWhereWithoutCompositionInput | Prisma.BudgetItemUpdateManyWithWhereWithoutCompositionInput[]
+  deleteMany?: Prisma.BudgetItemScalarWhereInput | Prisma.BudgetItemScalarWhereInput[]
+}
+
 export type BudgetItemCreateNestedOneWithoutMeasurementsInput = {
   create?: Prisma.XOR<Prisma.BudgetItemCreateWithoutMeasurementsInput, Prisma.BudgetItemUncheckedCreateWithoutMeasurementsInput>
   connectOrCreate?: Prisma.BudgetItemCreateOrConnectWithoutMeasurementsInput
@@ -851,12 +917,14 @@ export type BudgetItemCreateWithoutProjectInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   task?: Prisma.TaskCreateNestedOneWithoutBudgetItemsInput
+  composition?: Prisma.ServiceCompositionCreateNestedOneWithoutBudgetItemsInput
   measurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutBudgetItemInput
 }
 
 export type BudgetItemUncheckedCreateWithoutProjectInput = {
   id?: string
   taskId?: string | null
+  compositionId?: string | null
   code?: string | null
   phase: string
   description: string
@@ -910,6 +978,7 @@ export type BudgetItemScalarWhereInput = {
   id?: Prisma.StringFilter<"BudgetItem"> | string
   projectId?: Prisma.StringFilter<"BudgetItem"> | string
   taskId?: Prisma.StringNullableFilter<"BudgetItem"> | string | null
+  compositionId?: Prisma.StringNullableFilter<"BudgetItem"> | string | null
   code?: Prisma.StringNullableFilter<"BudgetItem"> | string | null
   phase?: Prisma.StringFilter<"BudgetItem"> | string
   description?: Prisma.StringFilter<"BudgetItem"> | string
@@ -949,12 +1018,14 @@ export type BudgetItemCreateWithoutTaskInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   project: Prisma.ProjectCreateNestedOneWithoutBudgetItemsInput
+  composition?: Prisma.ServiceCompositionCreateNestedOneWithoutBudgetItemsInput
   measurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutBudgetItemInput
 }
 
 export type BudgetItemUncheckedCreateWithoutTaskInput = {
   id?: string
   projectId: string
+  compositionId?: string | null
   code?: string | null
   phase: string
   description: string
@@ -1001,6 +1072,80 @@ export type BudgetItemUpdateManyWithWhereWithoutTaskInput = {
   data: Prisma.XOR<Prisma.BudgetItemUpdateManyMutationInput, Prisma.BudgetItemUncheckedUpdateManyWithoutTaskInput>
 }
 
+export type BudgetItemCreateWithoutCompositionInput = {
+  id?: string
+  code?: string | null
+  phase: string
+  description: string
+  unit: string
+  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  physicalWeight?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  plannedStartDate?: Date | string | null
+  plannedEndDate?: Date | string | null
+  actualStartDate?: Date | string | null
+  actualEndDate?: Date | string | null
+  physicalProgress?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: $Enums.BudgetItemStatus
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  project: Prisma.ProjectCreateNestedOneWithoutBudgetItemsInput
+  task?: Prisma.TaskCreateNestedOneWithoutBudgetItemsInput
+  measurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutBudgetItemInput
+}
+
+export type BudgetItemUncheckedCreateWithoutCompositionInput = {
+  id?: string
+  projectId: string
+  taskId?: string | null
+  code?: string | null
+  phase: string
+  description: string
+  unit: string
+  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  physicalWeight?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  plannedStartDate?: Date | string | null
+  plannedEndDate?: Date | string | null
+  actualStartDate?: Date | string | null
+  actualEndDate?: Date | string | null
+  physicalProgress?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: $Enums.BudgetItemStatus
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  measurements?: Prisma.ServiceMeasurementUncheckedCreateNestedManyWithoutBudgetItemInput
+}
+
+export type BudgetItemCreateOrConnectWithoutCompositionInput = {
+  where: Prisma.BudgetItemWhereUniqueInput
+  create: Prisma.XOR<Prisma.BudgetItemCreateWithoutCompositionInput, Prisma.BudgetItemUncheckedCreateWithoutCompositionInput>
+}
+
+export type BudgetItemCreateManyCompositionInputEnvelope = {
+  data: Prisma.BudgetItemCreateManyCompositionInput | Prisma.BudgetItemCreateManyCompositionInput[]
+  skipDuplicates?: boolean
+}
+
+export type BudgetItemUpsertWithWhereUniqueWithoutCompositionInput = {
+  where: Prisma.BudgetItemWhereUniqueInput
+  update: Prisma.XOR<Prisma.BudgetItemUpdateWithoutCompositionInput, Prisma.BudgetItemUncheckedUpdateWithoutCompositionInput>
+  create: Prisma.XOR<Prisma.BudgetItemCreateWithoutCompositionInput, Prisma.BudgetItemUncheckedCreateWithoutCompositionInput>
+}
+
+export type BudgetItemUpdateWithWhereUniqueWithoutCompositionInput = {
+  where: Prisma.BudgetItemWhereUniqueInput
+  data: Prisma.XOR<Prisma.BudgetItemUpdateWithoutCompositionInput, Prisma.BudgetItemUncheckedUpdateWithoutCompositionInput>
+}
+
+export type BudgetItemUpdateManyWithWhereWithoutCompositionInput = {
+  where: Prisma.BudgetItemScalarWhereInput
+  data: Prisma.XOR<Prisma.BudgetItemUpdateManyMutationInput, Prisma.BudgetItemUncheckedUpdateManyWithoutCompositionInput>
+}
+
 export type BudgetItemCreateWithoutMeasurementsInput = {
   id?: string
   code?: string | null
@@ -1022,12 +1167,14 @@ export type BudgetItemCreateWithoutMeasurementsInput = {
   updatedAt?: Date | string
   project: Prisma.ProjectCreateNestedOneWithoutBudgetItemsInput
   task?: Prisma.TaskCreateNestedOneWithoutBudgetItemsInput
+  composition?: Prisma.ServiceCompositionCreateNestedOneWithoutBudgetItemsInput
 }
 
 export type BudgetItemUncheckedCreateWithoutMeasurementsInput = {
   id?: string
   projectId: string
   taskId?: string | null
+  compositionId?: string | null
   code?: string | null
   phase: string
   description: string
@@ -1084,12 +1231,14 @@ export type BudgetItemUpdateWithoutMeasurementsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   project?: Prisma.ProjectUpdateOneRequiredWithoutBudgetItemsNestedInput
   task?: Prisma.TaskUpdateOneWithoutBudgetItemsNestedInput
+  composition?: Prisma.ServiceCompositionUpdateOneWithoutBudgetItemsNestedInput
 }
 
 export type BudgetItemUncheckedUpdateWithoutMeasurementsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   projectId?: Prisma.StringFieldUpdateOperationsInput | string
   taskId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  compositionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phase?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1112,6 +1261,7 @@ export type BudgetItemUncheckedUpdateWithoutMeasurementsInput = {
 export type BudgetItemCreateManyProjectInput = {
   id?: string
   taskId?: string | null
+  compositionId?: string | null
   code?: string | null
   phase: string
   description: string
@@ -1151,12 +1301,14 @@ export type BudgetItemUpdateWithoutProjectInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   task?: Prisma.TaskUpdateOneWithoutBudgetItemsNestedInput
+  composition?: Prisma.ServiceCompositionUpdateOneWithoutBudgetItemsNestedInput
   measurements?: Prisma.ServiceMeasurementUpdateManyWithoutBudgetItemNestedInput
 }
 
 export type BudgetItemUncheckedUpdateWithoutProjectInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   taskId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  compositionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phase?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1180,6 +1332,7 @@ export type BudgetItemUncheckedUpdateWithoutProjectInput = {
 export type BudgetItemUncheckedUpdateManyWithoutProjectInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   taskId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  compositionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phase?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1202,6 +1355,7 @@ export type BudgetItemUncheckedUpdateManyWithoutProjectInput = {
 export type BudgetItemCreateManyTaskInput = {
   id?: string
   projectId: string
+  compositionId?: string | null
   code?: string | null
   phase: string
   description: string
@@ -1241,12 +1395,14 @@ export type BudgetItemUpdateWithoutTaskInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   project?: Prisma.ProjectUpdateOneRequiredWithoutBudgetItemsNestedInput
+  composition?: Prisma.ServiceCompositionUpdateOneWithoutBudgetItemsNestedInput
   measurements?: Prisma.ServiceMeasurementUpdateManyWithoutBudgetItemNestedInput
 }
 
 export type BudgetItemUncheckedUpdateWithoutTaskInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  compositionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phase?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1270,6 +1426,101 @@ export type BudgetItemUncheckedUpdateWithoutTaskInput = {
 export type BudgetItemUncheckedUpdateManyWithoutTaskInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  compositionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phase?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
+  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  physicalWeight?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  plannedStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  plannedEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  actualStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  actualEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  physicalProgress?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumBudgetItemStatusFieldUpdateOperationsInput | $Enums.BudgetItemStatus
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type BudgetItemCreateManyCompositionInput = {
+  id?: string
+  projectId: string
+  taskId?: string | null
+  code?: string | null
+  phase: string
+  description: string
+  unit: string
+  quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  physicalWeight?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  plannedStartDate?: Date | string | null
+  plannedEndDate?: Date | string | null
+  actualStartDate?: Date | string | null
+  actualEndDate?: Date | string | null
+  physicalProgress?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: $Enums.BudgetItemStatus
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type BudgetItemUpdateWithoutCompositionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phase?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
+  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  physicalWeight?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  plannedStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  plannedEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  actualStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  actualEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  physicalProgress?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumBudgetItemStatusFieldUpdateOperationsInput | $Enums.BudgetItemStatus
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  project?: Prisma.ProjectUpdateOneRequiredWithoutBudgetItemsNestedInput
+  task?: Prisma.TaskUpdateOneWithoutBudgetItemsNestedInput
+  measurements?: Prisma.ServiceMeasurementUpdateManyWithoutBudgetItemNestedInput
+}
+
+export type BudgetItemUncheckedUpdateWithoutCompositionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  taskId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phase?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
+  quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  physicalWeight?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  plannedStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  plannedEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  actualStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  actualEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  physicalProgress?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumBudgetItemStatusFieldUpdateOperationsInput | $Enums.BudgetItemStatus
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  measurements?: Prisma.ServiceMeasurementUncheckedUpdateManyWithoutBudgetItemNestedInput
+}
+
+export type BudgetItemUncheckedUpdateManyWithoutCompositionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  taskId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phase?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1324,6 +1575,7 @@ export type BudgetItemSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   id?: boolean
   projectId?: boolean
   taskId?: boolean
+  compositionId?: boolean
   code?: boolean
   phase?: boolean
   description?: boolean
@@ -1343,6 +1595,7 @@ export type BudgetItemSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   updatedAt?: boolean
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
   task?: boolean | Prisma.BudgetItem$taskArgs<ExtArgs>
+  composition?: boolean | Prisma.BudgetItem$compositionArgs<ExtArgs>
   measurements?: boolean | Prisma.BudgetItem$measurementsArgs<ExtArgs>
   _count?: boolean | Prisma.BudgetItemCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["budgetItem"]>
@@ -1351,6 +1604,7 @@ export type BudgetItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   id?: boolean
   projectId?: boolean
   taskId?: boolean
+  compositionId?: boolean
   code?: boolean
   phase?: boolean
   description?: boolean
@@ -1370,12 +1624,14 @@ export type BudgetItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   updatedAt?: boolean
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
   task?: boolean | Prisma.BudgetItem$taskArgs<ExtArgs>
+  composition?: boolean | Prisma.BudgetItem$compositionArgs<ExtArgs>
 }, ExtArgs["result"]["budgetItem"]>
 
 export type BudgetItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   projectId?: boolean
   taskId?: boolean
+  compositionId?: boolean
   code?: boolean
   phase?: boolean
   description?: boolean
@@ -1395,12 +1651,14 @@ export type BudgetItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   updatedAt?: boolean
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
   task?: boolean | Prisma.BudgetItem$taskArgs<ExtArgs>
+  composition?: boolean | Prisma.BudgetItem$compositionArgs<ExtArgs>
 }, ExtArgs["result"]["budgetItem"]>
 
 export type BudgetItemSelectScalar = {
   id?: boolean
   projectId?: boolean
   taskId?: boolean
+  compositionId?: boolean
   code?: boolean
   phase?: boolean
   description?: boolean
@@ -1420,20 +1678,23 @@ export type BudgetItemSelectScalar = {
   updatedAt?: boolean
 }
 
-export type BudgetItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "projectId" | "taskId" | "code" | "phase" | "description" | "unit" | "quantity" | "unitPrice" | "totalPrice" | "physicalWeight" | "plannedStartDate" | "plannedEndDate" | "actualStartDate" | "actualEndDate" | "physicalProgress" | "status" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["budgetItem"]>
+export type BudgetItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "projectId" | "taskId" | "compositionId" | "code" | "phase" | "description" | "unit" | "quantity" | "unitPrice" | "totalPrice" | "physicalWeight" | "plannedStartDate" | "plannedEndDate" | "actualStartDate" | "actualEndDate" | "physicalProgress" | "status" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["budgetItem"]>
 export type BudgetItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
   task?: boolean | Prisma.BudgetItem$taskArgs<ExtArgs>
+  composition?: boolean | Prisma.BudgetItem$compositionArgs<ExtArgs>
   measurements?: boolean | Prisma.BudgetItem$measurementsArgs<ExtArgs>
   _count?: boolean | Prisma.BudgetItemCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type BudgetItemIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
   task?: boolean | Prisma.BudgetItem$taskArgs<ExtArgs>
+  composition?: boolean | Prisma.BudgetItem$compositionArgs<ExtArgs>
 }
 export type BudgetItemIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
   task?: boolean | Prisma.BudgetItem$taskArgs<ExtArgs>
+  composition?: boolean | Prisma.BudgetItem$compositionArgs<ExtArgs>
 }
 
 export type $BudgetItemPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1441,12 +1702,14 @@ export type $BudgetItemPayload<ExtArgs extends runtime.Types.Extensions.Internal
   objects: {
     project: Prisma.$ProjectPayload<ExtArgs>
     task: Prisma.$TaskPayload<ExtArgs> | null
+    composition: Prisma.$ServiceCompositionPayload<ExtArgs> | null
     measurements: Prisma.$ServiceMeasurementPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     projectId: string
     taskId: string | null
+    compositionId: string | null
     code: string | null
     phase: string
     description: string
@@ -1860,6 +2123,7 @@ export interface Prisma__BudgetItemClient<T, Null = never, ExtArgs extends runti
   readonly [Symbol.toStringTag]: "PrismaPromise"
   project<T extends Prisma.ProjectDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProjectDefaultArgs<ExtArgs>>): Prisma.Prisma__ProjectClient<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   task<T extends Prisma.BudgetItem$taskArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BudgetItem$taskArgs<ExtArgs>>): Prisma.Prisma__TaskClient<runtime.Types.Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  composition<T extends Prisma.BudgetItem$compositionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BudgetItem$compositionArgs<ExtArgs>>): Prisma.Prisma__ServiceCompositionClient<runtime.Types.Result.GetResult<Prisma.$ServiceCompositionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   measurements<T extends Prisma.BudgetItem$measurementsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BudgetItem$measurementsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceMeasurementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1893,6 +2157,7 @@ export interface BudgetItemFieldRefs {
   readonly id: Prisma.FieldRef<"BudgetItem", 'String'>
   readonly projectId: Prisma.FieldRef<"BudgetItem", 'String'>
   readonly taskId: Prisma.FieldRef<"BudgetItem", 'String'>
+  readonly compositionId: Prisma.FieldRef<"BudgetItem", 'String'>
   readonly code: Prisma.FieldRef<"BudgetItem", 'String'>
   readonly phase: Prisma.FieldRef<"BudgetItem", 'String'>
   readonly description: Prisma.FieldRef<"BudgetItem", 'String'>
@@ -2327,6 +2592,25 @@ export type BudgetItem$taskArgs<ExtArgs extends runtime.Types.Extensions.Interna
    */
   include?: Prisma.TaskInclude<ExtArgs> | null
   where?: Prisma.TaskWhereInput
+}
+
+/**
+ * BudgetItem.composition
+ */
+export type BudgetItem$compositionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ServiceComposition
+   */
+  select?: Prisma.ServiceCompositionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ServiceComposition
+   */
+  omit?: Prisma.ServiceCompositionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ServiceCompositionInclude<ExtArgs> | null
+  where?: Prisma.ServiceCompositionWhereInput
 }
 
 /**

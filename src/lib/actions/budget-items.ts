@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { BudgetItemStatus } from "@/generated/prisma/client";
 import { requireSession } from "@/lib/auth/session";
+import { syncProjectMaterialRequirements } from "@/lib/actions/material-requirements";
 import { budgetItemSchema } from "@/lib/validations/graphite";
 
 const statusMap: Record<string, BudgetItemStatus> = {
@@ -26,6 +27,7 @@ function parseBudgetItem(formData: FormData) {
   return budgetItemSchema.safeParse({
     projectId: getString(formData, "projectId"),
     taskId: getString(formData, "taskId"),
+    compositionId: getString(formData, "compositionId"),
     code: getString(formData, "code"),
     phase: getString(formData, "phase"),
     description: getString(formData, "description"),
@@ -62,6 +64,7 @@ export async function createBudgetItemAction(formData: FormData) {
     data: {
       projectId: input.projectId,
       taskId: input.taskId || null,
+      compositionId: input.compositionId || null,
       code: input.code || null,
       phase: input.phase,
       description: input.description,
@@ -77,6 +80,7 @@ export async function createBudgetItemAction(formData: FormData) {
       notes: input.notes || null,
     },
   });
+  await syncProjectMaterialRequirements(input.projectId);
 
   revalidatePath("/budget-items");
   revalidatePath(`/projects/${input.projectId}`);
@@ -106,6 +110,7 @@ export async function updateBudgetItemAction(formData: FormData) {
     data: {
       projectId: input.projectId,
       taskId: input.taskId || null,
+      compositionId: input.compositionId || null,
       code: input.code || null,
       phase: input.phase,
       description: input.description,
@@ -121,6 +126,7 @@ export async function updateBudgetItemAction(formData: FormData) {
       notes: input.notes || null,
     },
   });
+  await syncProjectMaterialRequirements(input.projectId);
 
   revalidatePath("/budget-items");
   revalidatePath(`/projects/${input.projectId}`);
@@ -137,11 +143,22 @@ export async function deleteBudgetItemAction(formData: FormData) {
   }
 
   const { prisma } = await import("@/lib/db/prisma");
+  const item = await prisma.budgetItem.findUnique({
+    where: { id },
+    select: {
+      projectId: true,
+    },
+  });
 
   try {
     await prisma.budgetItem.delete({ where: { id } });
   } catch {
     redirect("/budget-items?error=Nao%20foi%20possivel%20excluir%20o%20item");
+  }
+
+  if (item) {
+    await syncProjectMaterialRequirements(item.projectId);
+    revalidatePath(`/projects/${item.projectId}`);
   }
 
   revalidatePath("/budget-items");

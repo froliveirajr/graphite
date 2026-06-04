@@ -349,6 +349,7 @@ export type ProjectWhereInput = {
   files?: Prisma.FileListRelationFilter
   financialEntries?: Prisma.FinancialEntryListRelationFilter
   budgetItems?: Prisma.BudgetItemListRelationFilter
+  serviceCompositions?: Prisma.ServiceCompositionListRelationFilter
   serviceMeasurements?: Prisma.ServiceMeasurementListRelationFilter
   materialRequirements?: Prisma.ProjectMaterialRequirementListRelationFilter
 }
@@ -390,6 +391,7 @@ export type ProjectOrderByWithRelationInput = {
   files?: Prisma.FileOrderByRelationAggregateInput
   financialEntries?: Prisma.FinancialEntryOrderByRelationAggregateInput
   budgetItems?: Prisma.BudgetItemOrderByRelationAggregateInput
+  serviceCompositions?: Prisma.ServiceCompositionOrderByRelationAggregateInput
   serviceMeasurements?: Prisma.ServiceMeasurementOrderByRelationAggregateInput
   materialRequirements?: Prisma.ProjectMaterialRequirementOrderByRelationAggregateInput
 }
@@ -434,6 +436,7 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   files?: Prisma.FileListRelationFilter
   financialEntries?: Prisma.FinancialEntryListRelationFilter
   budgetItems?: Prisma.BudgetItemListRelationFilter
+  serviceCompositions?: Prisma.ServiceCompositionListRelationFilter
   serviceMeasurements?: Prisma.ServiceMeasurementListRelationFilter
   materialRequirements?: Prisma.ProjectMaterialRequirementListRelationFilter
 }, "id" | "code">
@@ -524,6 +527,7 @@ export type ProjectCreateInput = {
   files?: Prisma.FileCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutProjectInput
   budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutProjectInput
+  serviceCompositions?: Prisma.ServiceCompositionCreateNestedManyWithoutProjectInput
   serviceMeasurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutProjectInput
   materialRequirements?: Prisma.ProjectMaterialRequirementCreateNestedManyWithoutProjectInput
 }
@@ -562,6 +566,7 @@ export type ProjectUncheckedCreateInput = {
   files?: Prisma.FileUncheckedCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutProjectInput
   budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutProjectInput
+  serviceCompositions?: Prisma.ServiceCompositionUncheckedCreateNestedManyWithoutProjectInput
   serviceMeasurements?: Prisma.ServiceMeasurementUncheckedCreateNestedManyWithoutProjectInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUncheckedCreateNestedManyWithoutProjectInput
 }
@@ -600,6 +605,7 @@ export type ProjectUpdateInput = {
   files?: Prisma.FileUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUpdateManyWithoutProjectNestedInput
   budgetItems?: Prisma.BudgetItemUpdateManyWithoutProjectNestedInput
+  serviceCompositions?: Prisma.ServiceCompositionUpdateManyWithoutProjectNestedInput
   serviceMeasurements?: Prisma.ServiceMeasurementUpdateManyWithoutProjectNestedInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUpdateManyWithoutProjectNestedInput
 }
@@ -638,6 +644,7 @@ export type ProjectUncheckedUpdateInput = {
   files?: Prisma.FileUncheckedUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutProjectNestedInput
   budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutProjectNestedInput
+  serviceCompositions?: Prisma.ServiceCompositionUncheckedUpdateManyWithoutProjectNestedInput
   serviceMeasurements?: Prisma.ServiceMeasurementUncheckedUpdateManyWithoutProjectNestedInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUncheckedUpdateManyWithoutProjectNestedInput
 }
@@ -989,6 +996,22 @@ export type ProjectUpdateOneRequiredWithoutBudgetItemsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutBudgetItemsInput, Prisma.ProjectUpdateWithoutBudgetItemsInput>, Prisma.ProjectUncheckedUpdateWithoutBudgetItemsInput>
 }
 
+export type ProjectCreateNestedOneWithoutServiceCompositionsInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutServiceCompositionsInput, Prisma.ProjectUncheckedCreateWithoutServiceCompositionsInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutServiceCompositionsInput
+  connect?: Prisma.ProjectWhereUniqueInput
+}
+
+export type ProjectUpdateOneWithoutServiceCompositionsNestedInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutServiceCompositionsInput, Prisma.ProjectUncheckedCreateWithoutServiceCompositionsInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutServiceCompositionsInput
+  upsert?: Prisma.ProjectUpsertWithoutServiceCompositionsInput
+  disconnect?: Prisma.ProjectWhereInput | boolean
+  delete?: Prisma.ProjectWhereInput | boolean
+  connect?: Prisma.ProjectWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutServiceCompositionsInput, Prisma.ProjectUpdateWithoutServiceCompositionsInput>, Prisma.ProjectUncheckedUpdateWithoutServiceCompositionsInput>
+}
+
 export type ProjectCreateNestedOneWithoutProjectContractorsInput = {
   create?: Prisma.XOR<Prisma.ProjectCreateWithoutProjectContractorsInput, Prisma.ProjectUncheckedCreateWithoutProjectContractorsInput>
   connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutProjectContractorsInput
@@ -1212,6 +1235,7 @@ export type ProjectCreateWithoutManagerInput = {
   files?: Prisma.FileCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutProjectInput
   budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutProjectInput
+  serviceCompositions?: Prisma.ServiceCompositionCreateNestedManyWithoutProjectInput
   serviceMeasurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutProjectInput
   materialRequirements?: Prisma.ProjectMaterialRequirementCreateNestedManyWithoutProjectInput
 }
@@ -1249,6 +1273,7 @@ export type ProjectUncheckedCreateWithoutManagerInput = {
   files?: Prisma.FileUncheckedCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutProjectInput
   budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutProjectInput
+  serviceCompositions?: Prisma.ServiceCompositionUncheckedCreateNestedManyWithoutProjectInput
   serviceMeasurements?: Prisma.ServiceMeasurementUncheckedCreateNestedManyWithoutProjectInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUncheckedCreateNestedManyWithoutProjectInput
 }
@@ -1296,6 +1321,7 @@ export type ProjectCreateWithoutTechnicalResponsibleInput = {
   files?: Prisma.FileCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutProjectInput
   budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutProjectInput
+  serviceCompositions?: Prisma.ServiceCompositionCreateNestedManyWithoutProjectInput
   serviceMeasurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutProjectInput
   materialRequirements?: Prisma.ProjectMaterialRequirementCreateNestedManyWithoutProjectInput
 }
@@ -1333,6 +1359,7 @@ export type ProjectUncheckedCreateWithoutTechnicalResponsibleInput = {
   files?: Prisma.FileUncheckedCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutProjectInput
   budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutProjectInput
+  serviceCompositions?: Prisma.ServiceCompositionUncheckedCreateNestedManyWithoutProjectInput
   serviceMeasurements?: Prisma.ServiceMeasurementUncheckedCreateNestedManyWithoutProjectInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUncheckedCreateNestedManyWithoutProjectInput
 }
@@ -1437,6 +1464,7 @@ export type ProjectCreateWithoutClientInput = {
   files?: Prisma.FileCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutProjectInput
   budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutProjectInput
+  serviceCompositions?: Prisma.ServiceCompositionCreateNestedManyWithoutProjectInput
   serviceMeasurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutProjectInput
   materialRequirements?: Prisma.ProjectMaterialRequirementCreateNestedManyWithoutProjectInput
 }
@@ -1474,6 +1502,7 @@ export type ProjectUncheckedCreateWithoutClientInput = {
   files?: Prisma.FileUncheckedCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutProjectInput
   budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutProjectInput
+  serviceCompositions?: Prisma.ServiceCompositionUncheckedCreateNestedManyWithoutProjectInput
   serviceMeasurements?: Prisma.ServiceMeasurementUncheckedCreateNestedManyWithoutProjectInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUncheckedCreateNestedManyWithoutProjectInput
 }
@@ -1537,6 +1566,7 @@ export type ProjectCreateWithoutAreasInput = {
   files?: Prisma.FileCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutProjectInput
   budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutProjectInput
+  serviceCompositions?: Prisma.ServiceCompositionCreateNestedManyWithoutProjectInput
   serviceMeasurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutProjectInput
   materialRequirements?: Prisma.ProjectMaterialRequirementCreateNestedManyWithoutProjectInput
 }
@@ -1574,6 +1604,7 @@ export type ProjectUncheckedCreateWithoutAreasInput = {
   files?: Prisma.FileUncheckedCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutProjectInput
   budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutProjectInput
+  serviceCompositions?: Prisma.ServiceCompositionUncheckedCreateNestedManyWithoutProjectInput
   serviceMeasurements?: Prisma.ServiceMeasurementUncheckedCreateNestedManyWithoutProjectInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUncheckedCreateNestedManyWithoutProjectInput
 }
@@ -1627,6 +1658,7 @@ export type ProjectUpdateWithoutAreasInput = {
   files?: Prisma.FileUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUpdateManyWithoutProjectNestedInput
   budgetItems?: Prisma.BudgetItemUpdateManyWithoutProjectNestedInput
+  serviceCompositions?: Prisma.ServiceCompositionUpdateManyWithoutProjectNestedInput
   serviceMeasurements?: Prisma.ServiceMeasurementUpdateManyWithoutProjectNestedInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUpdateManyWithoutProjectNestedInput
 }
@@ -1664,6 +1696,7 @@ export type ProjectUncheckedUpdateWithoutAreasInput = {
   files?: Prisma.FileUncheckedUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutProjectNestedInput
   budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutProjectNestedInput
+  serviceCompositions?: Prisma.ServiceCompositionUncheckedUpdateManyWithoutProjectNestedInput
   serviceMeasurements?: Prisma.ServiceMeasurementUncheckedUpdateManyWithoutProjectNestedInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUncheckedUpdateManyWithoutProjectNestedInput
 }
@@ -1701,6 +1734,7 @@ export type ProjectCreateWithoutTasksInput = {
   files?: Prisma.FileCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutProjectInput
   budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutProjectInput
+  serviceCompositions?: Prisma.ServiceCompositionCreateNestedManyWithoutProjectInput
   serviceMeasurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutProjectInput
   materialRequirements?: Prisma.ProjectMaterialRequirementCreateNestedManyWithoutProjectInput
 }
@@ -1738,6 +1772,7 @@ export type ProjectUncheckedCreateWithoutTasksInput = {
   files?: Prisma.FileUncheckedCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutProjectInput
   budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutProjectInput
+  serviceCompositions?: Prisma.ServiceCompositionUncheckedCreateNestedManyWithoutProjectInput
   serviceMeasurements?: Prisma.ServiceMeasurementUncheckedCreateNestedManyWithoutProjectInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUncheckedCreateNestedManyWithoutProjectInput
 }
@@ -1791,6 +1826,7 @@ export type ProjectUpdateWithoutTasksInput = {
   files?: Prisma.FileUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUpdateManyWithoutProjectNestedInput
   budgetItems?: Prisma.BudgetItemUpdateManyWithoutProjectNestedInput
+  serviceCompositions?: Prisma.ServiceCompositionUpdateManyWithoutProjectNestedInput
   serviceMeasurements?: Prisma.ServiceMeasurementUpdateManyWithoutProjectNestedInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUpdateManyWithoutProjectNestedInput
 }
@@ -1828,6 +1864,7 @@ export type ProjectUncheckedUpdateWithoutTasksInput = {
   files?: Prisma.FileUncheckedUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutProjectNestedInput
   budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutProjectNestedInput
+  serviceCompositions?: Prisma.ServiceCompositionUncheckedUpdateManyWithoutProjectNestedInput
   serviceMeasurements?: Prisma.ServiceMeasurementUncheckedUpdateManyWithoutProjectNestedInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUncheckedUpdateManyWithoutProjectNestedInput
 }
@@ -1865,6 +1902,7 @@ export type ProjectCreateWithoutBudgetItemsInput = {
   dailyReports?: Prisma.DailyReportCreateNestedManyWithoutProjectInput
   files?: Prisma.FileCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutProjectInput
+  serviceCompositions?: Prisma.ServiceCompositionCreateNestedManyWithoutProjectInput
   serviceMeasurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutProjectInput
   materialRequirements?: Prisma.ProjectMaterialRequirementCreateNestedManyWithoutProjectInput
 }
@@ -1902,6 +1940,7 @@ export type ProjectUncheckedCreateWithoutBudgetItemsInput = {
   dailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutProjectInput
   files?: Prisma.FileUncheckedCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutProjectInput
+  serviceCompositions?: Prisma.ServiceCompositionUncheckedCreateNestedManyWithoutProjectInput
   serviceMeasurements?: Prisma.ServiceMeasurementUncheckedCreateNestedManyWithoutProjectInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUncheckedCreateNestedManyWithoutProjectInput
 }
@@ -1955,6 +1994,7 @@ export type ProjectUpdateWithoutBudgetItemsInput = {
   dailyReports?: Prisma.DailyReportUpdateManyWithoutProjectNestedInput
   files?: Prisma.FileUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUpdateManyWithoutProjectNestedInput
+  serviceCompositions?: Prisma.ServiceCompositionUpdateManyWithoutProjectNestedInput
   serviceMeasurements?: Prisma.ServiceMeasurementUpdateManyWithoutProjectNestedInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUpdateManyWithoutProjectNestedInput
 }
@@ -1992,6 +2032,175 @@ export type ProjectUncheckedUpdateWithoutBudgetItemsInput = {
   dailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutProjectNestedInput
   files?: Prisma.FileUncheckedUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutProjectNestedInput
+  serviceCompositions?: Prisma.ServiceCompositionUncheckedUpdateManyWithoutProjectNestedInput
+  serviceMeasurements?: Prisma.ServiceMeasurementUncheckedUpdateManyWithoutProjectNestedInput
+  materialRequirements?: Prisma.ProjectMaterialRequirementUncheckedUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectCreateWithoutServiceCompositionsInput = {
+  id?: string
+  code: string
+  name: string
+  projectType: string
+  address: string
+  plannedStartDate?: Date | string | null
+  plannedEndDate?: Date | string | null
+  actualStartDate?: Date | string | null
+  actualEndDate?: Date | string | null
+  plannedBudget?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: $Enums.ProjectStatus
+  priority?: $Enums.ProjectPriority
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  client: Prisma.ClientCreateNestedOneWithoutProjectsInput
+  manager?: Prisma.UserCreateNestedOneWithoutManagedProjectsInput
+  technicalResponsible?: Prisma.UserCreateNestedOneWithoutTechnicalProjectsInput
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationCreateNestedManyWithoutProjectInput
+  areas?: Prisma.ProjectAreaCreateNestedManyWithoutProjectInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutProjectInput
+  projectContractors?: Prisma.ProjectContractorCreateNestedManyWithoutProjectInput
+  purchaseRequests?: Prisma.PurchaseRequestCreateNestedManyWithoutProjectInput
+  stockMovements?: Prisma.StockMovementCreateNestedManyWithoutProjectInput
+  sourceTransfers?: Prisma.StockMovementCreateNestedManyWithoutSourceProjectInput
+  destinationTransfers?: Prisma.StockMovementCreateNestedManyWithoutDestinationProjectInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceCreateNestedManyWithoutTransferredToProjectInput
+  wasteDisposals?: Prisma.WasteDisposalCreateNestedManyWithoutProjectInput
+  dailyReports?: Prisma.DailyReportCreateNestedManyWithoutProjectInput
+  files?: Prisma.FileCreateNestedManyWithoutProjectInput
+  financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutProjectInput
+  budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutProjectInput
+  serviceMeasurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutProjectInput
+  materialRequirements?: Prisma.ProjectMaterialRequirementCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectUncheckedCreateWithoutServiceCompositionsInput = {
+  id?: string
+  code: string
+  name: string
+  clientId: string
+  projectType: string
+  address: string
+  managerId?: string | null
+  technicalResponsibleId?: string | null
+  plannedStartDate?: Date | string | null
+  plannedEndDate?: Date | string | null
+  actualStartDate?: Date | string | null
+  actualEndDate?: Date | string | null
+  plannedBudget?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: $Enums.ProjectStatus
+  priority?: $Enums.ProjectPriority
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUncheckedCreateNestedManyWithoutProjectInput
+  areas?: Prisma.ProjectAreaUncheckedCreateNestedManyWithoutProjectInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutProjectInput
+  projectContractors?: Prisma.ProjectContractorUncheckedCreateNestedManyWithoutProjectInput
+  purchaseRequests?: Prisma.PurchaseRequestUncheckedCreateNestedManyWithoutProjectInput
+  stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProjectInput
+  sourceTransfers?: Prisma.StockMovementUncheckedCreateNestedManyWithoutSourceProjectInput
+  destinationTransfers?: Prisma.StockMovementUncheckedCreateNestedManyWithoutDestinationProjectInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUncheckedCreateNestedManyWithoutTransferredToProjectInput
+  wasteDisposals?: Prisma.WasteDisposalUncheckedCreateNestedManyWithoutProjectInput
+  dailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutProjectInput
+  files?: Prisma.FileUncheckedCreateNestedManyWithoutProjectInput
+  financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutProjectInput
+  budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutProjectInput
+  serviceMeasurements?: Prisma.ServiceMeasurementUncheckedCreateNestedManyWithoutProjectInput
+  materialRequirements?: Prisma.ProjectMaterialRequirementUncheckedCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectCreateOrConnectWithoutServiceCompositionsInput = {
+  where: Prisma.ProjectWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutServiceCompositionsInput, Prisma.ProjectUncheckedCreateWithoutServiceCompositionsInput>
+}
+
+export type ProjectUpsertWithoutServiceCompositionsInput = {
+  update: Prisma.XOR<Prisma.ProjectUpdateWithoutServiceCompositionsInput, Prisma.ProjectUncheckedUpdateWithoutServiceCompositionsInput>
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutServiceCompositionsInput, Prisma.ProjectUncheckedCreateWithoutServiceCompositionsInput>
+  where?: Prisma.ProjectWhereInput
+}
+
+export type ProjectUpdateToOneWithWhereWithoutServiceCompositionsInput = {
+  where?: Prisma.ProjectWhereInput
+  data: Prisma.XOR<Prisma.ProjectUpdateWithoutServiceCompositionsInput, Prisma.ProjectUncheckedUpdateWithoutServiceCompositionsInput>
+}
+
+export type ProjectUpdateWithoutServiceCompositionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  projectType?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  plannedStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  plannedEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  actualStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  actualEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  plannedBudget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
+  priority?: Prisma.EnumProjectPriorityFieldUpdateOperationsInput | $Enums.ProjectPriority
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  client?: Prisma.ClientUpdateOneRequiredWithoutProjectsNestedInput
+  manager?: Prisma.UserUpdateOneWithoutManagedProjectsNestedInput
+  technicalResponsible?: Prisma.UserUpdateOneWithoutTechnicalProjectsNestedInput
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUpdateManyWithoutProjectNestedInput
+  areas?: Prisma.ProjectAreaUpdateManyWithoutProjectNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutProjectNestedInput
+  projectContractors?: Prisma.ProjectContractorUpdateManyWithoutProjectNestedInput
+  purchaseRequests?: Prisma.PurchaseRequestUpdateManyWithoutProjectNestedInput
+  stockMovements?: Prisma.StockMovementUpdateManyWithoutProjectNestedInput
+  sourceTransfers?: Prisma.StockMovementUpdateManyWithoutSourceProjectNestedInput
+  destinationTransfers?: Prisma.StockMovementUpdateManyWithoutDestinationProjectNestedInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUpdateManyWithoutTransferredToProjectNestedInput
+  wasteDisposals?: Prisma.WasteDisposalUpdateManyWithoutProjectNestedInput
+  dailyReports?: Prisma.DailyReportUpdateManyWithoutProjectNestedInput
+  files?: Prisma.FileUpdateManyWithoutProjectNestedInput
+  financialEntries?: Prisma.FinancialEntryUpdateManyWithoutProjectNestedInput
+  budgetItems?: Prisma.BudgetItemUpdateManyWithoutProjectNestedInput
+  serviceMeasurements?: Prisma.ServiceMeasurementUpdateManyWithoutProjectNestedInput
+  materialRequirements?: Prisma.ProjectMaterialRequirementUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectUncheckedUpdateWithoutServiceCompositionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
+  projectType?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  managerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalResponsibleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plannedStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  plannedEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  actualStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  actualEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  plannedBudget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  actualCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
+  priority?: Prisma.EnumProjectPriorityFieldUpdateOperationsInput | $Enums.ProjectPriority
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  employeeAllocations?: Prisma.ProjectEmployeeAllocationUncheckedUpdateManyWithoutProjectNestedInput
+  areas?: Prisma.ProjectAreaUncheckedUpdateManyWithoutProjectNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutProjectNestedInput
+  projectContractors?: Prisma.ProjectContractorUncheckedUpdateManyWithoutProjectNestedInput
+  purchaseRequests?: Prisma.PurchaseRequestUncheckedUpdateManyWithoutProjectNestedInput
+  stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutProjectNestedInput
+  sourceTransfers?: Prisma.StockMovementUncheckedUpdateManyWithoutSourceProjectNestedInput
+  destinationTransfers?: Prisma.StockMovementUncheckedUpdateManyWithoutDestinationProjectNestedInput
+  attendanceTransfers?: Prisma.DailyReportAttendanceUncheckedUpdateManyWithoutTransferredToProjectNestedInput
+  wasteDisposals?: Prisma.WasteDisposalUncheckedUpdateManyWithoutProjectNestedInput
+  dailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutProjectNestedInput
+  files?: Prisma.FileUncheckedUpdateManyWithoutProjectNestedInput
+  financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutProjectNestedInput
+  budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutProjectNestedInput
   serviceMeasurements?: Prisma.ServiceMeasurementUncheckedUpdateManyWithoutProjectNestedInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUncheckedUpdateManyWithoutProjectNestedInput
 }
@@ -2029,6 +2238,7 @@ export type ProjectCreateWithoutProjectContractorsInput = {
   files?: Prisma.FileCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutProjectInput
   budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutProjectInput
+  serviceCompositions?: Prisma.ServiceCompositionCreateNestedManyWithoutProjectInput
   serviceMeasurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutProjectInput
   materialRequirements?: Prisma.ProjectMaterialRequirementCreateNestedManyWithoutProjectInput
 }
@@ -2066,6 +2276,7 @@ export type ProjectUncheckedCreateWithoutProjectContractorsInput = {
   files?: Prisma.FileUncheckedCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutProjectInput
   budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutProjectInput
+  serviceCompositions?: Prisma.ServiceCompositionUncheckedCreateNestedManyWithoutProjectInput
   serviceMeasurements?: Prisma.ServiceMeasurementUncheckedCreateNestedManyWithoutProjectInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUncheckedCreateNestedManyWithoutProjectInput
 }
@@ -2119,6 +2330,7 @@ export type ProjectUpdateWithoutProjectContractorsInput = {
   files?: Prisma.FileUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUpdateManyWithoutProjectNestedInput
   budgetItems?: Prisma.BudgetItemUpdateManyWithoutProjectNestedInput
+  serviceCompositions?: Prisma.ServiceCompositionUpdateManyWithoutProjectNestedInput
   serviceMeasurements?: Prisma.ServiceMeasurementUpdateManyWithoutProjectNestedInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUpdateManyWithoutProjectNestedInput
 }
@@ -2156,6 +2368,7 @@ export type ProjectUncheckedUpdateWithoutProjectContractorsInput = {
   files?: Prisma.FileUncheckedUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutProjectNestedInput
   budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutProjectNestedInput
+  serviceCompositions?: Prisma.ServiceCompositionUncheckedUpdateManyWithoutProjectNestedInput
   serviceMeasurements?: Prisma.ServiceMeasurementUncheckedUpdateManyWithoutProjectNestedInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUncheckedUpdateManyWithoutProjectNestedInput
 }
@@ -2193,6 +2406,7 @@ export type ProjectCreateWithoutEmployeeAllocationsInput = {
   files?: Prisma.FileCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutProjectInput
   budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutProjectInput
+  serviceCompositions?: Prisma.ServiceCompositionCreateNestedManyWithoutProjectInput
   serviceMeasurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutProjectInput
   materialRequirements?: Prisma.ProjectMaterialRequirementCreateNestedManyWithoutProjectInput
 }
@@ -2230,6 +2444,7 @@ export type ProjectUncheckedCreateWithoutEmployeeAllocationsInput = {
   files?: Prisma.FileUncheckedCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutProjectInput
   budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutProjectInput
+  serviceCompositions?: Prisma.ServiceCompositionUncheckedCreateNestedManyWithoutProjectInput
   serviceMeasurements?: Prisma.ServiceMeasurementUncheckedCreateNestedManyWithoutProjectInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUncheckedCreateNestedManyWithoutProjectInput
 }
@@ -2283,6 +2498,7 @@ export type ProjectUpdateWithoutEmployeeAllocationsInput = {
   files?: Prisma.FileUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUpdateManyWithoutProjectNestedInput
   budgetItems?: Prisma.BudgetItemUpdateManyWithoutProjectNestedInput
+  serviceCompositions?: Prisma.ServiceCompositionUpdateManyWithoutProjectNestedInput
   serviceMeasurements?: Prisma.ServiceMeasurementUpdateManyWithoutProjectNestedInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUpdateManyWithoutProjectNestedInput
 }
@@ -2320,6 +2536,7 @@ export type ProjectUncheckedUpdateWithoutEmployeeAllocationsInput = {
   files?: Prisma.FileUncheckedUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutProjectNestedInput
   budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutProjectNestedInput
+  serviceCompositions?: Prisma.ServiceCompositionUncheckedUpdateManyWithoutProjectNestedInput
   serviceMeasurements?: Prisma.ServiceMeasurementUncheckedUpdateManyWithoutProjectNestedInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUncheckedUpdateManyWithoutProjectNestedInput
 }
@@ -2358,6 +2575,7 @@ export type ProjectCreateWithoutMaterialRequirementsInput = {
   files?: Prisma.FileCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutProjectInput
   budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutProjectInput
+  serviceCompositions?: Prisma.ServiceCompositionCreateNestedManyWithoutProjectInput
   serviceMeasurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutProjectInput
 }
 
@@ -2395,6 +2613,7 @@ export type ProjectUncheckedCreateWithoutMaterialRequirementsInput = {
   files?: Prisma.FileUncheckedCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutProjectInput
   budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutProjectInput
+  serviceCompositions?: Prisma.ServiceCompositionUncheckedCreateNestedManyWithoutProjectInput
   serviceMeasurements?: Prisma.ServiceMeasurementUncheckedCreateNestedManyWithoutProjectInput
 }
 
@@ -2448,6 +2667,7 @@ export type ProjectUpdateWithoutMaterialRequirementsInput = {
   files?: Prisma.FileUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUpdateManyWithoutProjectNestedInput
   budgetItems?: Prisma.BudgetItemUpdateManyWithoutProjectNestedInput
+  serviceCompositions?: Prisma.ServiceCompositionUpdateManyWithoutProjectNestedInput
   serviceMeasurements?: Prisma.ServiceMeasurementUpdateManyWithoutProjectNestedInput
 }
 
@@ -2485,6 +2705,7 @@ export type ProjectUncheckedUpdateWithoutMaterialRequirementsInput = {
   files?: Prisma.FileUncheckedUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutProjectNestedInput
   budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutProjectNestedInput
+  serviceCompositions?: Prisma.ServiceCompositionUncheckedUpdateManyWithoutProjectNestedInput
   serviceMeasurements?: Prisma.ServiceMeasurementUncheckedUpdateManyWithoutProjectNestedInput
 }
 
@@ -2521,6 +2742,7 @@ export type ProjectCreateWithoutPurchaseRequestsInput = {
   files?: Prisma.FileCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutProjectInput
   budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutProjectInput
+  serviceCompositions?: Prisma.ServiceCompositionCreateNestedManyWithoutProjectInput
   serviceMeasurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutProjectInput
   materialRequirements?: Prisma.ProjectMaterialRequirementCreateNestedManyWithoutProjectInput
 }
@@ -2558,6 +2780,7 @@ export type ProjectUncheckedCreateWithoutPurchaseRequestsInput = {
   files?: Prisma.FileUncheckedCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutProjectInput
   budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutProjectInput
+  serviceCompositions?: Prisma.ServiceCompositionUncheckedCreateNestedManyWithoutProjectInput
   serviceMeasurements?: Prisma.ServiceMeasurementUncheckedCreateNestedManyWithoutProjectInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUncheckedCreateNestedManyWithoutProjectInput
 }
@@ -2611,6 +2834,7 @@ export type ProjectUpdateWithoutPurchaseRequestsInput = {
   files?: Prisma.FileUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUpdateManyWithoutProjectNestedInput
   budgetItems?: Prisma.BudgetItemUpdateManyWithoutProjectNestedInput
+  serviceCompositions?: Prisma.ServiceCompositionUpdateManyWithoutProjectNestedInput
   serviceMeasurements?: Prisma.ServiceMeasurementUpdateManyWithoutProjectNestedInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUpdateManyWithoutProjectNestedInput
 }
@@ -2648,6 +2872,7 @@ export type ProjectUncheckedUpdateWithoutPurchaseRequestsInput = {
   files?: Prisma.FileUncheckedUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutProjectNestedInput
   budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutProjectNestedInput
+  serviceCompositions?: Prisma.ServiceCompositionUncheckedUpdateManyWithoutProjectNestedInput
   serviceMeasurements?: Prisma.ServiceMeasurementUncheckedUpdateManyWithoutProjectNestedInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUncheckedUpdateManyWithoutProjectNestedInput
 }
@@ -2685,6 +2910,7 @@ export type ProjectCreateWithoutStockMovementsInput = {
   files?: Prisma.FileCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutProjectInput
   budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutProjectInput
+  serviceCompositions?: Prisma.ServiceCompositionCreateNestedManyWithoutProjectInput
   serviceMeasurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutProjectInput
   materialRequirements?: Prisma.ProjectMaterialRequirementCreateNestedManyWithoutProjectInput
 }
@@ -2722,6 +2948,7 @@ export type ProjectUncheckedCreateWithoutStockMovementsInput = {
   files?: Prisma.FileUncheckedCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutProjectInput
   budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutProjectInput
+  serviceCompositions?: Prisma.ServiceCompositionUncheckedCreateNestedManyWithoutProjectInput
   serviceMeasurements?: Prisma.ServiceMeasurementUncheckedCreateNestedManyWithoutProjectInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUncheckedCreateNestedManyWithoutProjectInput
 }
@@ -2764,6 +2991,7 @@ export type ProjectCreateWithoutSourceTransfersInput = {
   files?: Prisma.FileCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutProjectInput
   budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutProjectInput
+  serviceCompositions?: Prisma.ServiceCompositionCreateNestedManyWithoutProjectInput
   serviceMeasurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutProjectInput
   materialRequirements?: Prisma.ProjectMaterialRequirementCreateNestedManyWithoutProjectInput
 }
@@ -2801,6 +3029,7 @@ export type ProjectUncheckedCreateWithoutSourceTransfersInput = {
   files?: Prisma.FileUncheckedCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutProjectInput
   budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutProjectInput
+  serviceCompositions?: Prisma.ServiceCompositionUncheckedCreateNestedManyWithoutProjectInput
   serviceMeasurements?: Prisma.ServiceMeasurementUncheckedCreateNestedManyWithoutProjectInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUncheckedCreateNestedManyWithoutProjectInput
 }
@@ -2843,6 +3072,7 @@ export type ProjectCreateWithoutDestinationTransfersInput = {
   files?: Prisma.FileCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutProjectInput
   budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutProjectInput
+  serviceCompositions?: Prisma.ServiceCompositionCreateNestedManyWithoutProjectInput
   serviceMeasurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutProjectInput
   materialRequirements?: Prisma.ProjectMaterialRequirementCreateNestedManyWithoutProjectInput
 }
@@ -2880,6 +3110,7 @@ export type ProjectUncheckedCreateWithoutDestinationTransfersInput = {
   files?: Prisma.FileUncheckedCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutProjectInput
   budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutProjectInput
+  serviceCompositions?: Prisma.ServiceCompositionUncheckedCreateNestedManyWithoutProjectInput
   serviceMeasurements?: Prisma.ServiceMeasurementUncheckedCreateNestedManyWithoutProjectInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUncheckedCreateNestedManyWithoutProjectInput
 }
@@ -2933,6 +3164,7 @@ export type ProjectUpdateWithoutStockMovementsInput = {
   files?: Prisma.FileUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUpdateManyWithoutProjectNestedInput
   budgetItems?: Prisma.BudgetItemUpdateManyWithoutProjectNestedInput
+  serviceCompositions?: Prisma.ServiceCompositionUpdateManyWithoutProjectNestedInput
   serviceMeasurements?: Prisma.ServiceMeasurementUpdateManyWithoutProjectNestedInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUpdateManyWithoutProjectNestedInput
 }
@@ -2970,6 +3202,7 @@ export type ProjectUncheckedUpdateWithoutStockMovementsInput = {
   files?: Prisma.FileUncheckedUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutProjectNestedInput
   budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutProjectNestedInput
+  serviceCompositions?: Prisma.ServiceCompositionUncheckedUpdateManyWithoutProjectNestedInput
   serviceMeasurements?: Prisma.ServiceMeasurementUncheckedUpdateManyWithoutProjectNestedInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUncheckedUpdateManyWithoutProjectNestedInput
 }
@@ -3018,6 +3251,7 @@ export type ProjectUpdateWithoutSourceTransfersInput = {
   files?: Prisma.FileUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUpdateManyWithoutProjectNestedInput
   budgetItems?: Prisma.BudgetItemUpdateManyWithoutProjectNestedInput
+  serviceCompositions?: Prisma.ServiceCompositionUpdateManyWithoutProjectNestedInput
   serviceMeasurements?: Prisma.ServiceMeasurementUpdateManyWithoutProjectNestedInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUpdateManyWithoutProjectNestedInput
 }
@@ -3055,6 +3289,7 @@ export type ProjectUncheckedUpdateWithoutSourceTransfersInput = {
   files?: Prisma.FileUncheckedUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutProjectNestedInput
   budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutProjectNestedInput
+  serviceCompositions?: Prisma.ServiceCompositionUncheckedUpdateManyWithoutProjectNestedInput
   serviceMeasurements?: Prisma.ServiceMeasurementUncheckedUpdateManyWithoutProjectNestedInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUncheckedUpdateManyWithoutProjectNestedInput
 }
@@ -3103,6 +3338,7 @@ export type ProjectUpdateWithoutDestinationTransfersInput = {
   files?: Prisma.FileUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUpdateManyWithoutProjectNestedInput
   budgetItems?: Prisma.BudgetItemUpdateManyWithoutProjectNestedInput
+  serviceCompositions?: Prisma.ServiceCompositionUpdateManyWithoutProjectNestedInput
   serviceMeasurements?: Prisma.ServiceMeasurementUpdateManyWithoutProjectNestedInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUpdateManyWithoutProjectNestedInput
 }
@@ -3140,6 +3376,7 @@ export type ProjectUncheckedUpdateWithoutDestinationTransfersInput = {
   files?: Prisma.FileUncheckedUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutProjectNestedInput
   budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutProjectNestedInput
+  serviceCompositions?: Prisma.ServiceCompositionUncheckedUpdateManyWithoutProjectNestedInput
   serviceMeasurements?: Prisma.ServiceMeasurementUncheckedUpdateManyWithoutProjectNestedInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUncheckedUpdateManyWithoutProjectNestedInput
 }
@@ -3177,6 +3414,7 @@ export type ProjectCreateWithoutWasteDisposalsInput = {
   files?: Prisma.FileCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutProjectInput
   budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutProjectInput
+  serviceCompositions?: Prisma.ServiceCompositionCreateNestedManyWithoutProjectInput
   serviceMeasurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutProjectInput
   materialRequirements?: Prisma.ProjectMaterialRequirementCreateNestedManyWithoutProjectInput
 }
@@ -3214,6 +3452,7 @@ export type ProjectUncheckedCreateWithoutWasteDisposalsInput = {
   files?: Prisma.FileUncheckedCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutProjectInput
   budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutProjectInput
+  serviceCompositions?: Prisma.ServiceCompositionUncheckedCreateNestedManyWithoutProjectInput
   serviceMeasurements?: Prisma.ServiceMeasurementUncheckedCreateNestedManyWithoutProjectInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUncheckedCreateNestedManyWithoutProjectInput
 }
@@ -3267,6 +3506,7 @@ export type ProjectUpdateWithoutWasteDisposalsInput = {
   files?: Prisma.FileUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUpdateManyWithoutProjectNestedInput
   budgetItems?: Prisma.BudgetItemUpdateManyWithoutProjectNestedInput
+  serviceCompositions?: Prisma.ServiceCompositionUpdateManyWithoutProjectNestedInput
   serviceMeasurements?: Prisma.ServiceMeasurementUpdateManyWithoutProjectNestedInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUpdateManyWithoutProjectNestedInput
 }
@@ -3304,6 +3544,7 @@ export type ProjectUncheckedUpdateWithoutWasteDisposalsInput = {
   files?: Prisma.FileUncheckedUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutProjectNestedInput
   budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutProjectNestedInput
+  serviceCompositions?: Prisma.ServiceCompositionUncheckedUpdateManyWithoutProjectNestedInput
   serviceMeasurements?: Prisma.ServiceMeasurementUncheckedUpdateManyWithoutProjectNestedInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUncheckedUpdateManyWithoutProjectNestedInput
 }
@@ -3341,6 +3582,7 @@ export type ProjectCreateWithoutDailyReportsInput = {
   files?: Prisma.FileCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutProjectInput
   budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutProjectInput
+  serviceCompositions?: Prisma.ServiceCompositionCreateNestedManyWithoutProjectInput
   serviceMeasurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutProjectInput
   materialRequirements?: Prisma.ProjectMaterialRequirementCreateNestedManyWithoutProjectInput
 }
@@ -3378,6 +3620,7 @@ export type ProjectUncheckedCreateWithoutDailyReportsInput = {
   files?: Prisma.FileUncheckedCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutProjectInput
   budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutProjectInput
+  serviceCompositions?: Prisma.ServiceCompositionUncheckedCreateNestedManyWithoutProjectInput
   serviceMeasurements?: Prisma.ServiceMeasurementUncheckedCreateNestedManyWithoutProjectInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUncheckedCreateNestedManyWithoutProjectInput
 }
@@ -3431,6 +3674,7 @@ export type ProjectUpdateWithoutDailyReportsInput = {
   files?: Prisma.FileUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUpdateManyWithoutProjectNestedInput
   budgetItems?: Prisma.BudgetItemUpdateManyWithoutProjectNestedInput
+  serviceCompositions?: Prisma.ServiceCompositionUpdateManyWithoutProjectNestedInput
   serviceMeasurements?: Prisma.ServiceMeasurementUpdateManyWithoutProjectNestedInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUpdateManyWithoutProjectNestedInput
 }
@@ -3468,6 +3712,7 @@ export type ProjectUncheckedUpdateWithoutDailyReportsInput = {
   files?: Prisma.FileUncheckedUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutProjectNestedInput
   budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutProjectNestedInput
+  serviceCompositions?: Prisma.ServiceCompositionUncheckedUpdateManyWithoutProjectNestedInput
   serviceMeasurements?: Prisma.ServiceMeasurementUncheckedUpdateManyWithoutProjectNestedInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUncheckedUpdateManyWithoutProjectNestedInput
 }
@@ -3505,6 +3750,7 @@ export type ProjectCreateWithoutAttendanceTransfersInput = {
   files?: Prisma.FileCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutProjectInput
   budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutProjectInput
+  serviceCompositions?: Prisma.ServiceCompositionCreateNestedManyWithoutProjectInput
   serviceMeasurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutProjectInput
   materialRequirements?: Prisma.ProjectMaterialRequirementCreateNestedManyWithoutProjectInput
 }
@@ -3542,6 +3788,7 @@ export type ProjectUncheckedCreateWithoutAttendanceTransfersInput = {
   files?: Prisma.FileUncheckedCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutProjectInput
   budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutProjectInput
+  serviceCompositions?: Prisma.ServiceCompositionUncheckedCreateNestedManyWithoutProjectInput
   serviceMeasurements?: Prisma.ServiceMeasurementUncheckedCreateNestedManyWithoutProjectInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUncheckedCreateNestedManyWithoutProjectInput
 }
@@ -3595,6 +3842,7 @@ export type ProjectUpdateWithoutAttendanceTransfersInput = {
   files?: Prisma.FileUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUpdateManyWithoutProjectNestedInput
   budgetItems?: Prisma.BudgetItemUpdateManyWithoutProjectNestedInput
+  serviceCompositions?: Prisma.ServiceCompositionUpdateManyWithoutProjectNestedInput
   serviceMeasurements?: Prisma.ServiceMeasurementUpdateManyWithoutProjectNestedInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUpdateManyWithoutProjectNestedInput
 }
@@ -3632,6 +3880,7 @@ export type ProjectUncheckedUpdateWithoutAttendanceTransfersInput = {
   files?: Prisma.FileUncheckedUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutProjectNestedInput
   budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutProjectNestedInput
+  serviceCompositions?: Prisma.ServiceCompositionUncheckedUpdateManyWithoutProjectNestedInput
   serviceMeasurements?: Prisma.ServiceMeasurementUncheckedUpdateManyWithoutProjectNestedInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUncheckedUpdateManyWithoutProjectNestedInput
 }
@@ -3669,6 +3918,7 @@ export type ProjectCreateWithoutFilesInput = {
   dailyReports?: Prisma.DailyReportCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutProjectInput
   budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutProjectInput
+  serviceCompositions?: Prisma.ServiceCompositionCreateNestedManyWithoutProjectInput
   serviceMeasurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutProjectInput
   materialRequirements?: Prisma.ProjectMaterialRequirementCreateNestedManyWithoutProjectInput
 }
@@ -3706,6 +3956,7 @@ export type ProjectUncheckedCreateWithoutFilesInput = {
   dailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutProjectInput
   budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutProjectInput
+  serviceCompositions?: Prisma.ServiceCompositionUncheckedCreateNestedManyWithoutProjectInput
   serviceMeasurements?: Prisma.ServiceMeasurementUncheckedCreateNestedManyWithoutProjectInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUncheckedCreateNestedManyWithoutProjectInput
 }
@@ -3759,6 +4010,7 @@ export type ProjectUpdateWithoutFilesInput = {
   dailyReports?: Prisma.DailyReportUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUpdateManyWithoutProjectNestedInput
   budgetItems?: Prisma.BudgetItemUpdateManyWithoutProjectNestedInput
+  serviceCompositions?: Prisma.ServiceCompositionUpdateManyWithoutProjectNestedInput
   serviceMeasurements?: Prisma.ServiceMeasurementUpdateManyWithoutProjectNestedInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUpdateManyWithoutProjectNestedInput
 }
@@ -3796,6 +4048,7 @@ export type ProjectUncheckedUpdateWithoutFilesInput = {
   dailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutProjectNestedInput
   budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutProjectNestedInput
+  serviceCompositions?: Prisma.ServiceCompositionUncheckedUpdateManyWithoutProjectNestedInput
   serviceMeasurements?: Prisma.ServiceMeasurementUncheckedUpdateManyWithoutProjectNestedInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUncheckedUpdateManyWithoutProjectNestedInput
 }
@@ -3833,6 +4086,7 @@ export type ProjectCreateWithoutFinancialEntriesInput = {
   dailyReports?: Prisma.DailyReportCreateNestedManyWithoutProjectInput
   files?: Prisma.FileCreateNestedManyWithoutProjectInput
   budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutProjectInput
+  serviceCompositions?: Prisma.ServiceCompositionCreateNestedManyWithoutProjectInput
   serviceMeasurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutProjectInput
   materialRequirements?: Prisma.ProjectMaterialRequirementCreateNestedManyWithoutProjectInput
 }
@@ -3870,6 +4124,7 @@ export type ProjectUncheckedCreateWithoutFinancialEntriesInput = {
   dailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutProjectInput
   files?: Prisma.FileUncheckedCreateNestedManyWithoutProjectInput
   budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutProjectInput
+  serviceCompositions?: Prisma.ServiceCompositionUncheckedCreateNestedManyWithoutProjectInput
   serviceMeasurements?: Prisma.ServiceMeasurementUncheckedCreateNestedManyWithoutProjectInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUncheckedCreateNestedManyWithoutProjectInput
 }
@@ -3923,6 +4178,7 @@ export type ProjectUpdateWithoutFinancialEntriesInput = {
   dailyReports?: Prisma.DailyReportUpdateManyWithoutProjectNestedInput
   files?: Prisma.FileUpdateManyWithoutProjectNestedInput
   budgetItems?: Prisma.BudgetItemUpdateManyWithoutProjectNestedInput
+  serviceCompositions?: Prisma.ServiceCompositionUpdateManyWithoutProjectNestedInput
   serviceMeasurements?: Prisma.ServiceMeasurementUpdateManyWithoutProjectNestedInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUpdateManyWithoutProjectNestedInput
 }
@@ -3960,6 +4216,7 @@ export type ProjectUncheckedUpdateWithoutFinancialEntriesInput = {
   dailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutProjectNestedInput
   files?: Prisma.FileUncheckedUpdateManyWithoutProjectNestedInput
   budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutProjectNestedInput
+  serviceCompositions?: Prisma.ServiceCompositionUncheckedUpdateManyWithoutProjectNestedInput
   serviceMeasurements?: Prisma.ServiceMeasurementUncheckedUpdateManyWithoutProjectNestedInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUncheckedUpdateManyWithoutProjectNestedInput
 }
@@ -3998,6 +4255,7 @@ export type ProjectCreateWithoutServiceMeasurementsInput = {
   files?: Prisma.FileCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutProjectInput
   budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutProjectInput
+  serviceCompositions?: Prisma.ServiceCompositionCreateNestedManyWithoutProjectInput
   materialRequirements?: Prisma.ProjectMaterialRequirementCreateNestedManyWithoutProjectInput
 }
 
@@ -4035,6 +4293,7 @@ export type ProjectUncheckedCreateWithoutServiceMeasurementsInput = {
   files?: Prisma.FileUncheckedCreateNestedManyWithoutProjectInput
   financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutProjectInput
   budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutProjectInput
+  serviceCompositions?: Prisma.ServiceCompositionUncheckedCreateNestedManyWithoutProjectInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUncheckedCreateNestedManyWithoutProjectInput
 }
 
@@ -4088,6 +4347,7 @@ export type ProjectUpdateWithoutServiceMeasurementsInput = {
   files?: Prisma.FileUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUpdateManyWithoutProjectNestedInput
   budgetItems?: Prisma.BudgetItemUpdateManyWithoutProjectNestedInput
+  serviceCompositions?: Prisma.ServiceCompositionUpdateManyWithoutProjectNestedInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUpdateManyWithoutProjectNestedInput
 }
 
@@ -4125,6 +4385,7 @@ export type ProjectUncheckedUpdateWithoutServiceMeasurementsInput = {
   files?: Prisma.FileUncheckedUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutProjectNestedInput
   budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutProjectNestedInput
+  serviceCompositions?: Prisma.ServiceCompositionUncheckedUpdateManyWithoutProjectNestedInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUncheckedUpdateManyWithoutProjectNestedInput
 }
 
@@ -4203,6 +4464,7 @@ export type ProjectUpdateWithoutManagerInput = {
   files?: Prisma.FileUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUpdateManyWithoutProjectNestedInput
   budgetItems?: Prisma.BudgetItemUpdateManyWithoutProjectNestedInput
+  serviceCompositions?: Prisma.ServiceCompositionUpdateManyWithoutProjectNestedInput
   serviceMeasurements?: Prisma.ServiceMeasurementUpdateManyWithoutProjectNestedInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUpdateManyWithoutProjectNestedInput
 }
@@ -4240,6 +4502,7 @@ export type ProjectUncheckedUpdateWithoutManagerInput = {
   files?: Prisma.FileUncheckedUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutProjectNestedInput
   budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutProjectNestedInput
+  serviceCompositions?: Prisma.ServiceCompositionUncheckedUpdateManyWithoutProjectNestedInput
   serviceMeasurements?: Prisma.ServiceMeasurementUncheckedUpdateManyWithoutProjectNestedInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUncheckedUpdateManyWithoutProjectNestedInput
 }
@@ -4298,6 +4561,7 @@ export type ProjectUpdateWithoutTechnicalResponsibleInput = {
   files?: Prisma.FileUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUpdateManyWithoutProjectNestedInput
   budgetItems?: Prisma.BudgetItemUpdateManyWithoutProjectNestedInput
+  serviceCompositions?: Prisma.ServiceCompositionUpdateManyWithoutProjectNestedInput
   serviceMeasurements?: Prisma.ServiceMeasurementUpdateManyWithoutProjectNestedInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUpdateManyWithoutProjectNestedInput
 }
@@ -4335,6 +4599,7 @@ export type ProjectUncheckedUpdateWithoutTechnicalResponsibleInput = {
   files?: Prisma.FileUncheckedUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutProjectNestedInput
   budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutProjectNestedInput
+  serviceCompositions?: Prisma.ServiceCompositionUncheckedUpdateManyWithoutProjectNestedInput
   serviceMeasurements?: Prisma.ServiceMeasurementUncheckedUpdateManyWithoutProjectNestedInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUncheckedUpdateManyWithoutProjectNestedInput
 }
@@ -4414,6 +4679,7 @@ export type ProjectUpdateWithoutClientInput = {
   files?: Prisma.FileUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUpdateManyWithoutProjectNestedInput
   budgetItems?: Prisma.BudgetItemUpdateManyWithoutProjectNestedInput
+  serviceCompositions?: Prisma.ServiceCompositionUpdateManyWithoutProjectNestedInput
   serviceMeasurements?: Prisma.ServiceMeasurementUpdateManyWithoutProjectNestedInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUpdateManyWithoutProjectNestedInput
 }
@@ -4451,6 +4717,7 @@ export type ProjectUncheckedUpdateWithoutClientInput = {
   files?: Prisma.FileUncheckedUpdateManyWithoutProjectNestedInput
   financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutProjectNestedInput
   budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutProjectNestedInput
+  serviceCompositions?: Prisma.ServiceCompositionUncheckedUpdateManyWithoutProjectNestedInput
   serviceMeasurements?: Prisma.ServiceMeasurementUncheckedUpdateManyWithoutProjectNestedInput
   materialRequirements?: Prisma.ProjectMaterialRequirementUncheckedUpdateManyWithoutProjectNestedInput
 }
@@ -4496,6 +4763,7 @@ export type ProjectCountOutputType = {
   files: number
   financialEntries: number
   budgetItems: number
+  serviceCompositions: number
   serviceMeasurements: number
   materialRequirements: number
 }
@@ -4515,6 +4783,7 @@ export type ProjectCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   files?: boolean | ProjectCountOutputTypeCountFilesArgs
   financialEntries?: boolean | ProjectCountOutputTypeCountFinancialEntriesArgs
   budgetItems?: boolean | ProjectCountOutputTypeCountBudgetItemsArgs
+  serviceCompositions?: boolean | ProjectCountOutputTypeCountServiceCompositionsArgs
   serviceMeasurements?: boolean | ProjectCountOutputTypeCountServiceMeasurementsArgs
   materialRequirements?: boolean | ProjectCountOutputTypeCountMaterialRequirementsArgs
 }
@@ -4630,6 +4899,13 @@ export type ProjectCountOutputTypeCountBudgetItemsArgs<ExtArgs extends runtime.T
 /**
  * ProjectCountOutputType without action
  */
+export type ProjectCountOutputTypeCountServiceCompositionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ServiceCompositionWhereInput
+}
+
+/**
+ * ProjectCountOutputType without action
+ */
 export type ProjectCountOutputTypeCountServiceMeasurementsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.ServiceMeasurementWhereInput
 }
@@ -4679,6 +4955,7 @@ export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   files?: boolean | Prisma.Project$filesArgs<ExtArgs>
   financialEntries?: boolean | Prisma.Project$financialEntriesArgs<ExtArgs>
   budgetItems?: boolean | Prisma.Project$budgetItemsArgs<ExtArgs>
+  serviceCompositions?: boolean | Prisma.Project$serviceCompositionsArgs<ExtArgs>
   serviceMeasurements?: boolean | Prisma.Project$serviceMeasurementsArgs<ExtArgs>
   materialRequirements?: boolean | Prisma.Project$materialRequirementsArgs<ExtArgs>
   _count?: boolean | Prisma.ProjectCountOutputTypeDefaultArgs<ExtArgs>
@@ -4775,6 +5052,7 @@ export type ProjectInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   files?: boolean | Prisma.Project$filesArgs<ExtArgs>
   financialEntries?: boolean | Prisma.Project$financialEntriesArgs<ExtArgs>
   budgetItems?: boolean | Prisma.Project$budgetItemsArgs<ExtArgs>
+  serviceCompositions?: boolean | Prisma.Project$serviceCompositionsArgs<ExtArgs>
   serviceMeasurements?: boolean | Prisma.Project$serviceMeasurementsArgs<ExtArgs>
   materialRequirements?: boolean | Prisma.Project$materialRequirementsArgs<ExtArgs>
   _count?: boolean | Prisma.ProjectCountOutputTypeDefaultArgs<ExtArgs>
@@ -4810,6 +5088,7 @@ export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     files: Prisma.$FilePayload<ExtArgs>[]
     financialEntries: Prisma.$FinancialEntryPayload<ExtArgs>[]
     budgetItems: Prisma.$BudgetItemPayload<ExtArgs>[]
+    serviceCompositions: Prisma.$ServiceCompositionPayload<ExtArgs>[]
     serviceMeasurements: Prisma.$ServiceMeasurementPayload<ExtArgs>[]
     materialRequirements: Prisma.$ProjectMaterialRequirementPayload<ExtArgs>[]
   }
@@ -5244,6 +5523,7 @@ export interface Prisma__ProjectClient<T, Null = never, ExtArgs extends runtime.
   files<T extends Prisma.Project$filesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$filesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   financialEntries<T extends Prisma.Project$financialEntriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$financialEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FinancialEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   budgetItems<T extends Prisma.Project$budgetItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$budgetItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BudgetItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  serviceCompositions<T extends Prisma.Project$serviceCompositionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$serviceCompositionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceCompositionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   serviceMeasurements<T extends Prisma.Project$serviceMeasurementsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$serviceMeasurementsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceMeasurementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   materialRequirements<T extends Prisma.Project$materialRequirementsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$materialRequirementsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectMaterialRequirementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -6066,6 +6346,30 @@ export type Project$budgetItemsArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.BudgetItemScalarFieldEnum | Prisma.BudgetItemScalarFieldEnum[]
+}
+
+/**
+ * Project.serviceCompositions
+ */
+export type Project$serviceCompositionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ServiceComposition
+   */
+  select?: Prisma.ServiceCompositionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ServiceComposition
+   */
+  omit?: Prisma.ServiceCompositionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ServiceCompositionInclude<ExtArgs> | null
+  where?: Prisma.ServiceCompositionWhereInput
+  orderBy?: Prisma.ServiceCompositionOrderByWithRelationInput | Prisma.ServiceCompositionOrderByWithRelationInput[]
+  cursor?: Prisma.ServiceCompositionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ServiceCompositionScalarFieldEnum | Prisma.ServiceCompositionScalarFieldEnum[]
 }
 
 /**

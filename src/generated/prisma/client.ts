@@ -72,6 +72,16 @@ export type Task = Prisma.TaskModel
  */
 export type BudgetItem = Prisma.BudgetItemModel
 /**
+ * Model ServiceComposition
+ * 
+ */
+export type ServiceComposition = Prisma.ServiceCompositionModel
+/**
+ * Model ServiceCompositionMaterial
+ * 
+ */
+export type ServiceCompositionMaterial = Prisma.ServiceCompositionMaterialModel
+/**
  * Model TaskChecklistItem
  * 
  */

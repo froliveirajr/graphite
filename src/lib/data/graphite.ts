@@ -43,6 +43,7 @@ export const navigation = [
   { label: "Quantitativos", href: "/project-materials", icon: ClipboardCheck },
   { label: "Compras", href: "/purchases", icon: PackageCheck },
   { label: "Orcamento", href: "/budget-items", icon: PercentCircle },
+  { label: "Composicoes", href: "/service-compositions", icon: ClipboardCheck },
   { label: "Medicoes", href: "/measurements", icon: ClipboardCheck },
   { label: "Estoque", href: "/stock", icon: Archive },
   { label: "Diario de obra", href: "/daily-reports", icon: NotebookText },

@@ -345,6 +345,8 @@ export type BudgetItemListItem = {
   project: string;
   taskId: string;
   task: string;
+  compositionId: string;
+  composition: string;
   code: string;
   phase: string;
   description: string;
@@ -358,6 +360,33 @@ export type BudgetItemListItem = {
   physicalProgress: number;
   status: string;
   notes: string;
+};
+
+export type ServiceCompositionMaterialItem = {
+  id: string;
+  materialId: string;
+  material: string;
+  quantityPerUnit: number;
+  unit: string;
+  wastePercent: number;
+  notes: string;
+};
+
+export type ServiceCompositionListItem = {
+  id: string;
+  projectId: string;
+  project: string;
+  code: string;
+  name: string;
+  serviceType: string;
+  unit: string;
+  unitPrice: number;
+  materials: number;
+  notes: string;
+};
+
+export type ServiceCompositionDetails = ServiceCompositionListItem & {
+  materialLines: ServiceCompositionMaterialItem[];
 };
 
 export type MeasurementListItem = {
@@ -743,6 +772,7 @@ export async function getProjectDetails(id: string): Promise<ProjectDetails | nu
         budgetItems: {
           include: {
             task: true,
+            composition: true,
           },
           orderBy: [
             {
@@ -961,6 +991,8 @@ export async function getProjectDetails(id: string): Promise<ProjectDetails | nu
         project: project.name,
         taskId: item.taskId ?? "",
         task: item.task?.title ?? "-",
+        compositionId: item.compositionId ?? "",
+        composition: item.composition?.name ?? "-",
         code: item.code ?? "-",
         phase: item.phase,
         description: item.description,
@@ -1485,6 +1517,7 @@ export async function getBudgetItems(): Promise<BudgetItemListItem[]> {
       include: {
         project: true,
         task: true,
+        composition: true,
       },
       orderBy: [
         { project: { updatedAt: "desc" } },
@@ -1498,6 +1531,8 @@ export async function getBudgetItems(): Promise<BudgetItemListItem[]> {
       project: item.project.name,
       taskId: item.taskId ?? "",
       task: item.task?.title ?? "-",
+      compositionId: item.compositionId ?? "",
+      composition: item.composition?.name ?? "-",
       code: item.code ?? "-",
       phase: item.phase,
       description: item.description,
@@ -1521,6 +1556,108 @@ export async function getBudgetItems(): Promise<BudgetItemListItem[]> {
 export async function getBudgetItemDetails(id: string): Promise<BudgetItemListItem | null> {
   const items = await getBudgetItems();
   return items.find((item) => item.id === id) ?? null;
+}
+
+export async function getServiceCompositions(): Promise<ServiceCompositionListItem[]> {
+  if (!hasDatabaseUrl()) {
+    return [];
+  }
+
+  try {
+    const { prisma } = await import("@/lib/db/prisma");
+    const compositions = await prisma.serviceComposition.findMany({
+      include: {
+        project: true,
+        _count: {
+          select: {
+            materials: true,
+          },
+        },
+      },
+      orderBy: {
+        updatedAt: "desc",
+      },
+    });
+
+    return compositions.map((composition) => ({
+      id: composition.id,
+      projectId: composition.projectId ?? "",
+      project: composition.project?.name ?? "Padrao",
+      code: composition.code ?? "-",
+      name: composition.name,
+      serviceType: composition.serviceType,
+      unit: composition.unit,
+      unitPrice: toNumber(composition.unitPrice),
+      materials: composition._count.materials,
+      notes: composition.notes ?? "",
+    }));
+  } catch (error) {
+    console.warn("Falha ao buscar composicoes de servico.", error);
+    return [];
+  }
+}
+
+export async function getServiceCompositionDetails(id: string): Promise<ServiceCompositionDetails | null> {
+  if (!hasDatabaseUrl()) {
+    return null;
+  }
+
+  try {
+    const { prisma } = await import("@/lib/db/prisma");
+    const composition = await prisma.serviceComposition.findUnique({
+      where: { id },
+      include: {
+        project: true,
+        materials: {
+          include: {
+            material: true,
+          },
+          orderBy: {
+            createdAt: "asc",
+          },
+        },
+      },
+    });
+
+    if (!composition) {
+      return null;
+    }
+
+    return {
+      id: composition.id,
+      projectId: composition.projectId ?? "",
+      project: composition.project?.name ?? "Padrao",
+      code: composition.code ?? "",
+      name: composition.name,
+      serviceType: composition.serviceType,
+      unit: composition.unit,
+      unitPrice: toNumber(composition.unitPrice),
+      materials: composition.materials.length,
+      notes: composition.notes ?? "",
+      materialLines: composition.materials.map((line) => ({
+        id: line.id,
+        materialId: line.materialId,
+        material: line.material.name,
+        quantityPerUnit: toNumber(line.quantityPerUnit),
+        unit: line.unit,
+        wastePercent: toNumber(line.wastePercent),
+        notes: line.notes ?? "",
+      })),
+    };
+  } catch (error) {
+    console.warn("Falha ao buscar composicao de servico.", error);
+    return null;
+  }
+}
+
+export async function getServiceCompositionOptions(): Promise<Array<{ id: string; label: string; unit: string; unitPrice: number }>> {
+  const compositions = await getServiceCompositions();
+  return compositions.map((composition) => ({
+    id: composition.id,
+    label: `${composition.code === "-" ? "" : `${composition.code} - `}${composition.name}`,
+    unit: composition.unit,
+    unitPrice: composition.unitPrice,
+  }));
 }
 
 export async function getBudgetItemOptions(): Promise<

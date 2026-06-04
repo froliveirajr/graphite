@@ -2,12 +2,12 @@ import Link from "next/link";
 import { AppShell } from "@/components/layout/app-shell";
 import { PageHeader } from "@/components/ui/page-header";
 import { createBudgetItemAction } from "@/lib/actions/budget-items";
-import { getProjectTaskOptions } from "@/lib/repositories/graphite";
+import { getProjectTaskOptions, getServiceCompositionOptions } from "@/lib/repositories/graphite";
 
 const statuses = ["Planejado", "Em andamento", "Concluido", "Cancelado"];
 
 export default async function NewBudgetItemPage({ searchParams }: { searchParams: Promise<{ error?: string; projectId?: string }> }) {
-  const [{ error, projectId }, projects] = await Promise.all([searchParams, getProjectTaskOptions()]);
+  const [{ error, projectId }, projects, compositions] = await Promise.all([searchParams, getProjectTaskOptions(), getServiceCompositionOptions()]);
 
   return (
     <AppShell>
@@ -23,6 +23,12 @@ export default async function NewBudgetItemPage({ searchParams }: { searchParams
               </select>
             </label>
             <input type="hidden" name="taskId" value="" />
+            <label className="text-sm font-medium text-zinc-800">Composicao
+              <select name="compositionId" className="mt-2 h-11 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm">
+                <option value="">Sem composicao</option>
+                {compositions.map((composition) => <option key={composition.id} value={composition.id}>{composition.label}</option>)}
+              </select>
+            </label>
             <label className="text-sm font-medium text-zinc-800">Codigo
               <input name="code" className="mt-2 h-11 w-full rounded-md border border-zinc-200 px-3 text-sm" />
             </label>

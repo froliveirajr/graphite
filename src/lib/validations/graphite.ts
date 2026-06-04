@@ -107,6 +107,7 @@ export const employeeAllocationSchema = z.object({
 export const budgetItemSchema = z.object({
   projectId: z.string().min(1, "Selecione uma obra."),
   taskId: z.string().optional(),
+  compositionId: z.string().optional(),
   code: z.string().optional(),
   phase: z.string().min(2, "Informe a etapa."),
   description: z.string().min(3, "Informe a descricao."),
@@ -118,6 +119,16 @@ export const budgetItemSchema = z.object({
   plannedEndDate: z.string().optional(),
   physicalProgress: z.coerce.number().min(0).max(100).optional(),
   status: z.enum(["Planejado", "Em andamento", "Concluido", "Cancelado"]),
+  notes: z.string().optional(),
+});
+
+export const serviceCompositionSchema = z.object({
+  projectId: z.string().optional(),
+  code: z.string().optional(),
+  name: z.string().min(3, "Informe o nome da composicao."),
+  serviceType: z.string().min(2, "Informe o tipo de servico."),
+  unit: z.string().min(1, "Informe a unidade do servico."),
+  unitPrice: z.coerce.number().nonnegative("Informe um valor unitario valido.").optional(),
   notes: z.string().optional(),
 });
 
@@ -168,6 +179,7 @@ export type MaterialInput = z.infer<typeof materialSchema>;
 export type DailyReportInput = z.infer<typeof dailyReportSchema>;
 export type EmployeeAllocationInput = z.infer<typeof employeeAllocationSchema>;
 export type BudgetItemInput = z.infer<typeof budgetItemSchema>;
+export type ServiceCompositionInput = z.infer<typeof serviceCompositionSchema>;
 export type ServiceMeasurementInput = z.infer<typeof serviceMeasurementSchema>;
 export type PurchaseRequestInput = z.infer<typeof purchaseRequestSchema>;
 export type ProjectMaterialRequirementInput = z.infer<typeof projectMaterialRequirementSchema>;
