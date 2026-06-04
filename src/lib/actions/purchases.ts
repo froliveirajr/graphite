@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { PurchaseStatus, StockMovementType } from "@/generated/prisma/client";
+import { ApprovalStatus, PurchaseStatus, StockMovementType } from "@/generated/prisma/client";
 import { requireSession } from "@/lib/auth/session";
 import { purchaseRequestSchema } from "@/lib/validations/graphite";
 
@@ -130,7 +130,10 @@ async function validateMaterialBudget(
     const requirement = requirementsByMaterial.get(materialId);
 
     if (!requirement) {
-      return "Material nao possui quantitativo previsto para esta obra. Lance o material em Quantitativos antes de pedir.";
+      return {
+        requiresApproval: false,
+        message: "Material nao possui quantitativo previsto para esta obra. Lance o material em Quantitativos antes de pedir.",
+      };
     }
 
     const plannedQuantity = Number(requirement.plannedQuantity);
@@ -138,13 +141,51 @@ async function validateMaterialBudget(
     const remainingQuantity = plannedQuantity - alreadyRequested;
 
     if (quantity > remainingQuantity + 0.0001) {
-      return `Pedido excede o saldo de ${requirement.material.name}. Saldo disponivel: ${remainingQuantity.toLocaleString("pt-BR", {
-        maximumFractionDigits: 3,
-      })} ${requirement.unit}`;
+      return {
+        requiresApproval: true,
+        message: `Pedido excede o saldo de ${requirement.material.name}. Saldo disponivel: ${remainingQuantity.toLocaleString("pt-BR", {
+          maximumFractionDigits: 3,
+        })} ${requirement.unit}`,
+      };
     }
   }
 
   return null;
+}
+
+async function upsertPurchaseApproval(
+  prisma: Awaited<typeof import("@/lib/db/prisma")>["prisma"],
+  purchaseId: string,
+  requestedById: string,
+  justification: string,
+) {
+  const existing = await prisma.approval.findFirst({
+    where: {
+      approvalType: "PURCHASE_MATERIAL_OVERRUN",
+      referenceId: purchaseId,
+      status: ApprovalStatus.PENDING,
+    },
+  });
+
+  if (existing) {
+    await prisma.approval.update({
+      where: { id: existing.id },
+      data: {
+        justification,
+      },
+    });
+    return;
+  }
+
+  await prisma.approval.create({
+    data: {
+      approvalType: "PURCHASE_MATERIAL_OVERRUN",
+      referenceId: purchaseId,
+      requestedById,
+      status: ApprovalStatus.PENDING,
+      justification,
+    },
+  });
 }
 
 export async function createPurchaseAction(formData: FormData) {
@@ -167,14 +208,22 @@ export async function createPurchaseAction(formData: FormData) {
   const budgetError = await validateMaterialBudget(prisma, input.projectId, items);
 
   if (budgetError) {
-    redirect(`/purchases/new?error=${encodeURIComponent(budgetError)}`);
+    if (!budgetError.requiresApproval) {
+      redirect(`/purchases/new?error=${encodeURIComponent(budgetError.message)}`);
+    }
+
+    if (!input.justification) {
+      redirect(
+        `/purchases/new?error=${encodeURIComponent(`${budgetError.message}. Preencha uma justificativa para enviar ao administrador.`)}`,
+      );
+    }
   }
 
-  await prisma.purchaseRequest.create({
+  const purchase = await prisma.purchaseRequest.create({
     data: {
       projectId: input.projectId,
       requestedById: session.userId,
-      status: statusMap[input.status],
+      status: budgetError?.requiresApproval ? PurchaseStatus.WAITING_APPROVAL : statusMap[input.status],
       urgency: input.urgency || null,
       neededBy: dateFromInput(input.neededBy),
       justification: input.justification || null,
@@ -187,13 +236,17 @@ export async function createPurchaseAction(formData: FormData) {
     },
   });
 
+  if (budgetError?.requiresApproval) {
+    await upsertPurchaseApproval(prisma, purchase.id, session.userId, input.justification ?? "");
+  }
+
   revalidatePath("/purchases");
   revalidatePath(`/projects/${input.projectId}`);
   redirect("/purchases?created=1");
 }
 
 export async function updatePurchaseAction(formData: FormData) {
-  await requireSession();
+  const session = await requireSession();
   const id = getString(formData, "id");
   const parsed = parsePurchase(formData);
 
@@ -217,7 +270,15 @@ export async function updatePurchaseAction(formData: FormData) {
   const budgetError = await validateMaterialBudget(prisma, input.projectId, items, id);
 
   if (budgetError) {
-    redirect(`/purchases/${id}/edit?error=${encodeURIComponent(budgetError)}`);
+    if (!budgetError.requiresApproval) {
+      redirect(`/purchases/${id}/edit?error=${encodeURIComponent(budgetError.message)}`);
+    }
+
+    if (!input.justification) {
+      redirect(
+        `/purchases/${id}/edit?error=${encodeURIComponent(`${budgetError.message}. Preencha uma justificativa para enviar ao administrador.`)}`,
+      );
+    }
   }
 
   await prisma.$transaction(async (tx) => {
@@ -226,7 +287,7 @@ export async function updatePurchaseAction(formData: FormData) {
       where: { id },
       data: {
         projectId: input.projectId,
-        status: statusMap[input.status],
+        status: budgetError?.requiresApproval ? PurchaseStatus.WAITING_APPROVAL : statusMap[input.status],
         urgency: input.urgency || null,
         neededBy: dateFromInput(input.neededBy),
         justification: input.justification || null,
@@ -239,6 +300,10 @@ export async function updatePurchaseAction(formData: FormData) {
       },
     });
   });
+
+  if (budgetError?.requiresApproval) {
+    await upsertPurchaseApproval(prisma, id, session.userId, input.justification ?? "");
+  }
 
   revalidatePath("/purchases");
   revalidatePath(`/projects/${input.projectId}`);
@@ -284,6 +349,19 @@ export async function approvePurchaseAction(formData: FormData) {
     },
   });
 
+  await prisma.approval.updateMany({
+    where: {
+      approvalType: "PURCHASE_MATERIAL_OVERRUN",
+      referenceId: id,
+      status: ApprovalStatus.PENDING,
+    },
+    data: {
+      status: ApprovalStatus.APPROVED,
+      approvedById: session.userId,
+      respondedAt: new Date(),
+    },
+  });
+
   revalidatePath("/purchases");
   redirect("/purchases?approved=1");
 }
@@ -298,6 +376,17 @@ export async function rejectPurchaseAction(formData: FormData) {
 
   const { prisma } = await import("@/lib/db/prisma");
   await prisma.purchaseRequest.update({ where: { id }, data: { status: PurchaseStatus.REJECTED } });
+  await prisma.approval.updateMany({
+    where: {
+      approvalType: "PURCHASE_MATERIAL_OVERRUN",
+      referenceId: id,
+      status: ApprovalStatus.PENDING,
+    },
+    data: {
+      status: ApprovalStatus.REJECTED,
+      respondedAt: new Date(),
+    },
+  });
 
   revalidatePath("/purchases");
   redirect("/purchases?rejected=1");
@@ -321,6 +410,10 @@ export async function receivePurchaseAction(formData: FormData) {
 
   if (!purchase) {
     redirect("/purchases?error=Pedido%20nao%20encontrado");
+  }
+
+  if (purchase.status === PurchaseStatus.WAITING_APPROVAL) {
+    redirect("/purchases?error=Pedido%20aguardando%20aprovacao%20do%20administrador");
   }
 
   const receivableItems = purchase.items.filter((item) => item.materialId);

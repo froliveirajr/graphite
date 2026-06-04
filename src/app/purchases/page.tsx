@@ -47,6 +47,7 @@ export default async function PurchasesPage({
 }) {
   const [purchases, params] = await Promise.all([getPurchases(), searchParams]);
   const feedback = message(params);
+  const pendingOverruns = purchases.filter((purchase) => purchase.overrunApprovalPending);
 
   return (
     <AppShell>
@@ -71,13 +72,38 @@ export default async function PurchasesPage({
             {feedback.text}
           </div>
         ) : null}
+        {pendingOverruns.length > 0 ? (
+          <div className="mb-5 rounded-lg border border-amber-200 bg-amber-50 p-4">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <h2 className="font-semibold text-amber-950">Pedidos acima do quantitativo aguardando autorizacao</h2>
+                <p className="mt-1 text-sm text-amber-800">
+                  Revise a justificativa e aprove ou reprove antes da compra/recebimento.
+                </p>
+              </div>
+              <strong className="text-sm text-amber-900">{pendingOverruns.length} pendente(s)</strong>
+            </div>
+            <div className="mt-3 grid gap-2">
+              {pendingOverruns.map((purchase) => (
+                <div key={purchase.id} className="rounded-md border border-amber-200 bg-white px-3 py-2 text-sm">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <strong>{purchase.project}</strong>
+                    <span>{purchase.requester}</span>
+                  </div>
+                  <p className="mt-1 text-amber-900">{purchase.approvalJustification || purchase.justification}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : null}
         <div className="overflow-hidden rounded-lg border border-zinc-200 bg-white shadow-sm">
-          <table className="w-full min-w-[1160px] text-left text-sm">
+          <table className="w-full min-w-[1240px] text-left text-sm">
             <thead className="bg-zinc-50 text-xs uppercase tracking-wide text-zinc-500">
               <tr>
                 <th className="px-4 py-3">Obra</th>
                 <th className="px-4 py-3">Solicitante</th>
                 <th className="px-4 py-3">Status</th>
+                <th className="px-4 py-3">Excecao</th>
                 <th className="px-4 py-3">Urgencia</th>
                 <th className="px-4 py-3">Necessario em</th>
                 <th className="px-4 py-3">Itens</th>
@@ -92,6 +118,15 @@ export default async function PurchasesPage({
                   <td className="px-4 py-4 font-semibold">{purchase.project}</td>
                   <td className="px-4 py-4 text-zinc-700">{purchase.requester}</td>
                   <td className="px-4 py-4"><StatusBadge value={purchase.status} /></td>
+                  <td className="px-4 py-4">
+                    {purchase.overrunApprovalPending ? (
+                      <span className="rounded-full bg-amber-100 px-2 py-1 text-xs font-semibold text-amber-800">Aprovar excesso</span>
+                    ) : purchase.approvalStatus === "APPROVED" ? (
+                      <span className="rounded-full bg-emerald-100 px-2 py-1 text-xs font-semibold text-emerald-700">Excesso autorizado</span>
+                    ) : (
+                      <span className="text-xs text-zinc-400">-</span>
+                    )}
+                  </td>
                   <td className="px-4 py-4 text-zinc-700">{purchase.urgency}</td>
                   <td className="px-4 py-4 text-zinc-700">{purchase.neededBy}</td>
                   <td className="px-4 py-4 font-medium">{purchase.items}</td>
@@ -131,7 +166,7 @@ export default async function PurchasesPage({
                 </tr>
               )) : (
                 <tr>
-                  <td colSpan={9} className="px-4 py-10 text-center text-sm text-zinc-500">
+                  <td colSpan={10} className="px-4 py-10 text-center text-sm text-zinc-500">
                     Nenhuma solicitacao de compra cadastrada.
                   </td>
                 </tr>

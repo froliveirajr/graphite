@@ -170,6 +170,9 @@ export type PurchaseListItem = {
   project: string;
   requester: string;
   status: string;
+  approvalStatus: string;
+  approvalJustification: string;
+  overrunApprovalPending: boolean;
   urgency: string;
   neededBy: string;
   estimatedTotal: number;
@@ -825,6 +828,18 @@ export async function getProjectDetails(id: string): Promise<ProjectDetails | nu
       if (movement.movementType !== "PURCHASE_ENTRY") return;
       receivedByMaterial.set(movement.materialId, (receivedByMaterial.get(movement.materialId) ?? 0) + toNumber(movement.quantity));
     });
+    const purchaseApprovals = await prisma.approval.findMany({
+      where: {
+        approvalType: "PURCHASE_MATERIAL_OVERRUN",
+        referenceId: {
+          in: project.purchaseRequests.map((purchase) => purchase.id),
+        },
+      },
+      orderBy: {
+        requestedAt: "desc",
+      },
+    });
+    const approvalByPurchase = new Map(purchaseApprovals.map((approval) => [approval.referenceId, approval]));
 
     return {
       id: project.id,
@@ -883,6 +898,9 @@ export async function getProjectDetails(id: string): Promise<ProjectDetails | nu
         project: project.name,
         requester: purchase.requestedBy.name,
         status: purchaseStatusLabels[purchase.status] ?? purchase.status,
+        approvalStatus: approvalByPurchase.get(purchase.id)?.status ?? "",
+        approvalJustification: approvalByPurchase.get(purchase.id)?.justification ?? "",
+        overrunApprovalPending: approvalByPurchase.get(purchase.id)?.status === "PENDING",
         urgency: purchase.urgency ?? "-",
         neededBy: formatDate(purchase.neededBy),
         estimatedTotal: toNumber(purchase.estimatedTotal),
@@ -1231,6 +1249,18 @@ export async function getPurchases(): Promise<PurchaseListItem[]> {
         updatedAt: "desc",
       },
     });
+    const approvals = await prisma.approval.findMany({
+      where: {
+        approvalType: "PURCHASE_MATERIAL_OVERRUN",
+        referenceId: {
+          in: purchases.map((purchase) => purchase.id),
+        },
+      },
+      orderBy: {
+        requestedAt: "desc",
+      },
+    });
+    const approvalByPurchase = new Map(approvals.map((approval) => [approval.referenceId, approval]));
 
     return purchases.map((purchase) => ({
       id: purchase.id,
@@ -1238,6 +1268,9 @@ export async function getPurchases(): Promise<PurchaseListItem[]> {
       project: purchase.project.name,
       requester: purchase.requestedBy.name,
       status: purchaseStatusLabels[purchase.status] ?? purchase.status,
+      approvalStatus: approvalByPurchase.get(purchase.id)?.status ?? "",
+      approvalJustification: approvalByPurchase.get(purchase.id)?.justification ?? "",
+      overrunApprovalPending: approvalByPurchase.get(purchase.id)?.status === "PENDING",
       urgency: purchase.urgency ?? "-",
       neededBy: formatDate(purchase.neededBy),
       estimatedTotal: toNumber(purchase.estimatedTotal),
@@ -1285,6 +1318,9 @@ export async function getPurchaseDetails(id: string): Promise<PurchaseDetails | 
       project: purchase.project.name,
       requester: purchase.requestedBy.name,
       status: purchaseStatusLabels[purchase.status] ?? purchase.status,
+      approvalStatus: "",
+      approvalJustification: "",
+      overrunApprovalPending: false,
       urgency: purchase.urgency ?? "",
       neededBy: purchase.neededBy ? formatDate(purchase.neededBy) : "",
       estimatedTotal: toNumber(purchase.estimatedTotal),

@@ -264,6 +264,11 @@ export default async function ProjectDetailsPage({
                         <StatusBadge value={purchase.status} />
                         <p className="mt-2 font-semibold">{purchase.items} itens - {purchase.urgency}</p>
                         <p className="text-zinc-500">Solicitado por {purchase.requester} para {purchase.neededBy}</p>
+                        {purchase.overrunApprovalPending ? (
+                          <p className="mt-2 rounded-md bg-amber-50 px-2 py-1 text-xs font-semibold text-amber-800">
+                            Acima do quantitativo previsto: aguardando autorizacao administrativa.
+                          </p>
+                        ) : null}
                       </div>
                       <strong>{formatCurrency(purchase.estimatedTotal)}</strong>
                     </div>

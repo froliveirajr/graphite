@@ -69,6 +69,7 @@ export default async function NewPurchasePage({ searchParams }: { searchParams: 
             </label>
             <label className="text-sm font-medium text-zinc-800 md:col-span-2">
               Justificativa
+              <span className="ml-2 text-xs font-normal text-zinc-500">Obrigatoria se algum item ultrapassar o quantitativo previsto da obra.</span>
               <textarea name="justification" rows={3} className="mt-2 w-full rounded-md border border-zinc-200 px-3 py-2 text-sm" />
             </label>
             <label className="text-sm font-medium text-zinc-800 md:col-span-2">
