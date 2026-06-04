@@ -103,9 +103,27 @@ export type MaterialListItem = {
   notes: string;
 };
 
+export type ProjectMaterialRequirementItem = {
+  id: string;
+  projectId: string;
+  project: string;
+  materialId: string;
+  material: string;
+  category: string;
+  plannedQuantity: number;
+  requestedQuantity: number;
+  receivedQuantity: number;
+  remainingQuantity: number;
+  unit: string;
+  estimatedUnitPrice: number;
+  estimatedTotal: number;
+  notes: string;
+};
+
 export type ProjectDetails = ProjectListItem & {
   areas: ProjectAreaItem[];
   tasks: TaskItem[];
+  materialRequirements: ProjectMaterialRequirementItem[];
   materialRequests: PurchaseListItem[];
   stockMovements: StockMovementListItem[];
   employeeAllocations: EmployeeAllocationListItem[];
@@ -410,6 +428,7 @@ function demoProjectDetails(id: string): ProjectDetails | null {
     ...project,
     areas: demoProjectAreas,
     tasks: demoTasks,
+    materialRequirements: [],
     materialRequests: [],
     stockMovements: [],
     employeeAllocations: [],
@@ -669,6 +688,12 @@ export async function getProjectDetails(id: string): Promise<ProjectDetails | nu
         purchaseRequests: {
           include: {
             requestedBy: true,
+            items: {
+              select: {
+                materialId: true,
+                quantity: true,
+              },
+            },
             _count: {
               select: {
                 items: true,
@@ -677,6 +702,16 @@ export async function getProjectDetails(id: string): Promise<ProjectDetails | nu
           },
           orderBy: {
             updatedAt: "desc",
+          },
+        },
+        materialRequirements: {
+          include: {
+            material: true,
+          },
+          orderBy: {
+            material: {
+              name: "asc",
+            },
           },
         },
         stockMovements: {
@@ -777,6 +812,19 @@ export async function getProjectDetails(id: string): Promise<ProjectDetails | nu
       priority: priorityLabels[task.priority] ?? task.priority,
       due: formatDate(task.plannedEndDate),
     }));
+    const requestedByMaterial = new Map<string, number>();
+    const receivedByMaterial = new Map<string, number>();
+
+    project.purchaseRequests.forEach((purchase) => {
+      purchase.items.forEach((item) => {
+        if (!item.materialId) return;
+        requestedByMaterial.set(item.materialId, (requestedByMaterial.get(item.materialId) ?? 0) + toNumber(item.quantity));
+      });
+    });
+    project.stockMovements.forEach((movement) => {
+      if (movement.movementType !== "PURCHASE_ENTRY") return;
+      receivedByMaterial.set(movement.materialId, (receivedByMaterial.get(movement.materialId) ?? 0) + toNumber(movement.quantity));
+    });
 
     return {
       id: project.id,
@@ -806,6 +854,29 @@ export async function getProjectDetails(id: string): Promise<ProjectDetails | nu
         tasks: area.tasks.length,
       })),
       tasks: mappedTasks,
+      materialRequirements: project.materialRequirements.map((requirement) => {
+        const requestedQuantity = requestedByMaterial.get(requirement.materialId) ?? 0;
+        const receivedQuantity = receivedByMaterial.get(requirement.materialId) ?? 0;
+        const plannedQuantity = toNumber(requirement.plannedQuantity);
+        const estimatedUnitPrice = toNumber(requirement.estimatedUnitPrice);
+
+        return {
+          id: requirement.id,
+          projectId: requirement.projectId,
+          project: project.name,
+          materialId: requirement.materialId,
+          material: requirement.material.name,
+          category: requirement.material.category,
+          plannedQuantity,
+          requestedQuantity,
+          receivedQuantity,
+          remainingQuantity: Math.max(0, plannedQuantity - requestedQuantity),
+          unit: requirement.unit,
+          estimatedUnitPrice,
+          estimatedTotal: plannedQuantity * estimatedUnitPrice,
+          notes: requirement.notes ?? "",
+        };
+      }),
       materialRequests: project.purchaseRequests.map((purchase) => ({
         id: purchase.id,
         projectId: purchase.projectId,
@@ -1272,6 +1343,99 @@ export async function getMaterialOptions(): Promise<Array<{ id: string; name: st
     console.warn("Falha ao buscar materiais para pedido.", error);
     return [];
   }
+}
+
+export async function getProjectMaterialRequirements(): Promise<ProjectMaterialRequirementItem[]> {
+  if (!hasDatabaseUrl()) {
+    return [];
+  }
+
+  try {
+    const { prisma } = await import("@/lib/db/prisma");
+    const [requirements, purchaseItems, stockMovements] = await Promise.all([
+      prisma.projectMaterialRequirement.findMany({
+        include: {
+          project: true,
+          material: true,
+        },
+        orderBy: [
+          { project: { updatedAt: "desc" } },
+          { material: { name: "asc" } },
+        ],
+      }),
+      prisma.purchaseRequestItem.findMany({
+        where: {
+          materialId: {
+            not: null,
+          },
+        },
+        select: {
+          materialId: true,
+          quantity: true,
+          purchaseRequest: {
+            select: {
+              projectId: true,
+            },
+          },
+        },
+      }),
+      prisma.stockMovement.findMany({
+        where: {
+          movementType: "PURCHASE_ENTRY",
+        },
+        select: {
+          projectId: true,
+          materialId: true,
+          quantity: true,
+        },
+      }),
+    ]);
+
+    const requested = new Map<string, number>();
+    const received = new Map<string, number>();
+
+    purchaseItems.forEach((item) => {
+      if (!item.materialId) return;
+      const key = `${item.purchaseRequest.projectId}:${item.materialId}`;
+      requested.set(key, (requested.get(key) ?? 0) + toNumber(item.quantity));
+    });
+    stockMovements.forEach((movement) => {
+      const key = `${movement.projectId}:${movement.materialId}`;
+      received.set(key, (received.get(key) ?? 0) + toNumber(movement.quantity));
+    });
+
+    return requirements.map((requirement) => {
+      const key = `${requirement.projectId}:${requirement.materialId}`;
+      const plannedQuantity = toNumber(requirement.plannedQuantity);
+      const estimatedUnitPrice = toNumber(requirement.estimatedUnitPrice);
+      const requestedQuantity = requested.get(key) ?? 0;
+
+      return {
+        id: requirement.id,
+        projectId: requirement.projectId,
+        project: requirement.project.name,
+        materialId: requirement.materialId,
+        material: requirement.material.name,
+        category: requirement.material.category,
+        plannedQuantity,
+        requestedQuantity,
+        receivedQuantity: received.get(key) ?? 0,
+        remainingQuantity: Math.max(0, plannedQuantity - requestedQuantity),
+        unit: requirement.unit,
+        estimatedUnitPrice,
+        estimatedTotal: plannedQuantity * estimatedUnitPrice,
+        notes: requirement.notes ?? "",
+      };
+    });
+  } catch (error) {
+    console.warn("Falha ao buscar quantitativos de materiais.", error);
+    return [];
+  }
+}
+
+export async function getProjectMaterialRequirementDetails(id: string): Promise<ProjectMaterialRequirementItem | null> {
+  const requirements = await getProjectMaterialRequirements();
+  return requirements.find((requirement) => requirement.id === id) ?? null;
 }
 
 export async function getBudgetItems(): Promise<BudgetItemListItem[]> {

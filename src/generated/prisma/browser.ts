@@ -83,6 +83,11 @@ export type Supplier = Prisma.SupplierModel
  */
 export type Material = Prisma.MaterialModel
 /**
+ * Model ProjectMaterialRequirement
+ * 
+ */
+export type ProjectMaterialRequirement = Prisma.ProjectMaterialRequirementModel
+/**
  * Model PurchaseRequest
  * 
  */

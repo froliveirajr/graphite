@@ -397,6 +397,7 @@ export const ModelName = {
   ProjectEmployeeAllocation: 'ProjectEmployeeAllocation',
   Supplier: 'Supplier',
   Material: 'Material',
+  ProjectMaterialRequirement: 'ProjectMaterialRequirement',
   PurchaseRequest: 'PurchaseRequest',
   PurchaseRequestItem: 'PurchaseRequestItem',
   StockMovement: 'StockMovement',
@@ -424,7 +425,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "client" | "project" | "projectArea" | "task" | "budgetItem" | "taskChecklistItem" | "employee" | "contractor" | "projectContractor" | "projectEmployeeAllocation" | "supplier" | "material" | "purchaseRequest" | "purchaseRequestItem" | "stockMovement" | "wasteDisposal" | "dailyReport" | "dailyReportAttendance" | "file" | "financialEntry" | "serviceMeasurement" | "serviceMeasurementEmployee" | "approval" | "auditLog"
+    modelProps: "user" | "client" | "project" | "projectArea" | "task" | "budgetItem" | "taskChecklistItem" | "employee" | "contractor" | "projectContractor" | "projectEmployeeAllocation" | "supplier" | "material" | "projectMaterialRequirement" | "purchaseRequest" | "purchaseRequestItem" | "stockMovement" | "wasteDisposal" | "dailyReport" | "dailyReportAttendance" | "file" | "financialEntry" | "serviceMeasurement" | "serviceMeasurementEmployee" | "approval" | "auditLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1387,6 +1388,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.MaterialCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.MaterialCountAggregateOutputType> | number
+        }
+      }
+    }
+    ProjectMaterialRequirement: {
+      payload: Prisma.$ProjectMaterialRequirementPayload<ExtArgs>
+      fields: Prisma.ProjectMaterialRequirementFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ProjectMaterialRequirementFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectMaterialRequirementPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ProjectMaterialRequirementFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectMaterialRequirementPayload>
+        }
+        findFirst: {
+          args: Prisma.ProjectMaterialRequirementFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectMaterialRequirementPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ProjectMaterialRequirementFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectMaterialRequirementPayload>
+        }
+        findMany: {
+          args: Prisma.ProjectMaterialRequirementFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectMaterialRequirementPayload>[]
+        }
+        create: {
+          args: Prisma.ProjectMaterialRequirementCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectMaterialRequirementPayload>
+        }
+        createMany: {
+          args: Prisma.ProjectMaterialRequirementCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ProjectMaterialRequirementCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectMaterialRequirementPayload>[]
+        }
+        delete: {
+          args: Prisma.ProjectMaterialRequirementDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectMaterialRequirementPayload>
+        }
+        update: {
+          args: Prisma.ProjectMaterialRequirementUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectMaterialRequirementPayload>
+        }
+        deleteMany: {
+          args: Prisma.ProjectMaterialRequirementDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ProjectMaterialRequirementUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ProjectMaterialRequirementUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectMaterialRequirementPayload>[]
+        }
+        upsert: {
+          args: Prisma.ProjectMaterialRequirementUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectMaterialRequirementPayload>
+        }
+        aggregate: {
+          args: Prisma.ProjectMaterialRequirementAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateProjectMaterialRequirement>
+        }
+        groupBy: {
+          args: Prisma.ProjectMaterialRequirementGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProjectMaterialRequirementGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ProjectMaterialRequirementCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProjectMaterialRequirementCountAggregateOutputType> | number
         }
       }
     }
@@ -2561,6 +2636,21 @@ export const MaterialScalarFieldEnum = {
 export type MaterialScalarFieldEnum = (typeof MaterialScalarFieldEnum)[keyof typeof MaterialScalarFieldEnum]
 
 
+export const ProjectMaterialRequirementScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  materialId: 'materialId',
+  plannedQuantity: 'plannedQuantity',
+  unit: 'unit',
+  estimatedUnitPrice: 'estimatedUnitPrice',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProjectMaterialRequirementScalarFieldEnum = (typeof ProjectMaterialRequirementScalarFieldEnum)[keyof typeof ProjectMaterialRequirementScalarFieldEnum]
+
+
 export const PurchaseRequestScalarFieldEnum = {
   id: 'id',
   projectId: 'projectId',
@@ -3239,6 +3329,7 @@ export type GlobalOmitConfig = {
   projectEmployeeAllocation?: Prisma.ProjectEmployeeAllocationOmit
   supplier?: Prisma.SupplierOmit
   material?: Prisma.MaterialOmit
+  projectMaterialRequirement?: Prisma.ProjectMaterialRequirementOmit
   purchaseRequest?: Prisma.PurchaseRequestOmit
   purchaseRequestItem?: Prisma.PurchaseRequestItemOmit
   stockMovement?: Prisma.StockMovementOmit

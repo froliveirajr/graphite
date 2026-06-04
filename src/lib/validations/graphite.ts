@@ -152,6 +152,15 @@ export const purchaseRequestSchema = z.object({
   notes: z.string().optional(),
 });
 
+export const projectMaterialRequirementSchema = z.object({
+  projectId: z.string().min(1, "Selecione uma obra."),
+  materialId: z.string().min(1, "Selecione um material."),
+  plannedQuantity: z.coerce.number().positive("Informe uma quantidade prevista valida."),
+  unit: z.string().min(1, "Informe a unidade."),
+  estimatedUnitPrice: z.coerce.number().nonnegative("Informe um valor unitario valido.").optional(),
+  notes: z.string().optional(),
+});
+
 export type ClientInput = z.infer<typeof clientSchema>;
 export type ProjectInput = z.infer<typeof projectSchema>;
 export type TaskInput = z.infer<typeof taskSchema>;
@@ -161,3 +170,4 @@ export type EmployeeAllocationInput = z.infer<typeof employeeAllocationSchema>;
 export type BudgetItemInput = z.infer<typeof budgetItemSchema>;
 export type ServiceMeasurementInput = z.infer<typeof serviceMeasurementSchema>;
 export type PurchaseRequestInput = z.infer<typeof purchaseRequestSchema>;
+export type ProjectMaterialRequirementInput = z.infer<typeof projectMaterialRequirementSchema>;

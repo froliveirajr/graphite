@@ -40,6 +40,7 @@ export const navigation = [
   { label: "Obras", href: "/projects", icon: HardHat },
   { label: "Tarefas", href: "/tasks", icon: ClipboardCheck },
   { label: "Materiais", href: "/materials", icon: Boxes },
+  { label: "Quantitativos", href: "/project-materials", icon: ClipboardCheck },
   { label: "Compras", href: "/purchases", icon: PackageCheck },
   { label: "Orcamento", href: "/budget-items", icon: PercentCircle },
   { label: "Medicoes", href: "/measurements", icon: ClipboardCheck },

@@ -216,6 +216,7 @@ model Project {
   financialEntries         FinancialEntry[]
   budgetItems              BudgetItem[]
   serviceMeasurements      ServiceMeasurement[]
+  materialRequirements     ProjectMaterialRequirement[]
   createdAt                DateTime             @default(now())
   updatedAt                DateTime             @updatedAt
 
@@ -448,6 +449,7 @@ model Material {
   averagePrice        Decimal?              @db.Decimal(12, 2)
   minimumStock        Decimal?              @db.Decimal(12, 3)
   notes               String?
+  projectRequirements ProjectMaterialRequirement[]
   purchaseItems       PurchaseRequestItem[]
   stockMovements      StockMovement[]
   createdAt           DateTime              @default(now())
@@ -456,6 +458,24 @@ model Material {
   @@index([name])
   @@index([category])
   @@index([preferredSupplierId])
+}
+
+model ProjectMaterialRequirement {
+  id              String   @id @default(cuid())
+  projectId       String
+  project         Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  materialId      String
+  material        Material @relation(fields: [materialId], references: [id])
+  plannedQuantity Decimal  @db.Decimal(12, 3)
+  unit            String
+  estimatedUnitPrice Decimal? @db.Decimal(12, 2)
+  notes           String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([projectId, materialId])
+  @@index([projectId])
+  @@index([materialId])
 }
 
 model PurchaseRequest {

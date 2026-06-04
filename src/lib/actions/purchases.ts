@@ -71,6 +71,82 @@ function totals(items: ReturnType<typeof parseItems>) {
   );
 }
 
+async function validateMaterialBudget(
+  prisma: Awaited<typeof import("@/lib/db/prisma")>["prisma"],
+  projectId: string,
+  items: ReturnType<typeof parseItems>,
+  currentPurchaseId?: string,
+) {
+  const requestedInForm = new Map<string, number>();
+
+  items.forEach((item) => {
+    if (!item.materialId) return;
+    requestedInForm.set(item.materialId, (requestedInForm.get(item.materialId) ?? 0) + item.quantity);
+  });
+
+  if (requestedInForm.size === 0) {
+    return null;
+  }
+
+  const materialIds = Array.from(requestedInForm.keys());
+  const [requirements, existingItems] = await Promise.all([
+    prisma.projectMaterialRequirement.findMany({
+      where: {
+        projectId,
+        materialId: {
+          in: materialIds,
+        },
+      },
+      include: {
+        material: true,
+      },
+    }),
+    prisma.purchaseRequestItem.findMany({
+      where: {
+        materialId: {
+          in: materialIds,
+        },
+        purchaseRequest: {
+          projectId,
+          ...(currentPurchaseId ? { id: { not: currentPurchaseId } } : {}),
+        },
+      },
+      select: {
+        materialId: true,
+        quantity: true,
+      },
+    }),
+  ]);
+
+  const requirementsByMaterial = new Map(requirements.map((requirement) => [requirement.materialId, requirement]));
+  const existingByMaterial = new Map<string, number>();
+
+  existingItems.forEach((item) => {
+    if (!item.materialId) return;
+    existingByMaterial.set(item.materialId, (existingByMaterial.get(item.materialId) ?? 0) + Number(item.quantity));
+  });
+
+  for (const [materialId, quantity] of requestedInForm) {
+    const requirement = requirementsByMaterial.get(materialId);
+
+    if (!requirement) {
+      return "Material nao possui quantitativo previsto para esta obra. Lance o material em Quantitativos antes de pedir.";
+    }
+
+    const plannedQuantity = Number(requirement.plannedQuantity);
+    const alreadyRequested = existingByMaterial.get(materialId) ?? 0;
+    const remainingQuantity = plannedQuantity - alreadyRequested;
+
+    if (quantity > remainingQuantity + 0.0001) {
+      return `Pedido excede o saldo de ${requirement.material.name}. Saldo disponivel: ${remainingQuantity.toLocaleString("pt-BR", {
+        maximumFractionDigits: 3,
+      })} ${requirement.unit}`;
+    }
+  }
+
+  return null;
+}
+
 export async function createPurchaseAction(formData: FormData) {
   const session = await requireSession();
   const parsed = parsePurchase(formData);
@@ -88,6 +164,11 @@ export async function createPurchaseAction(formData: FormData) {
   const { prisma } = await import("@/lib/db/prisma");
   const input = parsed.data;
   const calculated = totals(items);
+  const budgetError = await validateMaterialBudget(prisma, input.projectId, items);
+
+  if (budgetError) {
+    redirect(`/purchases/new?error=${encodeURIComponent(budgetError)}`);
+  }
 
   await prisma.purchaseRequest.create({
     data: {
@@ -133,6 +214,11 @@ export async function updatePurchaseAction(formData: FormData) {
   const { prisma } = await import("@/lib/db/prisma");
   const input = parsed.data;
   const calculated = totals(items);
+  const budgetError = await validateMaterialBudget(prisma, input.projectId, items, id);
+
+  if (budgetError) {
+    redirect(`/purchases/${id}/edit?error=${encodeURIComponent(budgetError)}`);
+  }
 
   await prisma.$transaction(async (tx) => {
     await tx.purchaseRequestItem.deleteMany({ where: { purchaseRequestId: id } });

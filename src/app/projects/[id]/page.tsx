@@ -203,11 +203,58 @@ export default async function ProjectDetailsPage({
         ) : null}
 
         {activeTab === "materials" ? (
-          <section className="grid gap-6 xl:grid-cols-2">
+          <section className="space-y-6">
+            <div className="rounded-lg border border-zinc-200 bg-white shadow-sm">
+              <div className="flex items-center justify-between border-b border-zinc-200 p-4">
+                <h2 className="font-semibold">Quantitativo previsto de materiais</h2>
+                <Link href={`/project-materials/new?projectId=${project.id}`} className="text-sm font-semibold text-zinc-900 hover:underline">
+                  Novo quantitativo
+                </Link>
+              </div>
+              {project.materialRequirements.length > 0 ? (
+                <div className="overflow-x-auto">
+                  <table className="w-full min-w-[920px] text-left text-sm">
+                    <thead className="bg-zinc-50 text-xs uppercase tracking-wide text-zinc-500">
+                      <tr>
+                        <th className="px-4 py-3">Material</th>
+                        <th className="px-4 py-3">Previsto</th>
+                        <th className="px-4 py-3">Pedido</th>
+                        <th className="px-4 py-3">Recebido</th>
+                        <th className="px-4 py-3">Saldo</th>
+                        <th className="px-4 py-3">Estimado</th>
+                        <th className="px-4 py-3">Acoes</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-zinc-100">
+                      {project.materialRequirements.map((item) => (
+                        <tr key={item.id}>
+                          <td className="px-4 py-4">
+                            <p className="font-semibold">{item.material}</p>
+                            <p className="mt-1 text-xs text-zinc-500">{item.category}</p>
+                          </td>
+                          <td className="px-4 py-4">{item.plannedQuantity} {item.unit}</td>
+                          <td className="px-4 py-4">{item.requestedQuantity} {item.unit}</td>
+                          <td className="px-4 py-4">{item.receivedQuantity} {item.unit}</td>
+                          <td className="px-4 py-4 font-semibold">{item.remainingQuantity} {item.unit}</td>
+                          <td className="px-4 py-4">{formatCurrency(item.estimatedTotal)}</td>
+                          <td className="px-4 py-4">
+                            <Link href={`/project-materials/${item.id}/edit`} className="font-semibold text-zinc-900 hover:underline">Editar</Link>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              ) : emptyState("Nenhum quantitativo de material previsto para esta obra.")}
+            </div>
+            <div className="grid gap-6 xl:grid-cols-2">
             <div className="rounded-lg border border-zinc-200 bg-white shadow-sm">
               <div className="flex items-center justify-between border-b border-zinc-200 p-4">
                 <h2 className="font-semibold">Pedidos de materiais</h2>
-                <Link href="/purchases" className="text-sm font-semibold text-zinc-900 hover:underline">Ver compras</Link>
+                <div className="flex items-center gap-3">
+                  <Link href={`/purchases/new?projectId=${project.id}`} className="text-sm font-semibold text-zinc-900 hover:underline">Novo pedido</Link>
+                  <Link href="/purchases" className="text-sm font-semibold text-zinc-900 hover:underline">Ver compras</Link>
+                </div>
               </div>
               {project.materialRequests.length > 0 ? (
                 <div className="divide-y divide-zinc-100">
@@ -241,6 +288,7 @@ export default async function ProjectDetailsPage({
                   ))}
                 </div>
               ) : emptyState("Nenhuma movimentacao de material registrada.")}
+            </div>
             </div>
           </section>
         ) : null}

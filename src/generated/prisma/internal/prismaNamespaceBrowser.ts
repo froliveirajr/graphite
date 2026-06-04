@@ -64,6 +64,7 @@ export const ModelName = {
   ProjectEmployeeAllocation: 'ProjectEmployeeAllocation',
   Supplier: 'Supplier',
   Material: 'Material',
+  ProjectMaterialRequirement: 'ProjectMaterialRequirement',
   PurchaseRequest: 'PurchaseRequest',
   PurchaseRequestItem: 'PurchaseRequestItem',
   StockMovement: 'StockMovement',
@@ -336,6 +337,21 @@ export const MaterialScalarFieldEnum = {
 } as const
 
 export type MaterialScalarFieldEnum = (typeof MaterialScalarFieldEnum)[keyof typeof MaterialScalarFieldEnum]
+
+
+export const ProjectMaterialRequirementScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  materialId: 'materialId',
+  plannedQuantity: 'plannedQuantity',
+  unit: 'unit',
+  estimatedUnitPrice: 'estimatedUnitPrice',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProjectMaterialRequirementScalarFieldEnum = (typeof ProjectMaterialRequirementScalarFieldEnum)[keyof typeof ProjectMaterialRequirementScalarFieldEnum]
 
 
 export const PurchaseRequestScalarFieldEnum = {

@@ -17,8 +17,8 @@ const statuses = [
 
 const itemRows = Array.from({ length: 10 }, (_, index) => index);
 
-export default async function NewPurchasePage({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
-  const [{ error }, projects, materials] = await Promise.all([
+export default async function NewPurchasePage({ searchParams }: { searchParams: Promise<{ error?: string; projectId?: string }> }) {
+  const [{ error, projectId }, projects, materials] = await Promise.all([
     searchParams,
     getProjectTaskOptions(),
     getMaterialOptions(),
@@ -40,7 +40,7 @@ export default async function NewPurchasePage({ searchParams }: { searchParams: 
           <div className="grid gap-4 md:grid-cols-2">
             <label className="text-sm font-medium text-zinc-800">
               Obra
-              <select name="projectId" required className="mt-2 h-11 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm">
+              <select name="projectId" required defaultValue={projectId ?? ""} className="mt-2 h-11 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm">
                 <option value="">Selecione</option>
                 {projects.map((project) => (
                   <option key={project.id} value={project.id}>
@@ -79,6 +79,9 @@ export default async function NewPurchasePage({ searchParams }: { searchParams: 
 
           <div className="mt-8">
             <h2 className="text-lg font-semibold text-zinc-950">Itens do pedido</h2>
+            <p className="mt-1 text-sm text-zinc-500">
+              Materiais cadastrados serao conferidos contra o quantitativo previsto da obra.
+            </p>
             <div className="mt-3 overflow-x-auto rounded-lg border border-zinc-200">
               <table className="w-full min-w-[980px] text-left text-sm">
                 <thead className="bg-zinc-50 text-xs uppercase tracking-wide text-zinc-500">
