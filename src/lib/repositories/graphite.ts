@@ -71,6 +71,21 @@ const attendanceStatusLabels: Record<string, string> = {
   TRANSFERRED: "Deslocado",
 };
 
+const budgetItemStatusLabels: Record<string, string> = {
+  PLANNED: "Planejado",
+  IN_PROGRESS: "Em andamento",
+  COMPLETED: "Concluido",
+  CANCELED: "Cancelado",
+};
+
+const measurementStatusLabels: Record<string, string> = {
+  DRAFT: "Rascunho",
+  SUBMITTED: "Enviada",
+  APPROVED: "Aprovada",
+  REJECTED: "Rejeitada",
+  INVOICED: "Faturada",
+};
+
 export type ClientListItem = (typeof demoClients)[number];
 export type ProjectListItem = (typeof demoProjects)[number];
 export type ProjectAreaItem = (typeof demoProjectAreas)[number];
@@ -96,6 +111,8 @@ export type ProjectDetails = ProjectListItem & {
   employeeAllocations: EmployeeAllocationListItem[];
   contractors: ProjectContractorItem[];
   financialEntries: ProjectFinancialEntryItem[];
+  budgetItems: BudgetItemListItem[];
+  measurements: MeasurementListItem[];
   files: ProjectFileItem[];
   dailyReports: DailyReportListItem[];
 };
@@ -283,6 +300,44 @@ export type DailyReportAttendanceItem = {
   notes: string;
 };
 
+export type BudgetItemListItem = {
+  id: string;
+  projectId: string;
+  project: string;
+  taskId: string;
+  task: string;
+  code: string;
+  phase: string;
+  description: string;
+  unit: string;
+  quantity: number;
+  unitPrice: number;
+  totalPrice: number;
+  physicalWeight: number;
+  plannedStartDate: string;
+  plannedEndDate: string;
+  physicalProgress: number;
+  status: string;
+  notes: string;
+};
+
+export type MeasurementListItem = {
+  id: string;
+  projectId: string;
+  project: string;
+  budgetItemId: string;
+  budgetItem: string;
+  measuredAt: string;
+  periodStartDate: string;
+  periodEndDate: string;
+  quantityMeasured: number;
+  amountMeasured: number;
+  physicalProgress: number;
+  status: string;
+  createdBy: string;
+  notes: string;
+};
+
 function hasDatabaseUrl() {
   return Boolean(process.env.DATABASE_URL);
 }
@@ -324,6 +379,8 @@ function demoProjectDetails(id: string): ProjectDetails | null {
     employeeAllocations: [],
     contractors: [],
     financialEntries: [],
+    budgetItems: [],
+    measurements: [],
     files: [],
     dailyReports: [],
   };
@@ -609,6 +666,28 @@ export async function getProjectDetails(id: string): Promise<ProjectDetails | nu
             dueDate: "asc",
           },
         },
+        budgetItems: {
+          include: {
+            task: true,
+          },
+          orderBy: [
+            {
+              plannedStartDate: "asc",
+            },
+            {
+              phase: "asc",
+            },
+          ],
+        },
+        serviceMeasurements: {
+          include: {
+            budgetItem: true,
+            createdBy: true,
+          },
+          orderBy: {
+            measuredAt: "desc",
+          },
+        },
         files: {
           include: {
             uploadedBy: true,
@@ -734,6 +813,42 @@ export async function getProjectDetails(id: string): Promise<ProjectDetails | nu
         dueDate: formatDate(entry.dueDate),
         paidAt: formatDate(entry.paidAt),
         status: entry.status,
+      })),
+      budgetItems: project.budgetItems.map((item) => ({
+        id: item.id,
+        projectId: item.projectId,
+        project: project.name,
+        taskId: item.taskId ?? "",
+        task: item.task?.title ?? "-",
+        code: item.code ?? "-",
+        phase: item.phase,
+        description: item.description,
+        unit: item.unit,
+        quantity: toNumber(item.quantity),
+        unitPrice: toNumber(item.unitPrice),
+        totalPrice: toNumber(item.totalPrice),
+        physicalWeight: toNumber(item.physicalWeight),
+        plannedStartDate: formatDate(item.plannedStartDate),
+        plannedEndDate: formatDate(item.plannedEndDate),
+        physicalProgress: toNumber(item.physicalProgress),
+        status: budgetItemStatusLabels[item.status] ?? item.status,
+        notes: item.notes ?? "",
+      })),
+      measurements: project.serviceMeasurements.map((measurement) => ({
+        id: measurement.id,
+        projectId: measurement.projectId,
+        project: project.name,
+        budgetItemId: measurement.budgetItemId,
+        budgetItem: measurement.budgetItem.description,
+        measuredAt: formatDate(measurement.measuredAt),
+        periodStartDate: formatDate(measurement.periodStartDate),
+        periodEndDate: formatDate(measurement.periodEndDate),
+        quantityMeasured: toNumber(measurement.quantityMeasured),
+        amountMeasured: toNumber(measurement.amountMeasured),
+        physicalProgress: toNumber(measurement.physicalProgress),
+        status: measurementStatusLabels[measurement.status] ?? measurement.status,
+        createdBy: measurement.createdBy.name,
+        notes: measurement.notes ?? "",
       })),
       files: project.files.map((file) => ({
         id: file.id,
@@ -996,6 +1111,110 @@ export async function getPurchases(): Promise<PurchaseListItem[]> {
     console.warn("Falha ao buscar compras no banco.", error);
     return [];
   }
+}
+
+export async function getBudgetItems(): Promise<BudgetItemListItem[]> {
+  if (!hasDatabaseUrl()) {
+    return [];
+  }
+
+  try {
+    const { prisma } = await import("@/lib/db/prisma");
+    const items = await prisma.budgetItem.findMany({
+      include: {
+        project: true,
+        task: true,
+      },
+      orderBy: [
+        { project: { updatedAt: "desc" } },
+        { plannedStartDate: "asc" },
+      ],
+    });
+
+    return items.map((item) => ({
+      id: item.id,
+      projectId: item.projectId,
+      project: item.project.name,
+      taskId: item.taskId ?? "",
+      task: item.task?.title ?? "-",
+      code: item.code ?? "-",
+      phase: item.phase,
+      description: item.description,
+      unit: item.unit,
+      quantity: toNumber(item.quantity),
+      unitPrice: toNumber(item.unitPrice),
+      totalPrice: toNumber(item.totalPrice),
+      physicalWeight: toNumber(item.physicalWeight),
+      plannedStartDate: formatDate(item.plannedStartDate),
+      plannedEndDate: formatDate(item.plannedEndDate),
+      physicalProgress: toNumber(item.physicalProgress),
+      status: budgetItemStatusLabels[item.status] ?? item.status,
+      notes: item.notes ?? "",
+    }));
+  } catch (error) {
+    console.warn("Falha ao buscar itens de orcamento no banco.", error);
+    return [];
+  }
+}
+
+export async function getBudgetItemDetails(id: string): Promise<BudgetItemListItem | null> {
+  const items = await getBudgetItems();
+  return items.find((item) => item.id === id) ?? null;
+}
+
+export async function getBudgetItemOptions(): Promise<Array<{ id: string; projectId: string; label: string; unitPrice: number }>> {
+  const items = await getBudgetItems();
+  return items.map((item) => ({
+    id: item.id,
+    projectId: item.projectId,
+    label: `${item.project} - ${item.phase} - ${item.description}`,
+    unitPrice: item.unitPrice,
+  }));
+}
+
+export async function getMeasurements(): Promise<MeasurementListItem[]> {
+  if (!hasDatabaseUrl()) {
+    return [];
+  }
+
+  try {
+    const { prisma } = await import("@/lib/db/prisma");
+    const measurements = await prisma.serviceMeasurement.findMany({
+      include: {
+        project: true,
+        budgetItem: true,
+        createdBy: true,
+      },
+      orderBy: {
+        measuredAt: "desc",
+      },
+    });
+
+    return measurements.map((measurement) => ({
+      id: measurement.id,
+      projectId: measurement.projectId,
+      project: measurement.project.name,
+      budgetItemId: measurement.budgetItemId,
+      budgetItem: measurement.budgetItem.description,
+      measuredAt: formatDate(measurement.measuredAt),
+      periodStartDate: formatDate(measurement.periodStartDate),
+      periodEndDate: formatDate(measurement.periodEndDate),
+      quantityMeasured: toNumber(measurement.quantityMeasured),
+      amountMeasured: toNumber(measurement.amountMeasured),
+      physicalProgress: toNumber(measurement.physicalProgress),
+      status: measurementStatusLabels[measurement.status] ?? measurement.status,
+      createdBy: measurement.createdBy.name,
+      notes: measurement.notes ?? "",
+    }));
+  } catch (error) {
+    console.warn("Falha ao buscar medicoes no banco.", error);
+    return [];
+  }
+}
+
+export async function getMeasurementDetails(id: string): Promise<MeasurementListItem | null> {
+  const measurements = await getMeasurements();
+  return measurements.find((measurement) => measurement.id === id) ?? null;
 }
 
 export async function getStockMovements(): Promise<StockMovementListItem[]> {

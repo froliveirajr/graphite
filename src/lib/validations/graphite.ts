@@ -104,9 +104,41 @@ export const employeeAllocationSchema = z.object({
   notes: z.string().optional(),
 });
 
+export const budgetItemSchema = z.object({
+  projectId: z.string().min(1, "Selecione uma obra."),
+  taskId: z.string().optional(),
+  code: z.string().optional(),
+  phase: z.string().min(2, "Informe a etapa."),
+  description: z.string().min(3, "Informe a descricao."),
+  unit: z.string().min(1, "Informe a unidade."),
+  quantity: z.coerce.number().positive("Informe uma quantidade valida."),
+  unitPrice: z.coerce.number().nonnegative("Informe um valor unitario valido."),
+  physicalWeight: z.coerce.number().min(0).max(100).optional(),
+  plannedStartDate: z.string().optional(),
+  plannedEndDate: z.string().optional(),
+  physicalProgress: z.coerce.number().min(0).max(100).optional(),
+  status: z.enum(["Planejado", "Em andamento", "Concluido", "Cancelado"]),
+  notes: z.string().optional(),
+});
+
+export const serviceMeasurementSchema = z.object({
+  projectId: z.string().min(1, "Selecione uma obra."),
+  budgetItemId: z.string().min(1, "Selecione um item do orcamento."),
+  measuredAt: z.string().min(1, "Informe a data da medicao."),
+  periodStartDate: z.string().optional(),
+  periodEndDate: z.string().optional(),
+  quantityMeasured: z.coerce.number().positive("Informe uma quantidade medida valida."),
+  amountMeasured: z.coerce.number().nonnegative("Informe um valor medido valido."),
+  physicalProgress: z.coerce.number().min(0).max(100).optional(),
+  status: z.enum(["Rascunho", "Enviada", "Aprovada", "Rejeitada", "Faturada"]),
+  notes: z.string().optional(),
+});
+
 export type ClientInput = z.infer<typeof clientSchema>;
 export type ProjectInput = z.infer<typeof projectSchema>;
 export type TaskInput = z.infer<typeof taskSchema>;
 export type MaterialInput = z.infer<typeof materialSchema>;
 export type DailyReportInput = z.infer<typeof dailyReportSchema>;
 export type EmployeeAllocationInput = z.infer<typeof employeeAllocationSchema>;
+export type BudgetItemInput = z.infer<typeof budgetItemSchema>;
+export type ServiceMeasurementInput = z.infer<typeof serviceMeasurementSchema>;

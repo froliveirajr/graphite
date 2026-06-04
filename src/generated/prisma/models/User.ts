@@ -227,6 +227,7 @@ export type UserWhereInput = {
   validatedDailyReports?: Prisma.DailyReportListRelationFilter
   uploadedFiles?: Prisma.FileListRelationFilter
   financialEntries?: Prisma.FinancialEntryListRelationFilter
+  createdMeasurements?: Prisma.ServiceMeasurementListRelationFilter
   requestedApprovals?: Prisma.ApprovalListRelationFilter
   approvedApprovals?: Prisma.ApprovalListRelationFilter
   auditLogs?: Prisma.AuditLogListRelationFilter
@@ -255,6 +256,7 @@ export type UserOrderByWithRelationInput = {
   validatedDailyReports?: Prisma.DailyReportOrderByRelationAggregateInput
   uploadedFiles?: Prisma.FileOrderByRelationAggregateInput
   financialEntries?: Prisma.FinancialEntryOrderByRelationAggregateInput
+  createdMeasurements?: Prisma.ServiceMeasurementOrderByRelationAggregateInput
   requestedApprovals?: Prisma.ApprovalOrderByRelationAggregateInput
   approvedApprovals?: Prisma.ApprovalOrderByRelationAggregateInput
   auditLogs?: Prisma.AuditLogOrderByRelationAggregateInput
@@ -286,6 +288,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   validatedDailyReports?: Prisma.DailyReportListRelationFilter
   uploadedFiles?: Prisma.FileListRelationFilter
   financialEntries?: Prisma.FinancialEntryListRelationFilter
+  createdMeasurements?: Prisma.ServiceMeasurementListRelationFilter
   requestedApprovals?: Prisma.ApprovalListRelationFilter
   approvedApprovals?: Prisma.ApprovalListRelationFilter
   auditLogs?: Prisma.AuditLogListRelationFilter
@@ -344,6 +347,7 @@ export type UserCreateInput = {
   validatedDailyReports?: Prisma.DailyReportCreateNestedManyWithoutValidatedByInput
   uploadedFiles?: Prisma.FileCreateNestedManyWithoutUploadedByInput
   financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutCreatedByInput
+  createdMeasurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutCreatedByInput
   requestedApprovals?: Prisma.ApprovalCreateNestedManyWithoutRequestedByInput
   approvedApprovals?: Prisma.ApprovalCreateNestedManyWithoutApprovedByInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
@@ -372,6 +376,7 @@ export type UserUncheckedCreateInput = {
   validatedDailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutValidatedByInput
   uploadedFiles?: Prisma.FileUncheckedCreateNestedManyWithoutUploadedByInput
   financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutCreatedByInput
+  createdMeasurements?: Prisma.ServiceMeasurementUncheckedCreateNestedManyWithoutCreatedByInput
   requestedApprovals?: Prisma.ApprovalUncheckedCreateNestedManyWithoutRequestedByInput
   approvedApprovals?: Prisma.ApprovalUncheckedCreateNestedManyWithoutApprovedByInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
@@ -400,6 +405,7 @@ export type UserUpdateInput = {
   validatedDailyReports?: Prisma.DailyReportUpdateManyWithoutValidatedByNestedInput
   uploadedFiles?: Prisma.FileUpdateManyWithoutUploadedByNestedInput
   financialEntries?: Prisma.FinancialEntryUpdateManyWithoutCreatedByNestedInput
+  createdMeasurements?: Prisma.ServiceMeasurementUpdateManyWithoutCreatedByNestedInput
   requestedApprovals?: Prisma.ApprovalUpdateManyWithoutRequestedByNestedInput
   approvedApprovals?: Prisma.ApprovalUpdateManyWithoutApprovedByNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
@@ -428,6 +434,7 @@ export type UserUncheckedUpdateInput = {
   validatedDailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutValidatedByNestedInput
   uploadedFiles?: Prisma.FileUncheckedUpdateManyWithoutUploadedByNestedInput
   financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdMeasurements?: Prisma.ServiceMeasurementUncheckedUpdateManyWithoutCreatedByNestedInput
   requestedApprovals?: Prisma.ApprovalUncheckedUpdateManyWithoutRequestedByNestedInput
   approvedApprovals?: Prisma.ApprovalUncheckedUpdateManyWithoutApprovedByNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
@@ -731,6 +738,20 @@ export type UserUpdateOneRequiredWithoutFinancialEntriesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFinancialEntriesInput, Prisma.UserUpdateWithoutFinancialEntriesInput>, Prisma.UserUncheckedUpdateWithoutFinancialEntriesInput>
 }
 
+export type UserCreateNestedOneWithoutCreatedMeasurementsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedMeasurementsInput, Prisma.UserUncheckedCreateWithoutCreatedMeasurementsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedMeasurementsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutCreatedMeasurementsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedMeasurementsInput, Prisma.UserUncheckedCreateWithoutCreatedMeasurementsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedMeasurementsInput
+  upsert?: Prisma.UserUpsertWithoutCreatedMeasurementsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCreatedMeasurementsInput, Prisma.UserUpdateWithoutCreatedMeasurementsInput>, Prisma.UserUncheckedUpdateWithoutCreatedMeasurementsInput>
+}
+
 export type UserCreateNestedOneWithoutRequestedApprovalsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutRequestedApprovalsInput, Prisma.UserUncheckedCreateWithoutRequestedApprovalsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutRequestedApprovalsInput
@@ -799,6 +820,7 @@ export type UserCreateWithoutManagedProjectsInput = {
   validatedDailyReports?: Prisma.DailyReportCreateNestedManyWithoutValidatedByInput
   uploadedFiles?: Prisma.FileCreateNestedManyWithoutUploadedByInput
   financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutCreatedByInput
+  createdMeasurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutCreatedByInput
   requestedApprovals?: Prisma.ApprovalCreateNestedManyWithoutRequestedByInput
   approvedApprovals?: Prisma.ApprovalCreateNestedManyWithoutApprovedByInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
@@ -826,6 +848,7 @@ export type UserUncheckedCreateWithoutManagedProjectsInput = {
   validatedDailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutValidatedByInput
   uploadedFiles?: Prisma.FileUncheckedCreateNestedManyWithoutUploadedByInput
   financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutCreatedByInput
+  createdMeasurements?: Prisma.ServiceMeasurementUncheckedCreateNestedManyWithoutCreatedByInput
   requestedApprovals?: Prisma.ApprovalUncheckedCreateNestedManyWithoutRequestedByInput
   approvedApprovals?: Prisma.ApprovalUncheckedCreateNestedManyWithoutApprovedByInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
@@ -858,6 +881,7 @@ export type UserCreateWithoutTechnicalProjectsInput = {
   validatedDailyReports?: Prisma.DailyReportCreateNestedManyWithoutValidatedByInput
   uploadedFiles?: Prisma.FileCreateNestedManyWithoutUploadedByInput
   financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutCreatedByInput
+  createdMeasurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutCreatedByInput
   requestedApprovals?: Prisma.ApprovalCreateNestedManyWithoutRequestedByInput
   approvedApprovals?: Prisma.ApprovalCreateNestedManyWithoutApprovedByInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
@@ -885,6 +909,7 @@ export type UserUncheckedCreateWithoutTechnicalProjectsInput = {
   validatedDailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutValidatedByInput
   uploadedFiles?: Prisma.FileUncheckedCreateNestedManyWithoutUploadedByInput
   financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutCreatedByInput
+  createdMeasurements?: Prisma.ServiceMeasurementUncheckedCreateNestedManyWithoutCreatedByInput
   requestedApprovals?: Prisma.ApprovalUncheckedCreateNestedManyWithoutRequestedByInput
   approvedApprovals?: Prisma.ApprovalUncheckedCreateNestedManyWithoutApprovedByInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
@@ -928,6 +953,7 @@ export type UserUpdateWithoutManagedProjectsInput = {
   validatedDailyReports?: Prisma.DailyReportUpdateManyWithoutValidatedByNestedInput
   uploadedFiles?: Prisma.FileUpdateManyWithoutUploadedByNestedInput
   financialEntries?: Prisma.FinancialEntryUpdateManyWithoutCreatedByNestedInput
+  createdMeasurements?: Prisma.ServiceMeasurementUpdateManyWithoutCreatedByNestedInput
   requestedApprovals?: Prisma.ApprovalUpdateManyWithoutRequestedByNestedInput
   approvedApprovals?: Prisma.ApprovalUpdateManyWithoutApprovedByNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
@@ -955,6 +981,7 @@ export type UserUncheckedUpdateWithoutManagedProjectsInput = {
   validatedDailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutValidatedByNestedInput
   uploadedFiles?: Prisma.FileUncheckedUpdateManyWithoutUploadedByNestedInput
   financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdMeasurements?: Prisma.ServiceMeasurementUncheckedUpdateManyWithoutCreatedByNestedInput
   requestedApprovals?: Prisma.ApprovalUncheckedUpdateManyWithoutRequestedByNestedInput
   approvedApprovals?: Prisma.ApprovalUncheckedUpdateManyWithoutApprovedByNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
@@ -993,6 +1020,7 @@ export type UserUpdateWithoutTechnicalProjectsInput = {
   validatedDailyReports?: Prisma.DailyReportUpdateManyWithoutValidatedByNestedInput
   uploadedFiles?: Prisma.FileUpdateManyWithoutUploadedByNestedInput
   financialEntries?: Prisma.FinancialEntryUpdateManyWithoutCreatedByNestedInput
+  createdMeasurements?: Prisma.ServiceMeasurementUpdateManyWithoutCreatedByNestedInput
   requestedApprovals?: Prisma.ApprovalUpdateManyWithoutRequestedByNestedInput
   approvedApprovals?: Prisma.ApprovalUpdateManyWithoutApprovedByNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
@@ -1020,6 +1048,7 @@ export type UserUncheckedUpdateWithoutTechnicalProjectsInput = {
   validatedDailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutValidatedByNestedInput
   uploadedFiles?: Prisma.FileUncheckedUpdateManyWithoutUploadedByNestedInput
   financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdMeasurements?: Prisma.ServiceMeasurementUncheckedUpdateManyWithoutCreatedByNestedInput
   requestedApprovals?: Prisma.ApprovalUncheckedUpdateManyWithoutRequestedByNestedInput
   approvedApprovals?: Prisma.ApprovalUncheckedUpdateManyWithoutApprovedByNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
@@ -1047,6 +1076,7 @@ export type UserCreateWithoutResponsibleAreasInput = {
   validatedDailyReports?: Prisma.DailyReportCreateNestedManyWithoutValidatedByInput
   uploadedFiles?: Prisma.FileCreateNestedManyWithoutUploadedByInput
   financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutCreatedByInput
+  createdMeasurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutCreatedByInput
   requestedApprovals?: Prisma.ApprovalCreateNestedManyWithoutRequestedByInput
   approvedApprovals?: Prisma.ApprovalCreateNestedManyWithoutApprovedByInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
@@ -1074,6 +1104,7 @@ export type UserUncheckedCreateWithoutResponsibleAreasInput = {
   validatedDailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutValidatedByInput
   uploadedFiles?: Prisma.FileUncheckedCreateNestedManyWithoutUploadedByInput
   financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutCreatedByInput
+  createdMeasurements?: Prisma.ServiceMeasurementUncheckedCreateNestedManyWithoutCreatedByInput
   requestedApprovals?: Prisma.ApprovalUncheckedCreateNestedManyWithoutRequestedByInput
   approvedApprovals?: Prisma.ApprovalUncheckedCreateNestedManyWithoutApprovedByInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
@@ -1117,6 +1148,7 @@ export type UserUpdateWithoutResponsibleAreasInput = {
   validatedDailyReports?: Prisma.DailyReportUpdateManyWithoutValidatedByNestedInput
   uploadedFiles?: Prisma.FileUpdateManyWithoutUploadedByNestedInput
   financialEntries?: Prisma.FinancialEntryUpdateManyWithoutCreatedByNestedInput
+  createdMeasurements?: Prisma.ServiceMeasurementUpdateManyWithoutCreatedByNestedInput
   requestedApprovals?: Prisma.ApprovalUpdateManyWithoutRequestedByNestedInput
   approvedApprovals?: Prisma.ApprovalUpdateManyWithoutApprovedByNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
@@ -1144,6 +1176,7 @@ export type UserUncheckedUpdateWithoutResponsibleAreasInput = {
   validatedDailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutValidatedByNestedInput
   uploadedFiles?: Prisma.FileUncheckedUpdateManyWithoutUploadedByNestedInput
   financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdMeasurements?: Prisma.ServiceMeasurementUncheckedUpdateManyWithoutCreatedByNestedInput
   requestedApprovals?: Prisma.ApprovalUncheckedUpdateManyWithoutRequestedByNestedInput
   approvedApprovals?: Prisma.ApprovalUncheckedUpdateManyWithoutApprovedByNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
@@ -1171,6 +1204,7 @@ export type UserCreateWithoutAssignedTasksInput = {
   validatedDailyReports?: Prisma.DailyReportCreateNestedManyWithoutValidatedByInput
   uploadedFiles?: Prisma.FileCreateNestedManyWithoutUploadedByInput
   financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutCreatedByInput
+  createdMeasurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutCreatedByInput
   requestedApprovals?: Prisma.ApprovalCreateNestedManyWithoutRequestedByInput
   approvedApprovals?: Prisma.ApprovalCreateNestedManyWithoutApprovedByInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
@@ -1198,6 +1232,7 @@ export type UserUncheckedCreateWithoutAssignedTasksInput = {
   validatedDailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutValidatedByInput
   uploadedFiles?: Prisma.FileUncheckedCreateNestedManyWithoutUploadedByInput
   financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutCreatedByInput
+  createdMeasurements?: Prisma.ServiceMeasurementUncheckedCreateNestedManyWithoutCreatedByInput
   requestedApprovals?: Prisma.ApprovalUncheckedCreateNestedManyWithoutRequestedByInput
   approvedApprovals?: Prisma.ApprovalUncheckedCreateNestedManyWithoutApprovedByInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
@@ -1241,6 +1276,7 @@ export type UserUpdateWithoutAssignedTasksInput = {
   validatedDailyReports?: Prisma.DailyReportUpdateManyWithoutValidatedByNestedInput
   uploadedFiles?: Prisma.FileUpdateManyWithoutUploadedByNestedInput
   financialEntries?: Prisma.FinancialEntryUpdateManyWithoutCreatedByNestedInput
+  createdMeasurements?: Prisma.ServiceMeasurementUpdateManyWithoutCreatedByNestedInput
   requestedApprovals?: Prisma.ApprovalUpdateManyWithoutRequestedByNestedInput
   approvedApprovals?: Prisma.ApprovalUpdateManyWithoutApprovedByNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
@@ -1268,6 +1304,7 @@ export type UserUncheckedUpdateWithoutAssignedTasksInput = {
   validatedDailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutValidatedByNestedInput
   uploadedFiles?: Prisma.FileUncheckedUpdateManyWithoutUploadedByNestedInput
   financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdMeasurements?: Prisma.ServiceMeasurementUncheckedUpdateManyWithoutCreatedByNestedInput
   requestedApprovals?: Prisma.ApprovalUncheckedUpdateManyWithoutRequestedByNestedInput
   approvedApprovals?: Prisma.ApprovalUncheckedUpdateManyWithoutApprovedByNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
@@ -1295,6 +1332,7 @@ export type UserCreateWithoutCompletedChecklistInput = {
   validatedDailyReports?: Prisma.DailyReportCreateNestedManyWithoutValidatedByInput
   uploadedFiles?: Prisma.FileCreateNestedManyWithoutUploadedByInput
   financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutCreatedByInput
+  createdMeasurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutCreatedByInput
   requestedApprovals?: Prisma.ApprovalCreateNestedManyWithoutRequestedByInput
   approvedApprovals?: Prisma.ApprovalCreateNestedManyWithoutApprovedByInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
@@ -1322,6 +1360,7 @@ export type UserUncheckedCreateWithoutCompletedChecklistInput = {
   validatedDailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutValidatedByInput
   uploadedFiles?: Prisma.FileUncheckedCreateNestedManyWithoutUploadedByInput
   financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutCreatedByInput
+  createdMeasurements?: Prisma.ServiceMeasurementUncheckedCreateNestedManyWithoutCreatedByInput
   requestedApprovals?: Prisma.ApprovalUncheckedCreateNestedManyWithoutRequestedByInput
   approvedApprovals?: Prisma.ApprovalUncheckedCreateNestedManyWithoutApprovedByInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
@@ -1365,6 +1404,7 @@ export type UserUpdateWithoutCompletedChecklistInput = {
   validatedDailyReports?: Prisma.DailyReportUpdateManyWithoutValidatedByNestedInput
   uploadedFiles?: Prisma.FileUpdateManyWithoutUploadedByNestedInput
   financialEntries?: Prisma.FinancialEntryUpdateManyWithoutCreatedByNestedInput
+  createdMeasurements?: Prisma.ServiceMeasurementUpdateManyWithoutCreatedByNestedInput
   requestedApprovals?: Prisma.ApprovalUpdateManyWithoutRequestedByNestedInput
   approvedApprovals?: Prisma.ApprovalUpdateManyWithoutApprovedByNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
@@ -1392,6 +1432,7 @@ export type UserUncheckedUpdateWithoutCompletedChecklistInput = {
   validatedDailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutValidatedByNestedInput
   uploadedFiles?: Prisma.FileUncheckedUpdateManyWithoutUploadedByNestedInput
   financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdMeasurements?: Prisma.ServiceMeasurementUncheckedUpdateManyWithoutCreatedByNestedInput
   requestedApprovals?: Prisma.ApprovalUncheckedUpdateManyWithoutRequestedByNestedInput
   approvedApprovals?: Prisma.ApprovalUncheckedUpdateManyWithoutApprovedByNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
@@ -1419,6 +1460,7 @@ export type UserCreateWithoutRequestedPurchasesInput = {
   validatedDailyReports?: Prisma.DailyReportCreateNestedManyWithoutValidatedByInput
   uploadedFiles?: Prisma.FileCreateNestedManyWithoutUploadedByInput
   financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutCreatedByInput
+  createdMeasurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutCreatedByInput
   requestedApprovals?: Prisma.ApprovalCreateNestedManyWithoutRequestedByInput
   approvedApprovals?: Prisma.ApprovalCreateNestedManyWithoutApprovedByInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
@@ -1446,6 +1488,7 @@ export type UserUncheckedCreateWithoutRequestedPurchasesInput = {
   validatedDailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutValidatedByInput
   uploadedFiles?: Prisma.FileUncheckedCreateNestedManyWithoutUploadedByInput
   financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutCreatedByInput
+  createdMeasurements?: Prisma.ServiceMeasurementUncheckedCreateNestedManyWithoutCreatedByInput
   requestedApprovals?: Prisma.ApprovalUncheckedCreateNestedManyWithoutRequestedByInput
   approvedApprovals?: Prisma.ApprovalUncheckedCreateNestedManyWithoutApprovedByInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
@@ -1478,6 +1521,7 @@ export type UserCreateWithoutApprovedPurchasesInput = {
   validatedDailyReports?: Prisma.DailyReportCreateNestedManyWithoutValidatedByInput
   uploadedFiles?: Prisma.FileCreateNestedManyWithoutUploadedByInput
   financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutCreatedByInput
+  createdMeasurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutCreatedByInput
   requestedApprovals?: Prisma.ApprovalCreateNestedManyWithoutRequestedByInput
   approvedApprovals?: Prisma.ApprovalCreateNestedManyWithoutApprovedByInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
@@ -1505,6 +1549,7 @@ export type UserUncheckedCreateWithoutApprovedPurchasesInput = {
   validatedDailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutValidatedByInput
   uploadedFiles?: Prisma.FileUncheckedCreateNestedManyWithoutUploadedByInput
   financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutCreatedByInput
+  createdMeasurements?: Prisma.ServiceMeasurementUncheckedCreateNestedManyWithoutCreatedByInput
   requestedApprovals?: Prisma.ApprovalUncheckedCreateNestedManyWithoutRequestedByInput
   approvedApprovals?: Prisma.ApprovalUncheckedCreateNestedManyWithoutApprovedByInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
@@ -1548,6 +1593,7 @@ export type UserUpdateWithoutRequestedPurchasesInput = {
   validatedDailyReports?: Prisma.DailyReportUpdateManyWithoutValidatedByNestedInput
   uploadedFiles?: Prisma.FileUpdateManyWithoutUploadedByNestedInput
   financialEntries?: Prisma.FinancialEntryUpdateManyWithoutCreatedByNestedInput
+  createdMeasurements?: Prisma.ServiceMeasurementUpdateManyWithoutCreatedByNestedInput
   requestedApprovals?: Prisma.ApprovalUpdateManyWithoutRequestedByNestedInput
   approvedApprovals?: Prisma.ApprovalUpdateManyWithoutApprovedByNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
@@ -1575,6 +1621,7 @@ export type UserUncheckedUpdateWithoutRequestedPurchasesInput = {
   validatedDailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutValidatedByNestedInput
   uploadedFiles?: Prisma.FileUncheckedUpdateManyWithoutUploadedByNestedInput
   financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdMeasurements?: Prisma.ServiceMeasurementUncheckedUpdateManyWithoutCreatedByNestedInput
   requestedApprovals?: Prisma.ApprovalUncheckedUpdateManyWithoutRequestedByNestedInput
   approvedApprovals?: Prisma.ApprovalUncheckedUpdateManyWithoutApprovedByNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
@@ -1613,6 +1660,7 @@ export type UserUpdateWithoutApprovedPurchasesInput = {
   validatedDailyReports?: Prisma.DailyReportUpdateManyWithoutValidatedByNestedInput
   uploadedFiles?: Prisma.FileUpdateManyWithoutUploadedByNestedInput
   financialEntries?: Prisma.FinancialEntryUpdateManyWithoutCreatedByNestedInput
+  createdMeasurements?: Prisma.ServiceMeasurementUpdateManyWithoutCreatedByNestedInput
   requestedApprovals?: Prisma.ApprovalUpdateManyWithoutRequestedByNestedInput
   approvedApprovals?: Prisma.ApprovalUpdateManyWithoutApprovedByNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
@@ -1640,6 +1688,7 @@ export type UserUncheckedUpdateWithoutApprovedPurchasesInput = {
   validatedDailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutValidatedByNestedInput
   uploadedFiles?: Prisma.FileUncheckedUpdateManyWithoutUploadedByNestedInput
   financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdMeasurements?: Prisma.ServiceMeasurementUncheckedUpdateManyWithoutCreatedByNestedInput
   requestedApprovals?: Prisma.ApprovalUncheckedUpdateManyWithoutRequestedByNestedInput
   approvedApprovals?: Prisma.ApprovalUncheckedUpdateManyWithoutApprovedByNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
@@ -1667,6 +1716,7 @@ export type UserCreateWithoutStockMovementsInput = {
   validatedDailyReports?: Prisma.DailyReportCreateNestedManyWithoutValidatedByInput
   uploadedFiles?: Prisma.FileCreateNestedManyWithoutUploadedByInput
   financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutCreatedByInput
+  createdMeasurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutCreatedByInput
   requestedApprovals?: Prisma.ApprovalCreateNestedManyWithoutRequestedByInput
   approvedApprovals?: Prisma.ApprovalCreateNestedManyWithoutApprovedByInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
@@ -1694,6 +1744,7 @@ export type UserUncheckedCreateWithoutStockMovementsInput = {
   validatedDailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutValidatedByInput
   uploadedFiles?: Prisma.FileUncheckedCreateNestedManyWithoutUploadedByInput
   financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutCreatedByInput
+  createdMeasurements?: Prisma.ServiceMeasurementUncheckedCreateNestedManyWithoutCreatedByInput
   requestedApprovals?: Prisma.ApprovalUncheckedCreateNestedManyWithoutRequestedByInput
   approvedApprovals?: Prisma.ApprovalUncheckedCreateNestedManyWithoutApprovedByInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
@@ -1737,6 +1788,7 @@ export type UserUpdateWithoutStockMovementsInput = {
   validatedDailyReports?: Prisma.DailyReportUpdateManyWithoutValidatedByNestedInput
   uploadedFiles?: Prisma.FileUpdateManyWithoutUploadedByNestedInput
   financialEntries?: Prisma.FinancialEntryUpdateManyWithoutCreatedByNestedInput
+  createdMeasurements?: Prisma.ServiceMeasurementUpdateManyWithoutCreatedByNestedInput
   requestedApprovals?: Prisma.ApprovalUpdateManyWithoutRequestedByNestedInput
   approvedApprovals?: Prisma.ApprovalUpdateManyWithoutApprovedByNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
@@ -1764,6 +1816,7 @@ export type UserUncheckedUpdateWithoutStockMovementsInput = {
   validatedDailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutValidatedByNestedInput
   uploadedFiles?: Prisma.FileUncheckedUpdateManyWithoutUploadedByNestedInput
   financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdMeasurements?: Prisma.ServiceMeasurementUncheckedUpdateManyWithoutCreatedByNestedInput
   requestedApprovals?: Prisma.ApprovalUncheckedUpdateManyWithoutRequestedByNestedInput
   approvedApprovals?: Prisma.ApprovalUncheckedUpdateManyWithoutApprovedByNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
@@ -1791,6 +1844,7 @@ export type UserCreateWithoutWasteDisposalsInput = {
   validatedDailyReports?: Prisma.DailyReportCreateNestedManyWithoutValidatedByInput
   uploadedFiles?: Prisma.FileCreateNestedManyWithoutUploadedByInput
   financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutCreatedByInput
+  createdMeasurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutCreatedByInput
   requestedApprovals?: Prisma.ApprovalCreateNestedManyWithoutRequestedByInput
   approvedApprovals?: Prisma.ApprovalCreateNestedManyWithoutApprovedByInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
@@ -1818,6 +1872,7 @@ export type UserUncheckedCreateWithoutWasteDisposalsInput = {
   validatedDailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutValidatedByInput
   uploadedFiles?: Prisma.FileUncheckedCreateNestedManyWithoutUploadedByInput
   financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutCreatedByInput
+  createdMeasurements?: Prisma.ServiceMeasurementUncheckedCreateNestedManyWithoutCreatedByInput
   requestedApprovals?: Prisma.ApprovalUncheckedCreateNestedManyWithoutRequestedByInput
   approvedApprovals?: Prisma.ApprovalUncheckedCreateNestedManyWithoutApprovedByInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
@@ -1861,6 +1916,7 @@ export type UserUpdateWithoutWasteDisposalsInput = {
   validatedDailyReports?: Prisma.DailyReportUpdateManyWithoutValidatedByNestedInput
   uploadedFiles?: Prisma.FileUpdateManyWithoutUploadedByNestedInput
   financialEntries?: Prisma.FinancialEntryUpdateManyWithoutCreatedByNestedInput
+  createdMeasurements?: Prisma.ServiceMeasurementUpdateManyWithoutCreatedByNestedInput
   requestedApprovals?: Prisma.ApprovalUpdateManyWithoutRequestedByNestedInput
   approvedApprovals?: Prisma.ApprovalUpdateManyWithoutApprovedByNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
@@ -1888,6 +1944,7 @@ export type UserUncheckedUpdateWithoutWasteDisposalsInput = {
   validatedDailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutValidatedByNestedInput
   uploadedFiles?: Prisma.FileUncheckedUpdateManyWithoutUploadedByNestedInput
   financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdMeasurements?: Prisma.ServiceMeasurementUncheckedUpdateManyWithoutCreatedByNestedInput
   requestedApprovals?: Prisma.ApprovalUncheckedUpdateManyWithoutRequestedByNestedInput
   approvedApprovals?: Prisma.ApprovalUncheckedUpdateManyWithoutApprovedByNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
@@ -1915,6 +1972,7 @@ export type UserCreateWithoutDailyReportsInput = {
   validatedDailyReports?: Prisma.DailyReportCreateNestedManyWithoutValidatedByInput
   uploadedFiles?: Prisma.FileCreateNestedManyWithoutUploadedByInput
   financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutCreatedByInput
+  createdMeasurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutCreatedByInput
   requestedApprovals?: Prisma.ApprovalCreateNestedManyWithoutRequestedByInput
   approvedApprovals?: Prisma.ApprovalCreateNestedManyWithoutApprovedByInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
@@ -1942,6 +2000,7 @@ export type UserUncheckedCreateWithoutDailyReportsInput = {
   validatedDailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutValidatedByInput
   uploadedFiles?: Prisma.FileUncheckedCreateNestedManyWithoutUploadedByInput
   financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutCreatedByInput
+  createdMeasurements?: Prisma.ServiceMeasurementUncheckedCreateNestedManyWithoutCreatedByInput
   requestedApprovals?: Prisma.ApprovalUncheckedCreateNestedManyWithoutRequestedByInput
   approvedApprovals?: Prisma.ApprovalUncheckedCreateNestedManyWithoutApprovedByInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
@@ -1974,6 +2033,7 @@ export type UserCreateWithoutValidatedDailyReportsInput = {
   dailyReports?: Prisma.DailyReportCreateNestedManyWithoutCreatedByInput
   uploadedFiles?: Prisma.FileCreateNestedManyWithoutUploadedByInput
   financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutCreatedByInput
+  createdMeasurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutCreatedByInput
   requestedApprovals?: Prisma.ApprovalCreateNestedManyWithoutRequestedByInput
   approvedApprovals?: Prisma.ApprovalCreateNestedManyWithoutApprovedByInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
@@ -2001,6 +2061,7 @@ export type UserUncheckedCreateWithoutValidatedDailyReportsInput = {
   dailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutCreatedByInput
   uploadedFiles?: Prisma.FileUncheckedCreateNestedManyWithoutUploadedByInput
   financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutCreatedByInput
+  createdMeasurements?: Prisma.ServiceMeasurementUncheckedCreateNestedManyWithoutCreatedByInput
   requestedApprovals?: Prisma.ApprovalUncheckedCreateNestedManyWithoutRequestedByInput
   approvedApprovals?: Prisma.ApprovalUncheckedCreateNestedManyWithoutApprovedByInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
@@ -2044,6 +2105,7 @@ export type UserUpdateWithoutDailyReportsInput = {
   validatedDailyReports?: Prisma.DailyReportUpdateManyWithoutValidatedByNestedInput
   uploadedFiles?: Prisma.FileUpdateManyWithoutUploadedByNestedInput
   financialEntries?: Prisma.FinancialEntryUpdateManyWithoutCreatedByNestedInput
+  createdMeasurements?: Prisma.ServiceMeasurementUpdateManyWithoutCreatedByNestedInput
   requestedApprovals?: Prisma.ApprovalUpdateManyWithoutRequestedByNestedInput
   approvedApprovals?: Prisma.ApprovalUpdateManyWithoutApprovedByNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
@@ -2071,6 +2133,7 @@ export type UserUncheckedUpdateWithoutDailyReportsInput = {
   validatedDailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutValidatedByNestedInput
   uploadedFiles?: Prisma.FileUncheckedUpdateManyWithoutUploadedByNestedInput
   financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdMeasurements?: Prisma.ServiceMeasurementUncheckedUpdateManyWithoutCreatedByNestedInput
   requestedApprovals?: Prisma.ApprovalUncheckedUpdateManyWithoutRequestedByNestedInput
   approvedApprovals?: Prisma.ApprovalUncheckedUpdateManyWithoutApprovedByNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
@@ -2109,6 +2172,7 @@ export type UserUpdateWithoutValidatedDailyReportsInput = {
   dailyReports?: Prisma.DailyReportUpdateManyWithoutCreatedByNestedInput
   uploadedFiles?: Prisma.FileUpdateManyWithoutUploadedByNestedInput
   financialEntries?: Prisma.FinancialEntryUpdateManyWithoutCreatedByNestedInput
+  createdMeasurements?: Prisma.ServiceMeasurementUpdateManyWithoutCreatedByNestedInput
   requestedApprovals?: Prisma.ApprovalUpdateManyWithoutRequestedByNestedInput
   approvedApprovals?: Prisma.ApprovalUpdateManyWithoutApprovedByNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
@@ -2136,6 +2200,7 @@ export type UserUncheckedUpdateWithoutValidatedDailyReportsInput = {
   dailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutCreatedByNestedInput
   uploadedFiles?: Prisma.FileUncheckedUpdateManyWithoutUploadedByNestedInput
   financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdMeasurements?: Prisma.ServiceMeasurementUncheckedUpdateManyWithoutCreatedByNestedInput
   requestedApprovals?: Prisma.ApprovalUncheckedUpdateManyWithoutRequestedByNestedInput
   approvedApprovals?: Prisma.ApprovalUncheckedUpdateManyWithoutApprovedByNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
@@ -2163,6 +2228,7 @@ export type UserCreateWithoutUploadedFilesInput = {
   dailyReports?: Prisma.DailyReportCreateNestedManyWithoutCreatedByInput
   validatedDailyReports?: Prisma.DailyReportCreateNestedManyWithoutValidatedByInput
   financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutCreatedByInput
+  createdMeasurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutCreatedByInput
   requestedApprovals?: Prisma.ApprovalCreateNestedManyWithoutRequestedByInput
   approvedApprovals?: Prisma.ApprovalCreateNestedManyWithoutApprovedByInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
@@ -2190,6 +2256,7 @@ export type UserUncheckedCreateWithoutUploadedFilesInput = {
   dailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutCreatedByInput
   validatedDailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutValidatedByInput
   financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutCreatedByInput
+  createdMeasurements?: Prisma.ServiceMeasurementUncheckedCreateNestedManyWithoutCreatedByInput
   requestedApprovals?: Prisma.ApprovalUncheckedCreateNestedManyWithoutRequestedByInput
   approvedApprovals?: Prisma.ApprovalUncheckedCreateNestedManyWithoutApprovedByInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
@@ -2233,6 +2300,7 @@ export type UserUpdateWithoutUploadedFilesInput = {
   dailyReports?: Prisma.DailyReportUpdateManyWithoutCreatedByNestedInput
   validatedDailyReports?: Prisma.DailyReportUpdateManyWithoutValidatedByNestedInput
   financialEntries?: Prisma.FinancialEntryUpdateManyWithoutCreatedByNestedInput
+  createdMeasurements?: Prisma.ServiceMeasurementUpdateManyWithoutCreatedByNestedInput
   requestedApprovals?: Prisma.ApprovalUpdateManyWithoutRequestedByNestedInput
   approvedApprovals?: Prisma.ApprovalUpdateManyWithoutApprovedByNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
@@ -2260,6 +2328,7 @@ export type UserUncheckedUpdateWithoutUploadedFilesInput = {
   dailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutCreatedByNestedInput
   validatedDailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutValidatedByNestedInput
   financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdMeasurements?: Prisma.ServiceMeasurementUncheckedUpdateManyWithoutCreatedByNestedInput
   requestedApprovals?: Prisma.ApprovalUncheckedUpdateManyWithoutRequestedByNestedInput
   approvedApprovals?: Prisma.ApprovalUncheckedUpdateManyWithoutApprovedByNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
@@ -2287,6 +2356,7 @@ export type UserCreateWithoutFinancialEntriesInput = {
   dailyReports?: Prisma.DailyReportCreateNestedManyWithoutCreatedByInput
   validatedDailyReports?: Prisma.DailyReportCreateNestedManyWithoutValidatedByInput
   uploadedFiles?: Prisma.FileCreateNestedManyWithoutUploadedByInput
+  createdMeasurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutCreatedByInput
   requestedApprovals?: Prisma.ApprovalCreateNestedManyWithoutRequestedByInput
   approvedApprovals?: Prisma.ApprovalCreateNestedManyWithoutApprovedByInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
@@ -2314,6 +2384,7 @@ export type UserUncheckedCreateWithoutFinancialEntriesInput = {
   dailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutCreatedByInput
   validatedDailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutValidatedByInput
   uploadedFiles?: Prisma.FileUncheckedCreateNestedManyWithoutUploadedByInput
+  createdMeasurements?: Prisma.ServiceMeasurementUncheckedCreateNestedManyWithoutCreatedByInput
   requestedApprovals?: Prisma.ApprovalUncheckedCreateNestedManyWithoutRequestedByInput
   approvedApprovals?: Prisma.ApprovalUncheckedCreateNestedManyWithoutApprovedByInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
@@ -2357,6 +2428,7 @@ export type UserUpdateWithoutFinancialEntriesInput = {
   dailyReports?: Prisma.DailyReportUpdateManyWithoutCreatedByNestedInput
   validatedDailyReports?: Prisma.DailyReportUpdateManyWithoutValidatedByNestedInput
   uploadedFiles?: Prisma.FileUpdateManyWithoutUploadedByNestedInput
+  createdMeasurements?: Prisma.ServiceMeasurementUpdateManyWithoutCreatedByNestedInput
   requestedApprovals?: Prisma.ApprovalUpdateManyWithoutRequestedByNestedInput
   approvedApprovals?: Prisma.ApprovalUpdateManyWithoutApprovedByNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
@@ -2384,6 +2456,135 @@ export type UserUncheckedUpdateWithoutFinancialEntriesInput = {
   dailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutCreatedByNestedInput
   validatedDailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutValidatedByNestedInput
   uploadedFiles?: Prisma.FileUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdMeasurements?: Prisma.ServiceMeasurementUncheckedUpdateManyWithoutCreatedByNestedInput
+  requestedApprovals?: Prisma.ApprovalUncheckedUpdateManyWithoutRequestedByNestedInput
+  approvedApprovals?: Prisma.ApprovalUncheckedUpdateManyWithoutApprovedByNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutCreatedMeasurementsInput = {
+  id?: string
+  name: string
+  email: string
+  passwordHash: string
+  role: $Enums.UserRole
+  phone?: string | null
+  status?: $Enums.RecordStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  managedProjects?: Prisma.ProjectCreateNestedManyWithoutManagerInput
+  technicalProjects?: Prisma.ProjectCreateNestedManyWithoutTechnicalResponsibleInput
+  responsibleAreas?: Prisma.ProjectAreaCreateNestedManyWithoutResponsibleInput
+  assignedTasks?: Prisma.TaskCreateNestedManyWithoutAssignedToUserInput
+  completedChecklist?: Prisma.TaskChecklistItemCreateNestedManyWithoutCompletedByInput
+  requestedPurchases?: Prisma.PurchaseRequestCreateNestedManyWithoutRequestedByInput
+  approvedPurchases?: Prisma.PurchaseRequestCreateNestedManyWithoutApprovedByInput
+  stockMovements?: Prisma.StockMovementCreateNestedManyWithoutCreatedByInput
+  wasteDisposals?: Prisma.WasteDisposalCreateNestedManyWithoutCreatedByInput
+  dailyReports?: Prisma.DailyReportCreateNestedManyWithoutCreatedByInput
+  validatedDailyReports?: Prisma.DailyReportCreateNestedManyWithoutValidatedByInput
+  uploadedFiles?: Prisma.FileCreateNestedManyWithoutUploadedByInput
+  financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutCreatedByInput
+  requestedApprovals?: Prisma.ApprovalCreateNestedManyWithoutRequestedByInput
+  approvedApprovals?: Prisma.ApprovalCreateNestedManyWithoutApprovedByInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutCreatedMeasurementsInput = {
+  id?: string
+  name: string
+  email: string
+  passwordHash: string
+  role: $Enums.UserRole
+  phone?: string | null
+  status?: $Enums.RecordStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  managedProjects?: Prisma.ProjectUncheckedCreateNestedManyWithoutManagerInput
+  technicalProjects?: Prisma.ProjectUncheckedCreateNestedManyWithoutTechnicalResponsibleInput
+  responsibleAreas?: Prisma.ProjectAreaUncheckedCreateNestedManyWithoutResponsibleInput
+  assignedTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutAssignedToUserInput
+  completedChecklist?: Prisma.TaskChecklistItemUncheckedCreateNestedManyWithoutCompletedByInput
+  requestedPurchases?: Prisma.PurchaseRequestUncheckedCreateNestedManyWithoutRequestedByInput
+  approvedPurchases?: Prisma.PurchaseRequestUncheckedCreateNestedManyWithoutApprovedByInput
+  stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutCreatedByInput
+  wasteDisposals?: Prisma.WasteDisposalUncheckedCreateNestedManyWithoutCreatedByInput
+  dailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutCreatedByInput
+  validatedDailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutValidatedByInput
+  uploadedFiles?: Prisma.FileUncheckedCreateNestedManyWithoutUploadedByInput
+  financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutCreatedByInput
+  requestedApprovals?: Prisma.ApprovalUncheckedCreateNestedManyWithoutRequestedByInput
+  approvedApprovals?: Prisma.ApprovalUncheckedCreateNestedManyWithoutApprovedByInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutCreatedMeasurementsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutCreatedMeasurementsInput, Prisma.UserUncheckedCreateWithoutCreatedMeasurementsInput>
+}
+
+export type UserUpsertWithoutCreatedMeasurementsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCreatedMeasurementsInput, Prisma.UserUncheckedUpdateWithoutCreatedMeasurementsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCreatedMeasurementsInput, Prisma.UserUncheckedCreateWithoutCreatedMeasurementsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutCreatedMeasurementsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCreatedMeasurementsInput, Prisma.UserUncheckedUpdateWithoutCreatedMeasurementsInput>
+}
+
+export type UserUpdateWithoutCreatedMeasurementsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumRecordStatusFieldUpdateOperationsInput | $Enums.RecordStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  managedProjects?: Prisma.ProjectUpdateManyWithoutManagerNestedInput
+  technicalProjects?: Prisma.ProjectUpdateManyWithoutTechnicalResponsibleNestedInput
+  responsibleAreas?: Prisma.ProjectAreaUpdateManyWithoutResponsibleNestedInput
+  assignedTasks?: Prisma.TaskUpdateManyWithoutAssignedToUserNestedInput
+  completedChecklist?: Prisma.TaskChecklistItemUpdateManyWithoutCompletedByNestedInput
+  requestedPurchases?: Prisma.PurchaseRequestUpdateManyWithoutRequestedByNestedInput
+  approvedPurchases?: Prisma.PurchaseRequestUpdateManyWithoutApprovedByNestedInput
+  stockMovements?: Prisma.StockMovementUpdateManyWithoutCreatedByNestedInput
+  wasteDisposals?: Prisma.WasteDisposalUpdateManyWithoutCreatedByNestedInput
+  dailyReports?: Prisma.DailyReportUpdateManyWithoutCreatedByNestedInput
+  validatedDailyReports?: Prisma.DailyReportUpdateManyWithoutValidatedByNestedInput
+  uploadedFiles?: Prisma.FileUpdateManyWithoutUploadedByNestedInput
+  financialEntries?: Prisma.FinancialEntryUpdateManyWithoutCreatedByNestedInput
+  requestedApprovals?: Prisma.ApprovalUpdateManyWithoutRequestedByNestedInput
+  approvedApprovals?: Prisma.ApprovalUpdateManyWithoutApprovedByNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutCreatedMeasurementsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumRecordStatusFieldUpdateOperationsInput | $Enums.RecordStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  managedProjects?: Prisma.ProjectUncheckedUpdateManyWithoutManagerNestedInput
+  technicalProjects?: Prisma.ProjectUncheckedUpdateManyWithoutTechnicalResponsibleNestedInput
+  responsibleAreas?: Prisma.ProjectAreaUncheckedUpdateManyWithoutResponsibleNestedInput
+  assignedTasks?: Prisma.TaskUncheckedUpdateManyWithoutAssignedToUserNestedInput
+  completedChecklist?: Prisma.TaskChecklistItemUncheckedUpdateManyWithoutCompletedByNestedInput
+  requestedPurchases?: Prisma.PurchaseRequestUncheckedUpdateManyWithoutRequestedByNestedInput
+  approvedPurchases?: Prisma.PurchaseRequestUncheckedUpdateManyWithoutApprovedByNestedInput
+  stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutCreatedByNestedInput
+  wasteDisposals?: Prisma.WasteDisposalUncheckedUpdateManyWithoutCreatedByNestedInput
+  dailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutCreatedByNestedInput
+  validatedDailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutValidatedByNestedInput
+  uploadedFiles?: Prisma.FileUncheckedUpdateManyWithoutUploadedByNestedInput
+  financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutCreatedByNestedInput
   requestedApprovals?: Prisma.ApprovalUncheckedUpdateManyWithoutRequestedByNestedInput
   approvedApprovals?: Prisma.ApprovalUncheckedUpdateManyWithoutApprovedByNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
@@ -2412,6 +2613,7 @@ export type UserCreateWithoutRequestedApprovalsInput = {
   validatedDailyReports?: Prisma.DailyReportCreateNestedManyWithoutValidatedByInput
   uploadedFiles?: Prisma.FileCreateNestedManyWithoutUploadedByInput
   financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutCreatedByInput
+  createdMeasurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutCreatedByInput
   approvedApprovals?: Prisma.ApprovalCreateNestedManyWithoutApprovedByInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
 }
@@ -2439,6 +2641,7 @@ export type UserUncheckedCreateWithoutRequestedApprovalsInput = {
   validatedDailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutValidatedByInput
   uploadedFiles?: Prisma.FileUncheckedCreateNestedManyWithoutUploadedByInput
   financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutCreatedByInput
+  createdMeasurements?: Prisma.ServiceMeasurementUncheckedCreateNestedManyWithoutCreatedByInput
   approvedApprovals?: Prisma.ApprovalUncheckedCreateNestedManyWithoutApprovedByInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
 }
@@ -2471,6 +2674,7 @@ export type UserCreateWithoutApprovedApprovalsInput = {
   validatedDailyReports?: Prisma.DailyReportCreateNestedManyWithoutValidatedByInput
   uploadedFiles?: Prisma.FileCreateNestedManyWithoutUploadedByInput
   financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutCreatedByInput
+  createdMeasurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutCreatedByInput
   requestedApprovals?: Prisma.ApprovalCreateNestedManyWithoutRequestedByInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
 }
@@ -2498,6 +2702,7 @@ export type UserUncheckedCreateWithoutApprovedApprovalsInput = {
   validatedDailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutValidatedByInput
   uploadedFiles?: Prisma.FileUncheckedCreateNestedManyWithoutUploadedByInput
   financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutCreatedByInput
+  createdMeasurements?: Prisma.ServiceMeasurementUncheckedCreateNestedManyWithoutCreatedByInput
   requestedApprovals?: Prisma.ApprovalUncheckedCreateNestedManyWithoutRequestedByInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
 }
@@ -2541,6 +2746,7 @@ export type UserUpdateWithoutRequestedApprovalsInput = {
   validatedDailyReports?: Prisma.DailyReportUpdateManyWithoutValidatedByNestedInput
   uploadedFiles?: Prisma.FileUpdateManyWithoutUploadedByNestedInput
   financialEntries?: Prisma.FinancialEntryUpdateManyWithoutCreatedByNestedInput
+  createdMeasurements?: Prisma.ServiceMeasurementUpdateManyWithoutCreatedByNestedInput
   approvedApprovals?: Prisma.ApprovalUpdateManyWithoutApprovedByNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
 }
@@ -2568,6 +2774,7 @@ export type UserUncheckedUpdateWithoutRequestedApprovalsInput = {
   validatedDailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutValidatedByNestedInput
   uploadedFiles?: Prisma.FileUncheckedUpdateManyWithoutUploadedByNestedInput
   financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdMeasurements?: Prisma.ServiceMeasurementUncheckedUpdateManyWithoutCreatedByNestedInput
   approvedApprovals?: Prisma.ApprovalUncheckedUpdateManyWithoutApprovedByNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -2606,6 +2813,7 @@ export type UserUpdateWithoutApprovedApprovalsInput = {
   validatedDailyReports?: Prisma.DailyReportUpdateManyWithoutValidatedByNestedInput
   uploadedFiles?: Prisma.FileUpdateManyWithoutUploadedByNestedInput
   financialEntries?: Prisma.FinancialEntryUpdateManyWithoutCreatedByNestedInput
+  createdMeasurements?: Prisma.ServiceMeasurementUpdateManyWithoutCreatedByNestedInput
   requestedApprovals?: Prisma.ApprovalUpdateManyWithoutRequestedByNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
 }
@@ -2633,6 +2841,7 @@ export type UserUncheckedUpdateWithoutApprovedApprovalsInput = {
   validatedDailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutValidatedByNestedInput
   uploadedFiles?: Prisma.FileUncheckedUpdateManyWithoutUploadedByNestedInput
   financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdMeasurements?: Prisma.ServiceMeasurementUncheckedUpdateManyWithoutCreatedByNestedInput
   requestedApprovals?: Prisma.ApprovalUncheckedUpdateManyWithoutRequestedByNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -2660,6 +2869,7 @@ export type UserCreateWithoutAuditLogsInput = {
   validatedDailyReports?: Prisma.DailyReportCreateNestedManyWithoutValidatedByInput
   uploadedFiles?: Prisma.FileCreateNestedManyWithoutUploadedByInput
   financialEntries?: Prisma.FinancialEntryCreateNestedManyWithoutCreatedByInput
+  createdMeasurements?: Prisma.ServiceMeasurementCreateNestedManyWithoutCreatedByInput
   requestedApprovals?: Prisma.ApprovalCreateNestedManyWithoutRequestedByInput
   approvedApprovals?: Prisma.ApprovalCreateNestedManyWithoutApprovedByInput
 }
@@ -2687,6 +2897,7 @@ export type UserUncheckedCreateWithoutAuditLogsInput = {
   validatedDailyReports?: Prisma.DailyReportUncheckedCreateNestedManyWithoutValidatedByInput
   uploadedFiles?: Prisma.FileUncheckedCreateNestedManyWithoutUploadedByInput
   financialEntries?: Prisma.FinancialEntryUncheckedCreateNestedManyWithoutCreatedByInput
+  createdMeasurements?: Prisma.ServiceMeasurementUncheckedCreateNestedManyWithoutCreatedByInput
   requestedApprovals?: Prisma.ApprovalUncheckedCreateNestedManyWithoutRequestedByInput
   approvedApprovals?: Prisma.ApprovalUncheckedCreateNestedManyWithoutApprovedByInput
 }
@@ -2730,6 +2941,7 @@ export type UserUpdateWithoutAuditLogsInput = {
   validatedDailyReports?: Prisma.DailyReportUpdateManyWithoutValidatedByNestedInput
   uploadedFiles?: Prisma.FileUpdateManyWithoutUploadedByNestedInput
   financialEntries?: Prisma.FinancialEntryUpdateManyWithoutCreatedByNestedInput
+  createdMeasurements?: Prisma.ServiceMeasurementUpdateManyWithoutCreatedByNestedInput
   requestedApprovals?: Prisma.ApprovalUpdateManyWithoutRequestedByNestedInput
   approvedApprovals?: Prisma.ApprovalUpdateManyWithoutApprovedByNestedInput
 }
@@ -2757,6 +2969,7 @@ export type UserUncheckedUpdateWithoutAuditLogsInput = {
   validatedDailyReports?: Prisma.DailyReportUncheckedUpdateManyWithoutValidatedByNestedInput
   uploadedFiles?: Prisma.FileUncheckedUpdateManyWithoutUploadedByNestedInput
   financialEntries?: Prisma.FinancialEntryUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdMeasurements?: Prisma.ServiceMeasurementUncheckedUpdateManyWithoutCreatedByNestedInput
   requestedApprovals?: Prisma.ApprovalUncheckedUpdateManyWithoutRequestedByNestedInput
   approvedApprovals?: Prisma.ApprovalUncheckedUpdateManyWithoutApprovedByNestedInput
 }
@@ -2780,6 +2993,7 @@ export type UserCountOutputType = {
   validatedDailyReports: number
   uploadedFiles: number
   financialEntries: number
+  createdMeasurements: number
   requestedApprovals: number
   approvedApprovals: number
   auditLogs: number
@@ -2799,6 +3013,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   validatedDailyReports?: boolean | UserCountOutputTypeCountValidatedDailyReportsArgs
   uploadedFiles?: boolean | UserCountOutputTypeCountUploadedFilesArgs
   financialEntries?: boolean | UserCountOutputTypeCountFinancialEntriesArgs
+  createdMeasurements?: boolean | UserCountOutputTypeCountCreatedMeasurementsArgs
   requestedApprovals?: boolean | UserCountOutputTypeCountRequestedApprovalsArgs
   approvedApprovals?: boolean | UserCountOutputTypeCountApprovedApprovalsArgs
   auditLogs?: boolean | UserCountOutputTypeCountAuditLogsArgs
@@ -2908,6 +3123,13 @@ export type UserCountOutputTypeCountFinancialEntriesArgs<ExtArgs extends runtime
 /**
  * UserCountOutputType without action
  */
+export type UserCountOutputTypeCountCreatedMeasurementsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ServiceMeasurementWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
 export type UserCountOutputTypeCountRequestedApprovalsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.ApprovalWhereInput
 }
@@ -2950,6 +3172,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   validatedDailyReports?: boolean | Prisma.User$validatedDailyReportsArgs<ExtArgs>
   uploadedFiles?: boolean | Prisma.User$uploadedFilesArgs<ExtArgs>
   financialEntries?: boolean | Prisma.User$financialEntriesArgs<ExtArgs>
+  createdMeasurements?: boolean | Prisma.User$createdMeasurementsArgs<ExtArgs>
   requestedApprovals?: boolean | Prisma.User$requestedApprovalsArgs<ExtArgs>
   approvedApprovals?: boolean | Prisma.User$approvedApprovalsArgs<ExtArgs>
   auditLogs?: boolean | Prisma.User$auditLogsArgs<ExtArgs>
@@ -3007,6 +3230,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   validatedDailyReports?: boolean | Prisma.User$validatedDailyReportsArgs<ExtArgs>
   uploadedFiles?: boolean | Prisma.User$uploadedFilesArgs<ExtArgs>
   financialEntries?: boolean | Prisma.User$financialEntriesArgs<ExtArgs>
+  createdMeasurements?: boolean | Prisma.User$createdMeasurementsArgs<ExtArgs>
   requestedApprovals?: boolean | Prisma.User$requestedApprovalsArgs<ExtArgs>
   approvedApprovals?: boolean | Prisma.User$approvedApprovalsArgs<ExtArgs>
   auditLogs?: boolean | Prisma.User$auditLogsArgs<ExtArgs>
@@ -3031,6 +3255,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     validatedDailyReports: Prisma.$DailyReportPayload<ExtArgs>[]
     uploadedFiles: Prisma.$FilePayload<ExtArgs>[]
     financialEntries: Prisma.$FinancialEntryPayload<ExtArgs>[]
+    createdMeasurements: Prisma.$ServiceMeasurementPayload<ExtArgs>[]
     requestedApprovals: Prisma.$ApprovalPayload<ExtArgs>[]
     approvedApprovals: Prisma.$ApprovalPayload<ExtArgs>[]
     auditLogs: Prisma.$AuditLogPayload<ExtArgs>[]
@@ -3452,6 +3677,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   validatedDailyReports<T extends Prisma.User$validatedDailyReportsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$validatedDailyReportsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DailyReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   uploadedFiles<T extends Prisma.User$uploadedFilesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$uploadedFilesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   financialEntries<T extends Prisma.User$financialEntriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$financialEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FinancialEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  createdMeasurements<T extends Prisma.User$createdMeasurementsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdMeasurementsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceMeasurementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   requestedApprovals<T extends Prisma.User$requestedApprovalsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$requestedApprovalsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ApprovalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   approvedApprovals<T extends Prisma.User$approvedApprovalsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$approvedApprovalsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ApprovalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   auditLogs<T extends Prisma.User$auditLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -4195,6 +4421,30 @@ export type User$financialEntriesArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   distinct?: Prisma.FinancialEntryScalarFieldEnum | Prisma.FinancialEntryScalarFieldEnum[]
+}
+
+/**
+ * User.createdMeasurements
+ */
+export type User$createdMeasurementsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ServiceMeasurement
+   */
+  select?: Prisma.ServiceMeasurementSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ServiceMeasurement
+   */
+  omit?: Prisma.ServiceMeasurementOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ServiceMeasurementInclude<ExtArgs> | null
+  where?: Prisma.ServiceMeasurementWhereInput
+  orderBy?: Prisma.ServiceMeasurementOrderByWithRelationInput | Prisma.ServiceMeasurementOrderByWithRelationInput[]
+  cursor?: Prisma.ServiceMeasurementWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ServiceMeasurementScalarFieldEnum | Prisma.ServiceMeasurementScalarFieldEnum[]
 }
 
 /**

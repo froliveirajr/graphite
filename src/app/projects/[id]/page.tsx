@@ -33,6 +33,10 @@ function financialUsage(project: ProjectDetails) {
   return Math.min(100, Math.round((project.actualCost / project.budget) * 100));
 }
 
+function sumValues(items: Array<{ totalPrice?: number; amountMeasured?: number }>, key: "totalPrice" | "amountMeasured") {
+  return items.reduce((total, item) => total + (item[key] ?? 0), 0);
+}
+
 function isProjectTab(value: string | undefined): value is ProjectTab {
   return tabs.some((tab) => tab.value === value);
 }
@@ -53,6 +57,15 @@ export default async function ProjectDetailsPage({
 
   const activeTab = isProjectTab(tab) ? tab : "overview";
   const usage = financialUsage(project);
+  const budgetTotal = sumValues(project.budgetItems, "totalPrice");
+  const measuredTotal = sumValues(project.measurements, "amountMeasured");
+  const physicalProgress =
+    project.budgetItems.length > 0
+      ? Math.round(
+          project.budgetItems.reduce((total, item) => total + item.physicalProgress * (item.physicalWeight || 1), 0) /
+            project.budgetItems.reduce((total, item) => total + (item.physicalWeight || 1), 0),
+        )
+      : project.progress;
   const photos = project.files.filter((file) => file.fileType.toLocaleLowerCase("pt-BR").includes("foto"));
   const documents = project.files.filter((file) => !file.fileType.toLocaleLowerCase("pt-BR").includes("foto"));
 
@@ -292,39 +305,111 @@ export default async function ProjectDetailsPage({
         ) : null}
 
         {activeTab === "financial" ? (
-          <section className="rounded-lg border border-zinc-200 bg-white shadow-sm">
-            <div className="border-b border-zinc-200 p-4">
-              <h2 className="font-semibold">Financeiro da obra</h2>
-            </div>
-            {project.financialEntries.length > 0 ? (
-              <div className="overflow-x-auto">
-                <table className="w-full min-w-[760px] text-left text-sm">
-                  <thead className="bg-zinc-50 text-xs uppercase tracking-wide text-zinc-500">
-                    <tr>
-                      <th className="px-4 py-3">Tipo</th>
-                      <th className="px-4 py-3">Categoria</th>
-                      <th className="px-4 py-3">Descricao</th>
-                      <th className="px-4 py-3">Vencimento</th>
-                      <th className="px-4 py-3">Status</th>
-                      <th className="px-4 py-3">Valor</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-zinc-100">
-                    {project.financialEntries.map((entry) => (
-                      <tr key={entry.id}>
-                        <td className="px-4 py-4">{entry.entryType}</td>
-                        <td className="px-4 py-4">{entry.category}</td>
-                        <td className="px-4 py-4 font-medium">{entry.description}</td>
-                        <td className="px-4 py-4">{entry.dueDate}</td>
-                        <td className="px-4 py-4"><StatusBadge value={entry.status} /></td>
-                        <td className="px-4 py-4 font-semibold">{formatCurrency(entry.amount)}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+          <div className="space-y-6">
+            <section className="grid gap-4 md:grid-cols-4">
+              <div className="rounded-lg border border-zinc-200 bg-white p-4 shadow-sm">
+                <p className="text-sm text-zinc-500">Orcamento detalhado</p>
+                <strong className="mt-2 block text-xl">{formatCurrency(budgetTotal || project.budget)}</strong>
               </div>
-            ) : emptyState("Nenhum lancamento financeiro cadastrado para esta obra.")}
-          </section>
+              <div className="rounded-lg border border-zinc-200 bg-white p-4 shadow-sm">
+                <p className="text-sm text-zinc-500">Medido aprovado/registrado</p>
+                <strong className="mt-2 block text-xl">{formatCurrency(measuredTotal)}</strong>
+              </div>
+              <div className="rounded-lg border border-zinc-200 bg-white p-4 shadow-sm">
+                <p className="text-sm text-zinc-500">Avanco fisico</p>
+                <strong className="mt-2 block text-xl">{physicalProgress}%</strong>
+              </div>
+              <div className="rounded-lg border border-zinc-200 bg-white p-4 shadow-sm">
+                <p className="text-sm text-zinc-500">Avanco financeiro</p>
+                <strong className="mt-2 block text-xl">{budgetTotal > 0 ? Math.round((measuredTotal / budgetTotal) * 100) : 0}%</strong>
+              </div>
+            </section>
+
+            <section className="rounded-lg border border-zinc-200 bg-white shadow-sm">
+              <div className="flex items-center justify-between border-b border-zinc-200 p-4">
+                <h2 className="font-semibold">Orcamento e cronograma fisico-financeiro</h2>
+                <Link href="/budget-items/new" className="text-sm font-semibold text-zinc-900 hover:underline">Novo item</Link>
+              </div>
+              {project.budgetItems.length > 0 ? (
+                <div className="divide-y divide-zinc-100">
+                  {project.budgetItems.map((item) => (
+                    <div key={item.id} className="grid gap-3 p-4 text-sm xl:grid-cols-[240px_1fr_180px]">
+                      <div>
+                        <p className="font-semibold">{item.phase}</p>
+                        <p className="mt-1 text-xs text-zinc-500">{item.description}</p>
+                      </div>
+                      <div>
+                        <div className="flex justify-between text-xs text-zinc-500">
+                          <span>{item.plannedStartDate}</span>
+                          <span>{item.plannedEndDate}</span>
+                        </div>
+                        <div className="mt-2 h-4 rounded-full bg-zinc-100">
+                          <div className="h-4 rounded-full bg-[#f9a52c]" style={{ width: `${Math.min(100, item.physicalProgress)}%` }} />
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between gap-3">
+                        <strong>{formatCurrency(item.totalPrice)}</strong>
+                        <Link href={`/budget-items/${item.id}/edit`} className="font-semibold text-zinc-900 hover:underline">Editar</Link>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : emptyState("Nenhum item de orcamento cadastrado para esta obra.")}
+            </section>
+
+            <section className="rounded-lg border border-zinc-200 bg-white shadow-sm">
+              <div className="flex items-center justify-between border-b border-zinc-200 p-4">
+                <h2 className="font-semibold">Medicoes da obra</h2>
+                <Link href="/measurements/new" className="text-sm font-semibold text-zinc-900 hover:underline">Nova medicao</Link>
+              </div>
+              {project.measurements.length > 0 ? (
+                <div className="divide-y divide-zinc-100">
+                  {project.measurements.map((measurement) => (
+                    <div key={measurement.id} className="grid gap-2 p-4 text-sm lg:grid-cols-[140px_1fr_160px_120px]">
+                      <strong>{measurement.measuredAt}</strong>
+                      <span>{measurement.budgetItem}</span>
+                      <strong>{formatCurrency(measurement.amountMeasured)}</strong>
+                      <StatusBadge value={measurement.status} />
+                    </div>
+                  ))}
+                </div>
+              ) : emptyState("Nenhuma medicao registrada para esta obra.")}
+            </section>
+
+            <section className="rounded-lg border border-zinc-200 bg-white shadow-sm">
+              <div className="border-b border-zinc-200 p-4">
+                <h2 className="font-semibold">Lancamentos financeiros</h2>
+              </div>
+              {project.financialEntries.length > 0 ? (
+                <div className="overflow-x-auto">
+                  <table className="w-full min-w-[760px] text-left text-sm">
+                    <thead className="bg-zinc-50 text-xs uppercase tracking-wide text-zinc-500">
+                      <tr>
+                        <th className="px-4 py-3">Tipo</th>
+                        <th className="px-4 py-3">Categoria</th>
+                        <th className="px-4 py-3">Descricao</th>
+                        <th className="px-4 py-3">Vencimento</th>
+                        <th className="px-4 py-3">Status</th>
+                        <th className="px-4 py-3">Valor</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-zinc-100">
+                      {project.financialEntries.map((entry) => (
+                        <tr key={entry.id}>
+                          <td className="px-4 py-4">{entry.entryType}</td>
+                          <td className="px-4 py-4">{entry.category}</td>
+                          <td className="px-4 py-4 font-medium">{entry.description}</td>
+                          <td className="px-4 py-4">{entry.dueDate}</td>
+                          <td className="px-4 py-4"><StatusBadge value={entry.status} /></td>
+                          <td className="px-4 py-4 font-semibold">{formatCurrency(entry.amount)}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              ) : emptyState("Nenhum lancamento financeiro cadastrado para esta obra.")}
+            </section>
+          </div>
         ) : null}
 
         {activeTab === "photos" ? (

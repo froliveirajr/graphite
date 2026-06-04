@@ -43,6 +43,11 @@ export type ProjectArea = Prisma.ProjectAreaModel
  */
 export type Task = Prisma.TaskModel
 /**
+ * Model BudgetItem
+ * 
+ */
+export type BudgetItem = Prisma.BudgetItemModel
+/**
  * Model TaskChecklistItem
  * 
  */
@@ -117,6 +122,11 @@ export type File = Prisma.FileModel
  * 
  */
 export type FinancialEntry = Prisma.FinancialEntryModel
+/**
+ * Model ServiceMeasurement
+ * 
+ */
+export type ServiceMeasurement = Prisma.ServiceMeasurementModel
 /**
  * Model Approval
  * 

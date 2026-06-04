@@ -284,6 +284,7 @@ export type TaskWhereInput = {
   assignedToContractor?: Prisma.XOR<Prisma.ContractorNullableScalarRelationFilter, Prisma.ContractorWhereInput> | null
   checklistItems?: Prisma.TaskChecklistItemListRelationFilter
   files?: Prisma.FileListRelationFilter
+  budgetItems?: Prisma.BudgetItemListRelationFilter
 }
 
 export type TaskOrderByWithRelationInput = {
@@ -310,6 +311,7 @@ export type TaskOrderByWithRelationInput = {
   assignedToContractor?: Prisma.ContractorOrderByWithRelationInput
   checklistItems?: Prisma.TaskChecklistItemOrderByRelationAggregateInput
   files?: Prisma.FileOrderByRelationAggregateInput
+  budgetItems?: Prisma.BudgetItemOrderByRelationAggregateInput
 }
 
 export type TaskWhereUniqueInput = Prisma.AtLeast<{
@@ -339,6 +341,7 @@ export type TaskWhereUniqueInput = Prisma.AtLeast<{
   assignedToContractor?: Prisma.XOR<Prisma.ContractorNullableScalarRelationFilter, Prisma.ContractorWhereInput> | null
   checklistItems?: Prisma.TaskChecklistItemListRelationFilter
   files?: Prisma.FileListRelationFilter
+  budgetItems?: Prisma.BudgetItemListRelationFilter
 }, "id">
 
 export type TaskOrderByWithAggregationInput = {
@@ -407,6 +410,7 @@ export type TaskCreateInput = {
   assignedToContractor?: Prisma.ContractorCreateNestedOneWithoutAssignedTasksInput
   checklistItems?: Prisma.TaskChecklistItemCreateNestedManyWithoutTaskInput
   files?: Prisma.FileCreateNestedManyWithoutTaskInput
+  budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutTaskInput
 }
 
 export type TaskUncheckedCreateInput = {
@@ -429,6 +433,7 @@ export type TaskUncheckedCreateInput = {
   updatedAt?: Date | string
   checklistItems?: Prisma.TaskChecklistItemUncheckedCreateNestedManyWithoutTaskInput
   files?: Prisma.FileUncheckedCreateNestedManyWithoutTaskInput
+  budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutTaskInput
 }
 
 export type TaskUpdateInput = {
@@ -451,6 +456,7 @@ export type TaskUpdateInput = {
   assignedToContractor?: Prisma.ContractorUpdateOneWithoutAssignedTasksNestedInput
   checklistItems?: Prisma.TaskChecklistItemUpdateManyWithoutTaskNestedInput
   files?: Prisma.FileUpdateManyWithoutTaskNestedInput
+  budgetItems?: Prisma.BudgetItemUpdateManyWithoutTaskNestedInput
 }
 
 export type TaskUncheckedUpdateInput = {
@@ -473,6 +479,7 @@ export type TaskUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   checklistItems?: Prisma.TaskChecklistItemUncheckedUpdateManyWithoutTaskNestedInput
   files?: Prisma.FileUncheckedUpdateManyWithoutTaskNestedInput
+  budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutTaskNestedInput
 }
 
 export type TaskCreateManyInput = {
@@ -601,14 +608,14 @@ export type TaskMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
-export type TaskScalarRelationFilter = {
-  is?: Prisma.TaskWhereInput
-  isNot?: Prisma.TaskWhereInput
-}
-
 export type TaskNullableScalarRelationFilter = {
   is?: Prisma.TaskWhereInput | null
   isNot?: Prisma.TaskWhereInput | null
+}
+
+export type TaskScalarRelationFilter = {
+  is?: Prisma.TaskWhereInput
+  isNot?: Prisma.TaskWhereInput
 }
 
 export type TaskCreateNestedManyWithoutAssignedToUserInput = {
@@ -741,6 +748,22 @@ export type EnumTaskStatusFieldUpdateOperationsInput = {
   set?: $Enums.TaskStatus
 }
 
+export type TaskCreateNestedOneWithoutBudgetItemsInput = {
+  create?: Prisma.XOR<Prisma.TaskCreateWithoutBudgetItemsInput, Prisma.TaskUncheckedCreateWithoutBudgetItemsInput>
+  connectOrCreate?: Prisma.TaskCreateOrConnectWithoutBudgetItemsInput
+  connect?: Prisma.TaskWhereUniqueInput
+}
+
+export type TaskUpdateOneWithoutBudgetItemsNestedInput = {
+  create?: Prisma.XOR<Prisma.TaskCreateWithoutBudgetItemsInput, Prisma.TaskUncheckedCreateWithoutBudgetItemsInput>
+  connectOrCreate?: Prisma.TaskCreateOrConnectWithoutBudgetItemsInput
+  upsert?: Prisma.TaskUpsertWithoutBudgetItemsInput
+  disconnect?: Prisma.TaskWhereInput | boolean
+  delete?: Prisma.TaskWhereInput | boolean
+  connect?: Prisma.TaskWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TaskUpdateToOneWithWhereWithoutBudgetItemsInput, Prisma.TaskUpdateWithoutBudgetItemsInput>, Prisma.TaskUncheckedUpdateWithoutBudgetItemsInput>
+}
+
 export type TaskCreateNestedOneWithoutChecklistItemsInput = {
   create?: Prisma.XOR<Prisma.TaskCreateWithoutChecklistItemsInput, Prisma.TaskUncheckedCreateWithoutChecklistItemsInput>
   connectOrCreate?: Prisma.TaskCreateOrConnectWithoutChecklistItemsInput
@@ -832,6 +855,7 @@ export type TaskCreateWithoutAssignedToUserInput = {
   assignedToContractor?: Prisma.ContractorCreateNestedOneWithoutAssignedTasksInput
   checklistItems?: Prisma.TaskChecklistItemCreateNestedManyWithoutTaskInput
   files?: Prisma.FileCreateNestedManyWithoutTaskInput
+  budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutTaskInput
 }
 
 export type TaskUncheckedCreateWithoutAssignedToUserInput = {
@@ -853,6 +877,7 @@ export type TaskUncheckedCreateWithoutAssignedToUserInput = {
   updatedAt?: Date | string
   checklistItems?: Prisma.TaskChecklistItemUncheckedCreateNestedManyWithoutTaskInput
   files?: Prisma.FileUncheckedCreateNestedManyWithoutTaskInput
+  budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutTaskInput
 }
 
 export type TaskCreateOrConnectWithoutAssignedToUserInput = {
@@ -923,6 +948,7 @@ export type TaskCreateWithoutProjectInput = {
   assignedToContractor?: Prisma.ContractorCreateNestedOneWithoutAssignedTasksInput
   checklistItems?: Prisma.TaskChecklistItemCreateNestedManyWithoutTaskInput
   files?: Prisma.FileCreateNestedManyWithoutTaskInput
+  budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutTaskInput
 }
 
 export type TaskUncheckedCreateWithoutProjectInput = {
@@ -944,6 +970,7 @@ export type TaskUncheckedCreateWithoutProjectInput = {
   updatedAt?: Date | string
   checklistItems?: Prisma.TaskChecklistItemUncheckedCreateNestedManyWithoutTaskInput
   files?: Prisma.FileUncheckedCreateNestedManyWithoutTaskInput
+  budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutTaskInput
 }
 
 export type TaskCreateOrConnectWithoutProjectInput = {
@@ -991,6 +1018,7 @@ export type TaskCreateWithoutAreaInput = {
   assignedToContractor?: Prisma.ContractorCreateNestedOneWithoutAssignedTasksInput
   checklistItems?: Prisma.TaskChecklistItemCreateNestedManyWithoutTaskInput
   files?: Prisma.FileCreateNestedManyWithoutTaskInput
+  budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutTaskInput
 }
 
 export type TaskUncheckedCreateWithoutAreaInput = {
@@ -1012,6 +1040,7 @@ export type TaskUncheckedCreateWithoutAreaInput = {
   updatedAt?: Date | string
   checklistItems?: Prisma.TaskChecklistItemUncheckedCreateNestedManyWithoutTaskInput
   files?: Prisma.FileUncheckedCreateNestedManyWithoutTaskInput
+  budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutTaskInput
 }
 
 export type TaskCreateOrConnectWithoutAreaInput = {
@@ -1040,6 +1069,110 @@ export type TaskUpdateManyWithWhereWithoutAreaInput = {
   data: Prisma.XOR<Prisma.TaskUpdateManyMutationInput, Prisma.TaskUncheckedUpdateManyWithoutAreaInput>
 }
 
+export type TaskCreateWithoutBudgetItemsInput = {
+  id?: string
+  title: string
+  description?: string | null
+  serviceType: string
+  plannedStartDate?: Date | string | null
+  plannedEndDate?: Date | string | null
+  actualStartDate?: Date | string | null
+  actualEndDate?: Date | string | null
+  status?: $Enums.TaskStatus
+  priority?: $Enums.ProjectPriority
+  blockedReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  project: Prisma.ProjectCreateNestedOneWithoutTasksInput
+  area?: Prisma.ProjectAreaCreateNestedOneWithoutTasksInput
+  assignedToUser?: Prisma.UserCreateNestedOneWithoutAssignedTasksInput
+  assignedToContractor?: Prisma.ContractorCreateNestedOneWithoutAssignedTasksInput
+  checklistItems?: Prisma.TaskChecklistItemCreateNestedManyWithoutTaskInput
+  files?: Prisma.FileCreateNestedManyWithoutTaskInput
+}
+
+export type TaskUncheckedCreateWithoutBudgetItemsInput = {
+  id?: string
+  projectId: string
+  areaId?: string | null
+  title: string
+  description?: string | null
+  serviceType: string
+  assignedToUserId?: string | null
+  assignedToContractorId?: string | null
+  plannedStartDate?: Date | string | null
+  plannedEndDate?: Date | string | null
+  actualStartDate?: Date | string | null
+  actualEndDate?: Date | string | null
+  status?: $Enums.TaskStatus
+  priority?: $Enums.ProjectPriority
+  blockedReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  checklistItems?: Prisma.TaskChecklistItemUncheckedCreateNestedManyWithoutTaskInput
+  files?: Prisma.FileUncheckedCreateNestedManyWithoutTaskInput
+}
+
+export type TaskCreateOrConnectWithoutBudgetItemsInput = {
+  where: Prisma.TaskWhereUniqueInput
+  create: Prisma.XOR<Prisma.TaskCreateWithoutBudgetItemsInput, Prisma.TaskUncheckedCreateWithoutBudgetItemsInput>
+}
+
+export type TaskUpsertWithoutBudgetItemsInput = {
+  update: Prisma.XOR<Prisma.TaskUpdateWithoutBudgetItemsInput, Prisma.TaskUncheckedUpdateWithoutBudgetItemsInput>
+  create: Prisma.XOR<Prisma.TaskCreateWithoutBudgetItemsInput, Prisma.TaskUncheckedCreateWithoutBudgetItemsInput>
+  where?: Prisma.TaskWhereInput
+}
+
+export type TaskUpdateToOneWithWhereWithoutBudgetItemsInput = {
+  where?: Prisma.TaskWhereInput
+  data: Prisma.XOR<Prisma.TaskUpdateWithoutBudgetItemsInput, Prisma.TaskUncheckedUpdateWithoutBudgetItemsInput>
+}
+
+export type TaskUpdateWithoutBudgetItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serviceType?: Prisma.StringFieldUpdateOperationsInput | string
+  plannedStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  plannedEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  actualStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  actualEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+  priority?: Prisma.EnumProjectPriorityFieldUpdateOperationsInput | $Enums.ProjectPriority
+  blockedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  project?: Prisma.ProjectUpdateOneRequiredWithoutTasksNestedInput
+  area?: Prisma.ProjectAreaUpdateOneWithoutTasksNestedInput
+  assignedToUser?: Prisma.UserUpdateOneWithoutAssignedTasksNestedInput
+  assignedToContractor?: Prisma.ContractorUpdateOneWithoutAssignedTasksNestedInput
+  checklistItems?: Prisma.TaskChecklistItemUpdateManyWithoutTaskNestedInput
+  files?: Prisma.FileUpdateManyWithoutTaskNestedInput
+}
+
+export type TaskUncheckedUpdateWithoutBudgetItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  areaId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  serviceType?: Prisma.StringFieldUpdateOperationsInput | string
+  assignedToUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assignedToContractorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plannedStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  plannedEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  actualStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  actualEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+  priority?: Prisma.EnumProjectPriorityFieldUpdateOperationsInput | $Enums.ProjectPriority
+  blockedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  checklistItems?: Prisma.TaskChecklistItemUncheckedUpdateManyWithoutTaskNestedInput
+  files?: Prisma.FileUncheckedUpdateManyWithoutTaskNestedInput
+}
+
 export type TaskCreateWithoutChecklistItemsInput = {
   id?: string
   title: string
@@ -1059,6 +1192,7 @@ export type TaskCreateWithoutChecklistItemsInput = {
   assignedToUser?: Prisma.UserCreateNestedOneWithoutAssignedTasksInput
   assignedToContractor?: Prisma.ContractorCreateNestedOneWithoutAssignedTasksInput
   files?: Prisma.FileCreateNestedManyWithoutTaskInput
+  budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutTaskInput
 }
 
 export type TaskUncheckedCreateWithoutChecklistItemsInput = {
@@ -1080,6 +1214,7 @@ export type TaskUncheckedCreateWithoutChecklistItemsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   files?: Prisma.FileUncheckedCreateNestedManyWithoutTaskInput
+  budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutTaskInput
 }
 
 export type TaskCreateOrConnectWithoutChecklistItemsInput = {
@@ -1117,6 +1252,7 @@ export type TaskUpdateWithoutChecklistItemsInput = {
   assignedToUser?: Prisma.UserUpdateOneWithoutAssignedTasksNestedInput
   assignedToContractor?: Prisma.ContractorUpdateOneWithoutAssignedTasksNestedInput
   files?: Prisma.FileUpdateManyWithoutTaskNestedInput
+  budgetItems?: Prisma.BudgetItemUpdateManyWithoutTaskNestedInput
 }
 
 export type TaskUncheckedUpdateWithoutChecklistItemsInput = {
@@ -1138,6 +1274,7 @@ export type TaskUncheckedUpdateWithoutChecklistItemsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   files?: Prisma.FileUncheckedUpdateManyWithoutTaskNestedInput
+  budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutTaskNestedInput
 }
 
 export type TaskCreateWithoutAssignedToContractorInput = {
@@ -1159,6 +1296,7 @@ export type TaskCreateWithoutAssignedToContractorInput = {
   assignedToUser?: Prisma.UserCreateNestedOneWithoutAssignedTasksInput
   checklistItems?: Prisma.TaskChecklistItemCreateNestedManyWithoutTaskInput
   files?: Prisma.FileCreateNestedManyWithoutTaskInput
+  budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutTaskInput
 }
 
 export type TaskUncheckedCreateWithoutAssignedToContractorInput = {
@@ -1180,6 +1318,7 @@ export type TaskUncheckedCreateWithoutAssignedToContractorInput = {
   updatedAt?: Date | string
   checklistItems?: Prisma.TaskChecklistItemUncheckedCreateNestedManyWithoutTaskInput
   files?: Prisma.FileUncheckedCreateNestedManyWithoutTaskInput
+  budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutTaskInput
 }
 
 export type TaskCreateOrConnectWithoutAssignedToContractorInput = {
@@ -1227,6 +1366,7 @@ export type TaskCreateWithoutFilesInput = {
   assignedToUser?: Prisma.UserCreateNestedOneWithoutAssignedTasksInput
   assignedToContractor?: Prisma.ContractorCreateNestedOneWithoutAssignedTasksInput
   checklistItems?: Prisma.TaskChecklistItemCreateNestedManyWithoutTaskInput
+  budgetItems?: Prisma.BudgetItemCreateNestedManyWithoutTaskInput
 }
 
 export type TaskUncheckedCreateWithoutFilesInput = {
@@ -1248,6 +1388,7 @@ export type TaskUncheckedCreateWithoutFilesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   checklistItems?: Prisma.TaskChecklistItemUncheckedCreateNestedManyWithoutTaskInput
+  budgetItems?: Prisma.BudgetItemUncheckedCreateNestedManyWithoutTaskInput
 }
 
 export type TaskCreateOrConnectWithoutFilesInput = {
@@ -1285,6 +1426,7 @@ export type TaskUpdateWithoutFilesInput = {
   assignedToUser?: Prisma.UserUpdateOneWithoutAssignedTasksNestedInput
   assignedToContractor?: Prisma.ContractorUpdateOneWithoutAssignedTasksNestedInput
   checklistItems?: Prisma.TaskChecklistItemUpdateManyWithoutTaskNestedInput
+  budgetItems?: Prisma.BudgetItemUpdateManyWithoutTaskNestedInput
 }
 
 export type TaskUncheckedUpdateWithoutFilesInput = {
@@ -1306,6 +1448,7 @@ export type TaskUncheckedUpdateWithoutFilesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   checklistItems?: Prisma.TaskChecklistItemUncheckedUpdateManyWithoutTaskNestedInput
+  budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutTaskNestedInput
 }
 
 export type TaskCreateManyAssignedToUserInput = {
@@ -1346,6 +1489,7 @@ export type TaskUpdateWithoutAssignedToUserInput = {
   assignedToContractor?: Prisma.ContractorUpdateOneWithoutAssignedTasksNestedInput
   checklistItems?: Prisma.TaskChecklistItemUpdateManyWithoutTaskNestedInput
   files?: Prisma.FileUpdateManyWithoutTaskNestedInput
+  budgetItems?: Prisma.BudgetItemUpdateManyWithoutTaskNestedInput
 }
 
 export type TaskUncheckedUpdateWithoutAssignedToUserInput = {
@@ -1367,6 +1511,7 @@ export type TaskUncheckedUpdateWithoutAssignedToUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   checklistItems?: Prisma.TaskChecklistItemUncheckedUpdateManyWithoutTaskNestedInput
   files?: Prisma.FileUncheckedUpdateManyWithoutTaskNestedInput
+  budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutTaskNestedInput
 }
 
 export type TaskUncheckedUpdateManyWithoutAssignedToUserInput = {
@@ -1426,6 +1571,7 @@ export type TaskUpdateWithoutProjectInput = {
   assignedToContractor?: Prisma.ContractorUpdateOneWithoutAssignedTasksNestedInput
   checklistItems?: Prisma.TaskChecklistItemUpdateManyWithoutTaskNestedInput
   files?: Prisma.FileUpdateManyWithoutTaskNestedInput
+  budgetItems?: Prisma.BudgetItemUpdateManyWithoutTaskNestedInput
 }
 
 export type TaskUncheckedUpdateWithoutProjectInput = {
@@ -1447,6 +1593,7 @@ export type TaskUncheckedUpdateWithoutProjectInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   checklistItems?: Prisma.TaskChecklistItemUncheckedUpdateManyWithoutTaskNestedInput
   files?: Prisma.FileUncheckedUpdateManyWithoutTaskNestedInput
+  budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutTaskNestedInput
 }
 
 export type TaskUncheckedUpdateManyWithoutProjectInput = {
@@ -1506,6 +1653,7 @@ export type TaskUpdateWithoutAreaInput = {
   assignedToContractor?: Prisma.ContractorUpdateOneWithoutAssignedTasksNestedInput
   checklistItems?: Prisma.TaskChecklistItemUpdateManyWithoutTaskNestedInput
   files?: Prisma.FileUpdateManyWithoutTaskNestedInput
+  budgetItems?: Prisma.BudgetItemUpdateManyWithoutTaskNestedInput
 }
 
 export type TaskUncheckedUpdateWithoutAreaInput = {
@@ -1527,6 +1675,7 @@ export type TaskUncheckedUpdateWithoutAreaInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   checklistItems?: Prisma.TaskChecklistItemUncheckedUpdateManyWithoutTaskNestedInput
   files?: Prisma.FileUncheckedUpdateManyWithoutTaskNestedInput
+  budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutTaskNestedInput
 }
 
 export type TaskUncheckedUpdateManyWithoutAreaInput = {
@@ -1586,6 +1735,7 @@ export type TaskUpdateWithoutAssignedToContractorInput = {
   assignedToUser?: Prisma.UserUpdateOneWithoutAssignedTasksNestedInput
   checklistItems?: Prisma.TaskChecklistItemUpdateManyWithoutTaskNestedInput
   files?: Prisma.FileUpdateManyWithoutTaskNestedInput
+  budgetItems?: Prisma.BudgetItemUpdateManyWithoutTaskNestedInput
 }
 
 export type TaskUncheckedUpdateWithoutAssignedToContractorInput = {
@@ -1607,6 +1757,7 @@ export type TaskUncheckedUpdateWithoutAssignedToContractorInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   checklistItems?: Prisma.TaskChecklistItemUncheckedUpdateManyWithoutTaskNestedInput
   files?: Prisma.FileUncheckedUpdateManyWithoutTaskNestedInput
+  budgetItems?: Prisma.BudgetItemUncheckedUpdateManyWithoutTaskNestedInput
 }
 
 export type TaskUncheckedUpdateManyWithoutAssignedToContractorInput = {
@@ -1636,11 +1787,13 @@ export type TaskUncheckedUpdateManyWithoutAssignedToContractorInput = {
 export type TaskCountOutputType = {
   checklistItems: number
   files: number
+  budgetItems: number
 }
 
 export type TaskCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   checklistItems?: boolean | TaskCountOutputTypeCountChecklistItemsArgs
   files?: boolean | TaskCountOutputTypeCountFilesArgs
+  budgetItems?: boolean | TaskCountOutputTypeCountBudgetItemsArgs
 }
 
 /**
@@ -1665,6 +1818,13 @@ export type TaskCountOutputTypeCountChecklistItemsArgs<ExtArgs extends runtime.T
  */
 export type TaskCountOutputTypeCountFilesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.FileWhereInput
+}
+
+/**
+ * TaskCountOutputType without action
+ */
+export type TaskCountOutputTypeCountBudgetItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BudgetItemWhereInput
 }
 
 
@@ -1692,6 +1852,7 @@ export type TaskSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   assignedToContractor?: boolean | Prisma.Task$assignedToContractorArgs<ExtArgs>
   checklistItems?: boolean | Prisma.Task$checklistItemsArgs<ExtArgs>
   files?: boolean | Prisma.Task$filesArgs<ExtArgs>
+  budgetItems?: boolean | Prisma.Task$budgetItemsArgs<ExtArgs>
   _count?: boolean | Prisma.TaskCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["task"]>
 
@@ -1771,6 +1932,7 @@ export type TaskInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   assignedToContractor?: boolean | Prisma.Task$assignedToContractorArgs<ExtArgs>
   checklistItems?: boolean | Prisma.Task$checklistItemsArgs<ExtArgs>
   files?: boolean | Prisma.Task$filesArgs<ExtArgs>
+  budgetItems?: boolean | Prisma.Task$budgetItemsArgs<ExtArgs>
   _count?: boolean | Prisma.TaskCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type TaskIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1795,6 +1957,7 @@ export type $TaskPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     assignedToContractor: Prisma.$ContractorPayload<ExtArgs> | null
     checklistItems: Prisma.$TaskChecklistItemPayload<ExtArgs>[]
     files: Prisma.$FilePayload<ExtArgs>[]
+    budgetItems: Prisma.$BudgetItemPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2214,6 +2377,7 @@ export interface Prisma__TaskClient<T, Null = never, ExtArgs extends runtime.Typ
   assignedToContractor<T extends Prisma.Task$assignedToContractorArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Task$assignedToContractorArgs<ExtArgs>>): Prisma.Prisma__ContractorClient<runtime.Types.Result.GetResult<Prisma.$ContractorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   checklistItems<T extends Prisma.Task$checklistItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Task$checklistItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskChecklistItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   files<T extends Prisma.Task$filesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Task$filesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  budgetItems<T extends Prisma.Task$budgetItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Task$budgetItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BudgetItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2763,6 +2927,30 @@ export type Task$filesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
   take?: number
   skip?: number
   distinct?: Prisma.FileScalarFieldEnum | Prisma.FileScalarFieldEnum[]
+}
+
+/**
+ * Task.budgetItems
+ */
+export type Task$budgetItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the BudgetItem
+   */
+  select?: Prisma.BudgetItemSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the BudgetItem
+   */
+  omit?: Prisma.BudgetItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BudgetItemInclude<ExtArgs> | null
+  where?: Prisma.BudgetItemWhereInput
+  orderBy?: Prisma.BudgetItemOrderByWithRelationInput | Prisma.BudgetItemOrderByWithRelationInput[]
+  cursor?: Prisma.BudgetItemWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.BudgetItemScalarFieldEnum | Prisma.BudgetItemScalarFieldEnum[]
 }
 
 /**

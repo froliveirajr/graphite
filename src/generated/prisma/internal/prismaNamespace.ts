@@ -389,6 +389,7 @@ export const ModelName = {
   Project: 'Project',
   ProjectArea: 'ProjectArea',
   Task: 'Task',
+  BudgetItem: 'BudgetItem',
   TaskChecklistItem: 'TaskChecklistItem',
   Employee: 'Employee',
   Contractor: 'Contractor',
@@ -404,6 +405,7 @@ export const ModelName = {
   DailyReportAttendance: 'DailyReportAttendance',
   File: 'File',
   FinancialEntry: 'FinancialEntry',
+  ServiceMeasurement: 'ServiceMeasurement',
   Approval: 'Approval',
   AuditLog: 'AuditLog'
 } as const
@@ -421,7 +423,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "client" | "project" | "projectArea" | "task" | "taskChecklistItem" | "employee" | "contractor" | "projectContractor" | "projectEmployeeAllocation" | "supplier" | "material" | "purchaseRequest" | "purchaseRequestItem" | "stockMovement" | "wasteDisposal" | "dailyReport" | "dailyReportAttendance" | "file" | "financialEntry" | "approval" | "auditLog"
+    modelProps: "user" | "client" | "project" | "projectArea" | "task" | "budgetItem" | "taskChecklistItem" | "employee" | "contractor" | "projectContractor" | "projectEmployeeAllocation" | "supplier" | "material" | "purchaseRequest" | "purchaseRequestItem" | "stockMovement" | "wasteDisposal" | "dailyReport" | "dailyReportAttendance" | "file" | "financialEntry" | "serviceMeasurement" | "approval" | "auditLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -792,6 +794,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.TaskCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.TaskCountAggregateOutputType> | number
+        }
+      }
+    }
+    BudgetItem: {
+      payload: Prisma.$BudgetItemPayload<ExtArgs>
+      fields: Prisma.BudgetItemFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.BudgetItemFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BudgetItemPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.BudgetItemFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BudgetItemPayload>
+        }
+        findFirst: {
+          args: Prisma.BudgetItemFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BudgetItemPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.BudgetItemFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BudgetItemPayload>
+        }
+        findMany: {
+          args: Prisma.BudgetItemFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BudgetItemPayload>[]
+        }
+        create: {
+          args: Prisma.BudgetItemCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BudgetItemPayload>
+        }
+        createMany: {
+          args: Prisma.BudgetItemCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.BudgetItemCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BudgetItemPayload>[]
+        }
+        delete: {
+          args: Prisma.BudgetItemDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BudgetItemPayload>
+        }
+        update: {
+          args: Prisma.BudgetItemUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BudgetItemPayload>
+        }
+        deleteMany: {
+          args: Prisma.BudgetItemDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.BudgetItemUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.BudgetItemUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BudgetItemPayload>[]
+        }
+        upsert: {
+          args: Prisma.BudgetItemUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BudgetItemPayload>
+        }
+        aggregate: {
+          args: Prisma.BudgetItemAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateBudgetItem>
+        }
+        groupBy: {
+          args: Prisma.BudgetItemGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BudgetItemGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.BudgetItemCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BudgetItemCountAggregateOutputType> | number
         }
       }
     }
@@ -1905,6 +1981,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ServiceMeasurement: {
+      payload: Prisma.$ServiceMeasurementPayload<ExtArgs>
+      fields: Prisma.ServiceMeasurementFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ServiceMeasurementFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceMeasurementPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ServiceMeasurementFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceMeasurementPayload>
+        }
+        findFirst: {
+          args: Prisma.ServiceMeasurementFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceMeasurementPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ServiceMeasurementFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceMeasurementPayload>
+        }
+        findMany: {
+          args: Prisma.ServiceMeasurementFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceMeasurementPayload>[]
+        }
+        create: {
+          args: Prisma.ServiceMeasurementCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceMeasurementPayload>
+        }
+        createMany: {
+          args: Prisma.ServiceMeasurementCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ServiceMeasurementCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceMeasurementPayload>[]
+        }
+        delete: {
+          args: Prisma.ServiceMeasurementDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceMeasurementPayload>
+        }
+        update: {
+          args: Prisma.ServiceMeasurementUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceMeasurementPayload>
+        }
+        deleteMany: {
+          args: Prisma.ServiceMeasurementDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ServiceMeasurementUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ServiceMeasurementUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceMeasurementPayload>[]
+        }
+        upsert: {
+          args: Prisma.ServiceMeasurementUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceMeasurementPayload>
+        }
+        aggregate: {
+          args: Prisma.ServiceMeasurementAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateServiceMeasurement>
+        }
+        groupBy: {
+          args: Prisma.ServiceMeasurementGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceMeasurementGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ServiceMeasurementCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceMeasurementCountAggregateOutputType> | number
+        }
+      }
+    }
     Approval: {
       payload: Prisma.$ApprovalPayload<ExtArgs>
       fields: Prisma.ApprovalFieldRefs
@@ -2189,6 +2339,32 @@ export const TaskScalarFieldEnum = {
 export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof TaskScalarFieldEnum]
 
 
+export const BudgetItemScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  taskId: 'taskId',
+  code: 'code',
+  phase: 'phase',
+  description: 'description',
+  unit: 'unit',
+  quantity: 'quantity',
+  unitPrice: 'unitPrice',
+  totalPrice: 'totalPrice',
+  physicalWeight: 'physicalWeight',
+  plannedStartDate: 'plannedStartDate',
+  plannedEndDate: 'plannedEndDate',
+  actualStartDate: 'actualStartDate',
+  actualEndDate: 'actualEndDate',
+  physicalProgress: 'physicalProgress',
+  status: 'status',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BudgetItemScalarFieldEnum = (typeof BudgetItemScalarFieldEnum)[keyof typeof BudgetItemScalarFieldEnum]
+
+
 export const TaskChecklistItemScalarFieldEnum = {
   id: 'id',
   taskId: 'taskId',
@@ -2468,6 +2644,26 @@ export const FinancialEntryScalarFieldEnum = {
 export type FinancialEntryScalarFieldEnum = (typeof FinancialEntryScalarFieldEnum)[keyof typeof FinancialEntryScalarFieldEnum]
 
 
+export const ServiceMeasurementScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  budgetItemId: 'budgetItemId',
+  measuredAt: 'measuredAt',
+  periodStartDate: 'periodStartDate',
+  periodEndDate: 'periodEndDate',
+  quantityMeasured: 'quantityMeasured',
+  amountMeasured: 'amountMeasured',
+  physicalProgress: 'physicalProgress',
+  status: 'status',
+  notes: 'notes',
+  createdById: 'createdById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ServiceMeasurementScalarFieldEnum = (typeof ServiceMeasurementScalarFieldEnum)[keyof typeof ServiceMeasurementScalarFieldEnum]
+
+
 export const ApprovalScalarFieldEnum = {
   id: 'id',
   approvalType: 'approvalType',
@@ -2659,6 +2855,20 @@ export type ListEnumTaskStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$P
 
 
 /**
+ * Reference to a field of type 'BudgetItemStatus'
+ */
+export type EnumBudgetItemStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BudgetItemStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'BudgetItemStatus[]'
+ */
+export type ListEnumBudgetItemStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BudgetItemStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'Boolean'
  */
 export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
@@ -2760,6 +2970,20 @@ export type EnumFinancialStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$
  * Reference to a field of type 'FinancialStatus[]'
  */
 export type ListEnumFinancialStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FinancialStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'MeasurementStatus'
+ */
+export type EnumMeasurementStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MeasurementStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'MeasurementStatus[]'
+ */
+export type ListEnumMeasurementStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MeasurementStatus[]'>
     
 
 
@@ -2919,6 +3143,7 @@ export type GlobalOmitConfig = {
   project?: Prisma.ProjectOmit
   projectArea?: Prisma.ProjectAreaOmit
   task?: Prisma.TaskOmit
+  budgetItem?: Prisma.BudgetItemOmit
   taskChecklistItem?: Prisma.TaskChecklistItemOmit
   employee?: Prisma.EmployeeOmit
   contractor?: Prisma.ContractorOmit
@@ -2934,6 +3159,7 @@ export type GlobalOmitConfig = {
   dailyReportAttendance?: Prisma.DailyReportAttendanceOmit
   file?: Prisma.FileOmit
   financialEntry?: Prisma.FinancialEntryOmit
+  serviceMeasurement?: Prisma.ServiceMeasurementOmit
   approval?: Prisma.ApprovalOmit
   auditLog?: Prisma.AuditLogOmit
 }

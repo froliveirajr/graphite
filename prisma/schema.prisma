@@ -111,6 +111,21 @@ enum DailyAttendanceStatus {
   TRANSFERRED
 }
 
+enum BudgetItemStatus {
+  PLANNED
+  IN_PROGRESS
+  COMPLETED
+  CANCELED
+}
+
+enum MeasurementStatus {
+  DRAFT
+  SUBMITTED
+  APPROVED
+  REJECTED
+  INVOICED
+}
+
 model User {
   id                     String             @id @default(cuid())
   name                   String
@@ -132,6 +147,7 @@ model User {
   validatedDailyReports  DailyReport[]      @relation("DailyReportValidator")
   uploadedFiles          File[]
   financialEntries       FinancialEntry[]
+  createdMeasurements    ServiceMeasurement[]
   requestedApprovals     Approval[]         @relation("ApprovalRequester")
   approvedApprovals      Approval[]         @relation("ApprovalApprover")
   auditLogs              AuditLog[]
@@ -198,6 +214,8 @@ model Project {
   dailyReports             DailyReport[]
   files                    File[]
   financialEntries         FinancialEntry[]
+  budgetItems              BudgetItem[]
+  serviceMeasurements      ServiceMeasurement[]
   createdAt                DateTime             @default(now())
   updatedAt                DateTime             @updatedAt
 
@@ -249,6 +267,7 @@ model Task {
   blockedReason          String?
   checklistItems         TaskChecklistItem[]
   files                  File[]
+  budgetItems            BudgetItem[]
   createdAt              DateTime            @default(now())
   updatedAt              DateTime            @updatedAt
 
@@ -258,6 +277,38 @@ model Task {
   @@index([plannedEndDate])
   @@index([assignedToUserId])
   @@index([assignedToContractorId])
+}
+
+model BudgetItem {
+  id                 String           @id @default(cuid())
+  projectId          String
+  project            Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  taskId             String?
+  task               Task?            @relation(fields: [taskId], references: [id])
+  code               String?
+  phase              String
+  description        String
+  unit               String
+  quantity           Decimal          @db.Decimal(12, 3)
+  unitPrice          Decimal          @db.Decimal(14, 2)
+  totalPrice         Decimal          @db.Decimal(14, 2)
+  physicalWeight     Decimal          @default(0) @db.Decimal(7, 4)
+  plannedStartDate   DateTime?
+  plannedEndDate     DateTime?
+  actualStartDate    DateTime?
+  actualEndDate      DateTime?
+  physicalProgress   Decimal          @default(0) @db.Decimal(5, 2)
+  status             BudgetItemStatus @default(PLANNED)
+  notes              String?
+  measurements       ServiceMeasurement[]
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+
+  @@index([projectId])
+  @@index([taskId])
+  @@index([phase])
+  @@index([status])
+  @@index([plannedStartDate])
 }
 
 model TaskChecklistItem {
@@ -619,6 +670,31 @@ model FinancialEntry {
   @@index([category])
   @@index([status])
   @@index([dueDate])
+}
+
+model ServiceMeasurement {
+  id               String            @id @default(cuid())
+  projectId        String
+  project          Project           @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  budgetItemId     String
+  budgetItem       BudgetItem        @relation(fields: [budgetItemId], references: [id], onDelete: Cascade)
+  measuredAt       DateTime
+  periodStartDate  DateTime?
+  periodEndDate    DateTime?
+  quantityMeasured Decimal           @db.Decimal(12, 3)
+  amountMeasured   Decimal           @db.Decimal(14, 2)
+  physicalProgress Decimal           @default(0) @db.Decimal(5, 2)
+  status           MeasurementStatus @default(DRAFT)
+  notes            String?
+  createdById      String
+  createdBy        User              @relation(fields: [createdById], references: [id])
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+
+  @@index([projectId])
+  @@index([budgetItemId])
+  @@index([status])
+  @@index([measuredAt])
 }
 
 model Approval {

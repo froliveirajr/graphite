@@ -56,6 +56,7 @@ export const ModelName = {
   Project: 'Project',
   ProjectArea: 'ProjectArea',
   Task: 'Task',
+  BudgetItem: 'BudgetItem',
   TaskChecklistItem: 'TaskChecklistItem',
   Employee: 'Employee',
   Contractor: 'Contractor',
@@ -71,6 +72,7 @@ export const ModelName = {
   DailyReportAttendance: 'DailyReportAttendance',
   File: 'File',
   FinancialEntry: 'FinancialEntry',
+  ServiceMeasurement: 'ServiceMeasurement',
   Approval: 'Approval',
   AuditLog: 'AuditLog'
 } as const
@@ -186,6 +188,32 @@ export const TaskScalarFieldEnum = {
 } as const
 
 export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof TaskScalarFieldEnum]
+
+
+export const BudgetItemScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  taskId: 'taskId',
+  code: 'code',
+  phase: 'phase',
+  description: 'description',
+  unit: 'unit',
+  quantity: 'quantity',
+  unitPrice: 'unitPrice',
+  totalPrice: 'totalPrice',
+  physicalWeight: 'physicalWeight',
+  plannedStartDate: 'plannedStartDate',
+  plannedEndDate: 'plannedEndDate',
+  actualStartDate: 'actualStartDate',
+  actualEndDate: 'actualEndDate',
+  physicalProgress: 'physicalProgress',
+  status: 'status',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BudgetItemScalarFieldEnum = (typeof BudgetItemScalarFieldEnum)[keyof typeof BudgetItemScalarFieldEnum]
 
 
 export const TaskChecklistItemScalarFieldEnum = {
@@ -465,6 +493,26 @@ export const FinancialEntryScalarFieldEnum = {
 } as const
 
 export type FinancialEntryScalarFieldEnum = (typeof FinancialEntryScalarFieldEnum)[keyof typeof FinancialEntryScalarFieldEnum]
+
+
+export const ServiceMeasurementScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  budgetItemId: 'budgetItemId',
+  measuredAt: 'measuredAt',
+  periodStartDate: 'periodStartDate',
+  periodEndDate: 'periodEndDate',
+  quantityMeasured: 'quantityMeasured',
+  amountMeasured: 'amountMeasured',
+  physicalProgress: 'physicalProgress',
+  status: 'status',
+  notes: 'notes',
+  createdById: 'createdById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ServiceMeasurementScalarFieldEnum = (typeof ServiceMeasurementScalarFieldEnum)[keyof typeof ServiceMeasurementScalarFieldEnum]
 
 
 export const ApprovalScalarFieldEnum = {

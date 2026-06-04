@@ -147,3 +147,24 @@ export const DailyAttendanceStatus = {
 } as const
 
 export type DailyAttendanceStatus = (typeof DailyAttendanceStatus)[keyof typeof DailyAttendanceStatus]
+
+
+export const BudgetItemStatus = {
+  PLANNED: 'PLANNED',
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED',
+  CANCELED: 'CANCELED'
+} as const
+
+export type BudgetItemStatus = (typeof BudgetItemStatus)[keyof typeof BudgetItemStatus]
+
+
+export const MeasurementStatus = {
+  DRAFT: 'DRAFT',
+  SUBMITTED: 'SUBMITTED',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED',
+  INVOICED: 'INVOICED'
+} as const
+
+export type MeasurementStatus = (typeof MeasurementStatus)[keyof typeof MeasurementStatus]
