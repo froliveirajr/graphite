@@ -1,0 +1,5 @@
+codigo composicao;descricao composicao;unidade composicao;grupo;codigo insumo;descricao insumo;unidade insumo;coeficiente;custo total
+SINAPI-EX-001;Assentamento de revestimento ceramico;m2;SINAPI exemplo;MAT-ARG-ACIII;Argamassa colante ACIII;saco;0,18;85,00
+SINAPI-EX-001;Assentamento de revestimento ceramico;m2;SINAPI exemplo;MAT-REJUNTE;Rejunte cimenticio;kg;0,22;85,00
+SINAPI-EX-002;Infraestrutura eletrica com eletroduto;m;SINAPI exemplo;MAT-ELETRODUTO;Eletroduto flexivel corrugado;m;1,05;32,00
+SINAPI-EX-002;Infraestrutura eletrica com eletroduto;m;SINAPI exemplo;MAT-CABO25;Cabo flexivel 2,5 mm2;m;3,15;32,00
