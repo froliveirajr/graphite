@@ -44,6 +44,7 @@ export const navigation = [
   { label: "Compras", href: "/purchases", icon: PackageCheck },
   { label: "Orcamento", href: "/budget-items", icon: PercentCircle },
   { label: "Composicoes", href: "/service-compositions", icon: ClipboardCheck },
+  { label: "Importar SINAPI", href: "/sinapi-import", icon: FileText },
   { label: "Medicoes", href: "/measurements", icon: ClipboardCheck },
   { label: "Estoque", href: "/stock", icon: Archive },
   { label: "Diario de obra", href: "/daily-reports", icon: NotebookText },

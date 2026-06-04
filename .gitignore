@@ -42,3 +42,9 @@ yarn-error.log*
 next-env.d.ts
 
 .vercel
+
+# SINAPI local imports
+/data/sinapi/extracted/
+/data/sinapi/*.zip
+/data/sinapi/*.xlsx
+/data/sinapi/*.xls
