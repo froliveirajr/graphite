@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AppShell } from "@/components/layout/app-shell";
 import { PageHeader } from "@/components/ui/page-header";
+import { BudgetGantt } from "@/components/ui/budget-gantt";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { formatCurrency } from "@/lib/data/graphite";
 import { getProjectDetails, type ProjectDetails } from "@/lib/repositories/graphite";
@@ -328,32 +329,10 @@ export default async function ProjectDetailsPage({
             <section className="rounded-lg border border-zinc-200 bg-white shadow-sm">
               <div className="flex items-center justify-between border-b border-zinc-200 p-4">
                 <h2 className="font-semibold">Orcamento e cronograma fisico-financeiro</h2>
-                <Link href="/budget-items/new" className="text-sm font-semibold text-zinc-900 hover:underline">Novo item</Link>
+                <Link href={`/budget-items/new?projectId=${project.id}`} className="text-sm font-semibold text-zinc-900 hover:underline">Novo item</Link>
               </div>
               {project.budgetItems.length > 0 ? (
-                <div className="divide-y divide-zinc-100">
-                  {project.budgetItems.map((item) => (
-                    <div key={item.id} className="grid gap-3 p-4 text-sm xl:grid-cols-[240px_1fr_180px]">
-                      <div>
-                        <p className="font-semibold">{item.phase}</p>
-                        <p className="mt-1 text-xs text-zinc-500">{item.description}</p>
-                      </div>
-                      <div>
-                        <div className="flex justify-between text-xs text-zinc-500">
-                          <span>{item.plannedStartDate}</span>
-                          <span>{item.plannedEndDate}</span>
-                        </div>
-                        <div className="mt-2 h-4 rounded-full bg-zinc-100">
-                          <div className="h-4 rounded-full bg-[#f9a52c]" style={{ width: `${Math.min(100, item.physicalProgress)}%` }} />
-                        </div>
-                      </div>
-                      <div className="flex items-center justify-between gap-3">
-                        <strong>{formatCurrency(item.totalPrice)}</strong>
-                        <Link href={`/budget-items/${item.id}/edit`} className="font-semibold text-zinc-900 hover:underline">Editar</Link>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                <BudgetGantt items={project.budgetItems} />
               ) : emptyState("Nenhum item de orcamento cadastrado para esta obra.")}
             </section>
 

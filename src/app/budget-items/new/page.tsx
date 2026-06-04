@@ -6,8 +6,8 @@ import { getProjectTaskOptions } from "@/lib/repositories/graphite";
 
 const statuses = ["Planejado", "Em andamento", "Concluido", "Cancelado"];
 
-export default async function NewBudgetItemPage({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
-  const [{ error }, projects] = await Promise.all([searchParams, getProjectTaskOptions()]);
+export default async function NewBudgetItemPage({ searchParams }: { searchParams: Promise<{ error?: string; projectId?: string }> }) {
+  const [{ error, projectId }, projects] = await Promise.all([searchParams, getProjectTaskOptions()]);
 
   return (
     <AppShell>
@@ -17,7 +17,7 @@ export default async function NewBudgetItemPage({ searchParams }: { searchParams
           {error ? <div className="mb-5 rounded-md border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-medium text-amber-800">{error}</div> : null}
           <div className="grid gap-4 md:grid-cols-2">
             <label className="text-sm font-medium text-zinc-800">Obra
-              <select name="projectId" required className="mt-2 h-11 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm">
+              <select name="projectId" required defaultValue={projectId ?? ""} className="mt-2 h-11 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm">
                 <option value="">Selecione</option>
                 {projects.map((project) => <option key={project.id} value={project.id}>{project.code} - {project.name}</option>)}
               </select>
