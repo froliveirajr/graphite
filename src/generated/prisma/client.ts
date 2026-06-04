@@ -152,6 +152,11 @@ export type FinancialEntry = Prisma.FinancialEntryModel
  */
 export type ServiceMeasurement = Prisma.ServiceMeasurementModel
 /**
+ * Model ServiceMeasurementEmployee
+ * 
+ */
+export type ServiceMeasurementEmployee = Prisma.ServiceMeasurementEmployeeModel
+/**
  * Model Approval
  * 
  */

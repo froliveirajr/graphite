@@ -73,6 +73,7 @@ export const ModelName = {
   File: 'File',
   FinancialEntry: 'FinancialEntry',
   ServiceMeasurement: 'ServiceMeasurement',
+  ServiceMeasurementEmployee: 'ServiceMeasurementEmployee',
   Approval: 'Approval',
   AuditLog: 'AuditLog'
 } as const
@@ -513,6 +514,19 @@ export const ServiceMeasurementScalarFieldEnum = {
 } as const
 
 export type ServiceMeasurementScalarFieldEnum = (typeof ServiceMeasurementScalarFieldEnum)[keyof typeof ServiceMeasurementScalarFieldEnum]
+
+
+export const ServiceMeasurementEmployeeScalarFieldEnum = {
+  id: 'id',
+  serviceMeasurementId: 'serviceMeasurementId',
+  employeeId: 'employeeId',
+  role: 'role',
+  hoursWorked: 'hoursWorked',
+  notes: 'notes',
+  createdAt: 'createdAt'
+} as const
+
+export type ServiceMeasurementEmployeeScalarFieldEnum = (typeof ServiceMeasurementEmployeeScalarFieldEnum)[keyof typeof ServiceMeasurementEmployeeScalarFieldEnum]
 
 
 export const ApprovalScalarFieldEnum = {

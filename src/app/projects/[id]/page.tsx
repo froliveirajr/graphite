@@ -344,10 +344,16 @@ export default async function ProjectDetailsPage({
               {project.measurements.length > 0 ? (
                 <div className="divide-y divide-zinc-100">
                   {project.measurements.map((measurement) => (
-                    <div key={measurement.id} className="grid gap-2 p-4 text-sm lg:grid-cols-[140px_1fr_160px_120px]">
+                    <div key={measurement.id} className="grid gap-2 p-4 text-sm xl:grid-cols-[120px_1fr_170px_180px_120px]">
                       <strong>{measurement.measuredAt}</strong>
-                      <span>{measurement.budgetItem}</span>
+                      <div>
+                        <p>{measurement.budgetItem}</p>
+                        <p className="mt-1 text-xs text-zinc-500">
+                          {measurement.quantityMeasured} {measurement.budgetUnit} medidos - saldo {measurement.remainingQuantity} {measurement.budgetUnit}
+                        </p>
+                      </div>
                       <strong>{formatCurrency(measurement.amountMeasured)}</strong>
+                      <span className="truncate text-zinc-600">{measurement.executants}</span>
                       <StatusBadge value={measurement.status} />
                     </div>
                   ))}

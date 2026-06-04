@@ -406,6 +406,7 @@ export const ModelName = {
   File: 'File',
   FinancialEntry: 'FinancialEntry',
   ServiceMeasurement: 'ServiceMeasurement',
+  ServiceMeasurementEmployee: 'ServiceMeasurementEmployee',
   Approval: 'Approval',
   AuditLog: 'AuditLog'
 } as const
@@ -423,7 +424,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "client" | "project" | "projectArea" | "task" | "budgetItem" | "taskChecklistItem" | "employee" | "contractor" | "projectContractor" | "projectEmployeeAllocation" | "supplier" | "material" | "purchaseRequest" | "purchaseRequestItem" | "stockMovement" | "wasteDisposal" | "dailyReport" | "dailyReportAttendance" | "file" | "financialEntry" | "serviceMeasurement" | "approval" | "auditLog"
+    modelProps: "user" | "client" | "project" | "projectArea" | "task" | "budgetItem" | "taskChecklistItem" | "employee" | "contractor" | "projectContractor" | "projectEmployeeAllocation" | "supplier" | "material" | "purchaseRequest" | "purchaseRequestItem" | "stockMovement" | "wasteDisposal" | "dailyReport" | "dailyReportAttendance" | "file" | "financialEntry" | "serviceMeasurement" | "serviceMeasurementEmployee" | "approval" | "auditLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2055,6 +2056,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ServiceMeasurementEmployee: {
+      payload: Prisma.$ServiceMeasurementEmployeePayload<ExtArgs>
+      fields: Prisma.ServiceMeasurementEmployeeFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ServiceMeasurementEmployeeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceMeasurementEmployeePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ServiceMeasurementEmployeeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceMeasurementEmployeePayload>
+        }
+        findFirst: {
+          args: Prisma.ServiceMeasurementEmployeeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceMeasurementEmployeePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ServiceMeasurementEmployeeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceMeasurementEmployeePayload>
+        }
+        findMany: {
+          args: Prisma.ServiceMeasurementEmployeeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceMeasurementEmployeePayload>[]
+        }
+        create: {
+          args: Prisma.ServiceMeasurementEmployeeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceMeasurementEmployeePayload>
+        }
+        createMany: {
+          args: Prisma.ServiceMeasurementEmployeeCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ServiceMeasurementEmployeeCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceMeasurementEmployeePayload>[]
+        }
+        delete: {
+          args: Prisma.ServiceMeasurementEmployeeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceMeasurementEmployeePayload>
+        }
+        update: {
+          args: Prisma.ServiceMeasurementEmployeeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceMeasurementEmployeePayload>
+        }
+        deleteMany: {
+          args: Prisma.ServiceMeasurementEmployeeDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ServiceMeasurementEmployeeUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ServiceMeasurementEmployeeUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceMeasurementEmployeePayload>[]
+        }
+        upsert: {
+          args: Prisma.ServiceMeasurementEmployeeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceMeasurementEmployeePayload>
+        }
+        aggregate: {
+          args: Prisma.ServiceMeasurementEmployeeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateServiceMeasurementEmployee>
+        }
+        groupBy: {
+          args: Prisma.ServiceMeasurementEmployeeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceMeasurementEmployeeGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ServiceMeasurementEmployeeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ServiceMeasurementEmployeeCountAggregateOutputType> | number
+        }
+      }
+    }
     Approval: {
       payload: Prisma.$ApprovalPayload<ExtArgs>
       fields: Prisma.ApprovalFieldRefs
@@ -2664,6 +2739,19 @@ export const ServiceMeasurementScalarFieldEnum = {
 export type ServiceMeasurementScalarFieldEnum = (typeof ServiceMeasurementScalarFieldEnum)[keyof typeof ServiceMeasurementScalarFieldEnum]
 
 
+export const ServiceMeasurementEmployeeScalarFieldEnum = {
+  id: 'id',
+  serviceMeasurementId: 'serviceMeasurementId',
+  employeeId: 'employeeId',
+  role: 'role',
+  hoursWorked: 'hoursWorked',
+  notes: 'notes',
+  createdAt: 'createdAt'
+} as const
+
+export type ServiceMeasurementEmployeeScalarFieldEnum = (typeof ServiceMeasurementEmployeeScalarFieldEnum)[keyof typeof ServiceMeasurementEmployeeScalarFieldEnum]
+
+
 export const ApprovalScalarFieldEnum = {
   id: 'id',
   approvalType: 'approvalType',
@@ -3160,6 +3248,7 @@ export type GlobalOmitConfig = {
   file?: Prisma.FileOmit
   financialEntry?: Prisma.FinancialEntryOmit
   serviceMeasurement?: Prisma.ServiceMeasurementOmit
+  serviceMeasurementEmployee?: Prisma.ServiceMeasurementEmployeeOmit
   approval?: Prisma.ApprovalOmit
   auditLog?: Prisma.AuditLogOmit
 }

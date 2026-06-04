@@ -345,6 +345,10 @@ export type MeasurementListItem = {
   project: string;
   budgetItemId: string;
   budgetItem: string;
+  budgetQuantity: number;
+  budgetUnit: string;
+  measuredTotal: number;
+  remainingQuantity: number;
   measuredAt: string;
   periodStartDate: string;
   periodEndDate: string;
@@ -353,7 +357,21 @@ export type MeasurementListItem = {
   physicalProgress: number;
   status: string;
   createdBy: string;
+  executants: string;
   notes: string;
+};
+
+export type MeasurementEmployeeLine = {
+  id: string;
+  employeeId: string;
+  employee: string;
+  role: string;
+  hoursWorked: number;
+  notes: string;
+};
+
+export type MeasurementDetails = MeasurementListItem & {
+  employeeLines: MeasurementEmployeeLine[];
 };
 
 function hasDatabaseUrl() {
@@ -699,8 +717,21 @@ export async function getProjectDetails(id: string): Promise<ProjectDetails | nu
         },
         serviceMeasurements: {
           include: {
-            budgetItem: true,
+            budgetItem: {
+              include: {
+                measurements: {
+                  select: {
+                    quantityMeasured: true,
+                  },
+                },
+              },
+            },
             createdBy: true,
+            employees: {
+              include: {
+                employee: true,
+              },
+            },
           },
           orderBy: {
             measuredAt: "desc",
@@ -855,22 +886,35 @@ export async function getProjectDetails(id: string): Promise<ProjectDetails | nu
         status: budgetItemStatusLabels[item.status] ?? item.status,
         notes: item.notes ?? "",
       })),
-      measurements: project.serviceMeasurements.map((measurement) => ({
-        id: measurement.id,
-        projectId: measurement.projectId,
-        project: project.name,
-        budgetItemId: measurement.budgetItemId,
-        budgetItem: measurement.budgetItem.description,
-        measuredAt: formatDate(measurement.measuredAt),
-        periodStartDate: formatDate(measurement.periodStartDate),
-        periodEndDate: formatDate(measurement.periodEndDate),
-        quantityMeasured: toNumber(measurement.quantityMeasured),
-        amountMeasured: toNumber(measurement.amountMeasured),
-        physicalProgress: toNumber(measurement.physicalProgress),
-        status: measurementStatusLabels[measurement.status] ?? measurement.status,
-        createdBy: measurement.createdBy.name,
-        notes: measurement.notes ?? "",
-      })),
+      measurements: project.serviceMeasurements.map((measurement) => {
+        const measuredTotalForItem = measurement.budgetItem.measurements.reduce(
+          (total, item) => total + toNumber(item.quantityMeasured),
+          0,
+        );
+        const budgetQuantity = toNumber(measurement.budgetItem.quantity);
+
+        return {
+          id: measurement.id,
+          projectId: measurement.projectId,
+          project: project.name,
+          budgetItemId: measurement.budgetItemId,
+          budgetItem: measurement.budgetItem.description,
+          budgetQuantity,
+          budgetUnit: measurement.budgetItem.unit,
+          measuredTotal: measuredTotalForItem,
+          remainingQuantity: Math.max(0, budgetQuantity - measuredTotalForItem),
+          measuredAt: formatDate(measurement.measuredAt),
+          periodStartDate: formatDate(measurement.periodStartDate),
+          periodEndDate: formatDate(measurement.periodEndDate),
+          quantityMeasured: toNumber(measurement.quantityMeasured),
+          amountMeasured: toNumber(measurement.amountMeasured),
+          physicalProgress: toNumber(measurement.physicalProgress),
+          status: measurementStatusLabels[measurement.status] ?? measurement.status,
+          createdBy: measurement.createdBy.name,
+          executants: measurement.employees.map((line) => line.employee.name).join(", ") || "-",
+          notes: measurement.notes ?? "",
+        };
+      }),
       files: project.files.map((file) => ({
         id: file.id,
         fileName: file.fileName,
@@ -1279,14 +1323,70 @@ export async function getBudgetItemDetails(id: string): Promise<BudgetItemListIt
   return items.find((item) => item.id === id) ?? null;
 }
 
-export async function getBudgetItemOptions(): Promise<Array<{ id: string; projectId: string; label: string; unitPrice: number }>> {
-  const items = await getBudgetItems();
-  return items.map((item) => ({
-    id: item.id,
-    projectId: item.projectId,
-    label: `${item.project} - ${item.phase} - ${item.description}`,
-    unitPrice: item.unitPrice,
-  }));
+export async function getBudgetItemOptions(): Promise<
+  Array<{
+    id: string;
+    projectId: string;
+    label: string;
+    unit: string;
+    quantity: number;
+    unitPrice: number;
+    measuredQuantity: number;
+    remainingQuantity: number;
+  }>
+> {
+  if (!hasDatabaseUrl()) {
+    const items = await getBudgetItems();
+    return items.map((item) => ({
+      id: item.id,
+      projectId: item.projectId,
+      label: `${item.project} - ${item.phase} - ${item.description}`,
+      unit: item.unit,
+      quantity: item.quantity,
+      unitPrice: item.unitPrice,
+      measuredQuantity: 0,
+      remainingQuantity: item.quantity,
+    }));
+  }
+
+  try {
+    const { prisma } = await import("@/lib/db/prisma");
+    const items = await prisma.budgetItem.findMany({
+      include: {
+        project: true,
+        measurements: {
+          select: {
+            quantityMeasured: true,
+          },
+        },
+      },
+      orderBy: [
+        { project: { updatedAt: "desc" } },
+        { plannedStartDate: "asc" },
+      ],
+    });
+
+    return items.map((item) => {
+      const quantity = toNumber(item.quantity);
+      const measuredQuantity = item.measurements.reduce((total, measurement) => {
+        return total + toNumber(measurement.quantityMeasured);
+      }, 0);
+
+      return {
+        id: item.id,
+        projectId: item.projectId,
+        label: `${item.project.name} - ${item.phase} - ${item.description}`,
+        unit: item.unit,
+        quantity,
+        unitPrice: toNumber(item.unitPrice),
+        measuredQuantity,
+        remainingQuantity: Math.max(0, quantity - measuredQuantity),
+      };
+    });
+  } catch (error) {
+    console.warn("Falha ao buscar itens de orcamento para medicao.", error);
+    return [];
+  }
 }
 
 export async function getMeasurements(): Promise<MeasurementListItem[]> {
@@ -1299,20 +1399,112 @@ export async function getMeasurements(): Promise<MeasurementListItem[]> {
     const measurements = await prisma.serviceMeasurement.findMany({
       include: {
         project: true,
-        budgetItem: true,
+        budgetItem: {
+          include: {
+            measurements: {
+              select: {
+                quantityMeasured: true,
+              },
+            },
+          },
+        },
         createdBy: true,
+        employees: {
+          include: {
+            employee: true,
+          },
+        },
       },
       orderBy: {
         measuredAt: "desc",
       },
     });
 
-    return measurements.map((measurement) => ({
+    return measurements.map((measurement) => {
+      const measuredTotalForItem = measurement.budgetItem.measurements.reduce((total, item) => {
+        return total + toNumber(item.quantityMeasured);
+      }, 0);
+      const budgetQuantity = toNumber(measurement.budgetItem.quantity);
+
+      return {
+        id: measurement.id,
+        projectId: measurement.projectId,
+        project: measurement.project.name,
+        budgetItemId: measurement.budgetItemId,
+        budgetItem: measurement.budgetItem.description,
+        budgetQuantity,
+        budgetUnit: measurement.budgetItem.unit,
+        measuredTotal: measuredTotalForItem,
+        remainingQuantity: Math.max(0, budgetQuantity - measuredTotalForItem),
+        measuredAt: formatDate(measurement.measuredAt),
+        periodStartDate: formatDate(measurement.periodStartDate),
+        periodEndDate: formatDate(measurement.periodEndDate),
+        quantityMeasured: toNumber(measurement.quantityMeasured),
+        amountMeasured: toNumber(measurement.amountMeasured),
+        physicalProgress: toNumber(measurement.physicalProgress),
+        status: measurementStatusLabels[measurement.status] ?? measurement.status,
+        createdBy: measurement.createdBy.name,
+        executants: measurement.employees.map((line) => line.employee.name).join(", ") || "-",
+        notes: measurement.notes ?? "",
+      };
+    });
+  } catch (error) {
+    console.warn("Falha ao buscar medicoes no banco.", error);
+    return [];
+  }
+}
+
+export async function getMeasurementDetails(id: string): Promise<MeasurementDetails | null> {
+  if (!hasDatabaseUrl()) {
+    return null;
+  }
+
+  try {
+    const { prisma } = await import("@/lib/db/prisma");
+    const measurement = await prisma.serviceMeasurement.findUnique({
+      where: { id },
+      include: {
+        project: true,
+        budgetItem: {
+          include: {
+            measurements: {
+              select: {
+                quantityMeasured: true,
+              },
+            },
+          },
+        },
+        createdBy: true,
+        employees: {
+          include: {
+            employee: true,
+          },
+          orderBy: {
+            createdAt: "asc",
+          },
+        },
+      },
+    });
+
+    if (!measurement) {
+      return null;
+    }
+
+    const measuredTotalForItem = measurement.budgetItem.measurements.reduce((total, item) => {
+      return total + toNumber(item.quantityMeasured);
+    }, 0);
+    const budgetQuantity = toNumber(measurement.budgetItem.quantity);
+
+    return {
       id: measurement.id,
       projectId: measurement.projectId,
       project: measurement.project.name,
       budgetItemId: measurement.budgetItemId,
       budgetItem: measurement.budgetItem.description,
+      budgetQuantity,
+      budgetUnit: measurement.budgetItem.unit,
+      measuredTotal: measuredTotalForItem,
+      remainingQuantity: Math.max(0, budgetQuantity - measuredTotalForItem),
       measuredAt: formatDate(measurement.measuredAt),
       periodStartDate: formatDate(measurement.periodStartDate),
       periodEndDate: formatDate(measurement.periodEndDate),
@@ -1321,17 +1513,21 @@ export async function getMeasurements(): Promise<MeasurementListItem[]> {
       physicalProgress: toNumber(measurement.physicalProgress),
       status: measurementStatusLabels[measurement.status] ?? measurement.status,
       createdBy: measurement.createdBy.name,
+      executants: measurement.employees.map((line) => line.employee.name).join(", ") || "-",
       notes: measurement.notes ?? "",
-    }));
+      employeeLines: measurement.employees.map((line) => ({
+        id: line.id,
+        employeeId: line.employeeId,
+        employee: line.employee.name,
+        role: line.role ?? "",
+        hoursWorked: toNumber(line.hoursWorked),
+        notes: line.notes ?? "",
+      })),
+    };
   } catch (error) {
-    console.warn("Falha ao buscar medicoes no banco.", error);
-    return [];
+    console.warn("Falha ao buscar medicao.", error);
+    return null;
   }
-}
-
-export async function getMeasurementDetails(id: string): Promise<MeasurementListItem | null> {
-  const measurements = await getMeasurements();
-  return measurements.find((measurement) => measurement.id === id) ?? null;
 }
 
 export async function getStockMovements(): Promise<StockMovementListItem[]> {

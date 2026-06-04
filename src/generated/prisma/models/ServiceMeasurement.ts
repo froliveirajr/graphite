@@ -299,6 +299,7 @@ export type ServiceMeasurementWhereInput = {
   project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
   budgetItem?: Prisma.XOR<Prisma.BudgetItemScalarRelationFilter, Prisma.BudgetItemWhereInput>
   createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  employees?: Prisma.ServiceMeasurementEmployeeListRelationFilter
 }
 
 export type ServiceMeasurementOrderByWithRelationInput = {
@@ -319,6 +320,7 @@ export type ServiceMeasurementOrderByWithRelationInput = {
   project?: Prisma.ProjectOrderByWithRelationInput
   budgetItem?: Prisma.BudgetItemOrderByWithRelationInput
   createdBy?: Prisma.UserOrderByWithRelationInput
+  employees?: Prisma.ServiceMeasurementEmployeeOrderByRelationAggregateInput
 }
 
 export type ServiceMeasurementWhereUniqueInput = Prisma.AtLeast<{
@@ -342,6 +344,7 @@ export type ServiceMeasurementWhereUniqueInput = Prisma.AtLeast<{
   project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
   budgetItem?: Prisma.XOR<Prisma.BudgetItemScalarRelationFilter, Prisma.BudgetItemWhereInput>
   createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  employees?: Prisma.ServiceMeasurementEmployeeListRelationFilter
 }, "id">
 
 export type ServiceMeasurementOrderByWithAggregationInput = {
@@ -401,6 +404,7 @@ export type ServiceMeasurementCreateInput = {
   project: Prisma.ProjectCreateNestedOneWithoutServiceMeasurementsInput
   budgetItem: Prisma.BudgetItemCreateNestedOneWithoutMeasurementsInput
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedMeasurementsInput
+  employees?: Prisma.ServiceMeasurementEmployeeCreateNestedManyWithoutServiceMeasurementInput
 }
 
 export type ServiceMeasurementUncheckedCreateInput = {
@@ -418,6 +422,7 @@ export type ServiceMeasurementUncheckedCreateInput = {
   createdById: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  employees?: Prisma.ServiceMeasurementEmployeeUncheckedCreateNestedManyWithoutServiceMeasurementInput
 }
 
 export type ServiceMeasurementUpdateInput = {
@@ -435,6 +440,7 @@ export type ServiceMeasurementUpdateInput = {
   project?: Prisma.ProjectUpdateOneRequiredWithoutServiceMeasurementsNestedInput
   budgetItem?: Prisma.BudgetItemUpdateOneRequiredWithoutMeasurementsNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedMeasurementsNestedInput
+  employees?: Prisma.ServiceMeasurementEmployeeUpdateManyWithoutServiceMeasurementNestedInput
 }
 
 export type ServiceMeasurementUncheckedUpdateInput = {
@@ -452,6 +458,7 @@ export type ServiceMeasurementUncheckedUpdateInput = {
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  employees?: Prisma.ServiceMeasurementEmployeeUncheckedUpdateManyWithoutServiceMeasurementNestedInput
 }
 
 export type ServiceMeasurementCreateManyInput = {
@@ -573,6 +580,11 @@ export type ServiceMeasurementSumOrderByAggregateInput = {
   quantityMeasured?: Prisma.SortOrder
   amountMeasured?: Prisma.SortOrder
   physicalProgress?: Prisma.SortOrder
+}
+
+export type ServiceMeasurementScalarRelationFilter = {
+  is?: Prisma.ServiceMeasurementWhereInput
+  isNot?: Prisma.ServiceMeasurementWhereInput
 }
 
 export type ServiceMeasurementCreateNestedManyWithoutCreatedByInput = {
@@ -705,6 +717,20 @@ export type EnumMeasurementStatusFieldUpdateOperationsInput = {
   set?: $Enums.MeasurementStatus
 }
 
+export type ServiceMeasurementCreateNestedOneWithoutEmployeesInput = {
+  create?: Prisma.XOR<Prisma.ServiceMeasurementCreateWithoutEmployeesInput, Prisma.ServiceMeasurementUncheckedCreateWithoutEmployeesInput>
+  connectOrCreate?: Prisma.ServiceMeasurementCreateOrConnectWithoutEmployeesInput
+  connect?: Prisma.ServiceMeasurementWhereUniqueInput
+}
+
+export type ServiceMeasurementUpdateOneRequiredWithoutEmployeesNestedInput = {
+  create?: Prisma.XOR<Prisma.ServiceMeasurementCreateWithoutEmployeesInput, Prisma.ServiceMeasurementUncheckedCreateWithoutEmployeesInput>
+  connectOrCreate?: Prisma.ServiceMeasurementCreateOrConnectWithoutEmployeesInput
+  upsert?: Prisma.ServiceMeasurementUpsertWithoutEmployeesInput
+  connect?: Prisma.ServiceMeasurementWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ServiceMeasurementUpdateToOneWithWhereWithoutEmployeesInput, Prisma.ServiceMeasurementUpdateWithoutEmployeesInput>, Prisma.ServiceMeasurementUncheckedUpdateWithoutEmployeesInput>
+}
+
 export type ServiceMeasurementCreateWithoutCreatedByInput = {
   id?: string
   measuredAt: Date | string
@@ -719,6 +745,7 @@ export type ServiceMeasurementCreateWithoutCreatedByInput = {
   updatedAt?: Date | string
   project: Prisma.ProjectCreateNestedOneWithoutServiceMeasurementsInput
   budgetItem: Prisma.BudgetItemCreateNestedOneWithoutMeasurementsInput
+  employees?: Prisma.ServiceMeasurementEmployeeCreateNestedManyWithoutServiceMeasurementInput
 }
 
 export type ServiceMeasurementUncheckedCreateWithoutCreatedByInput = {
@@ -735,6 +762,7 @@ export type ServiceMeasurementUncheckedCreateWithoutCreatedByInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  employees?: Prisma.ServiceMeasurementEmployeeUncheckedCreateNestedManyWithoutServiceMeasurementInput
 }
 
 export type ServiceMeasurementCreateOrConnectWithoutCreatedByInput = {
@@ -797,6 +825,7 @@ export type ServiceMeasurementCreateWithoutProjectInput = {
   updatedAt?: Date | string
   budgetItem: Prisma.BudgetItemCreateNestedOneWithoutMeasurementsInput
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedMeasurementsInput
+  employees?: Prisma.ServiceMeasurementEmployeeCreateNestedManyWithoutServiceMeasurementInput
 }
 
 export type ServiceMeasurementUncheckedCreateWithoutProjectInput = {
@@ -813,6 +842,7 @@ export type ServiceMeasurementUncheckedCreateWithoutProjectInput = {
   createdById: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  employees?: Prisma.ServiceMeasurementEmployeeUncheckedCreateNestedManyWithoutServiceMeasurementInput
 }
 
 export type ServiceMeasurementCreateOrConnectWithoutProjectInput = {
@@ -855,6 +885,7 @@ export type ServiceMeasurementCreateWithoutBudgetItemInput = {
   updatedAt?: Date | string
   project: Prisma.ProjectCreateNestedOneWithoutServiceMeasurementsInput
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedMeasurementsInput
+  employees?: Prisma.ServiceMeasurementEmployeeCreateNestedManyWithoutServiceMeasurementInput
 }
 
 export type ServiceMeasurementUncheckedCreateWithoutBudgetItemInput = {
@@ -871,6 +902,7 @@ export type ServiceMeasurementUncheckedCreateWithoutBudgetItemInput = {
   createdById: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  employees?: Prisma.ServiceMeasurementEmployeeUncheckedCreateNestedManyWithoutServiceMeasurementInput
 }
 
 export type ServiceMeasurementCreateOrConnectWithoutBudgetItemInput = {
@@ -897,6 +929,90 @@ export type ServiceMeasurementUpdateWithWhereUniqueWithoutBudgetItemInput = {
 export type ServiceMeasurementUpdateManyWithWhereWithoutBudgetItemInput = {
   where: Prisma.ServiceMeasurementScalarWhereInput
   data: Prisma.XOR<Prisma.ServiceMeasurementUpdateManyMutationInput, Prisma.ServiceMeasurementUncheckedUpdateManyWithoutBudgetItemInput>
+}
+
+export type ServiceMeasurementCreateWithoutEmployeesInput = {
+  id?: string
+  measuredAt: Date | string
+  periodStartDate?: Date | string | null
+  periodEndDate?: Date | string | null
+  quantityMeasured: runtime.Decimal | runtime.DecimalJsLike | number | string
+  amountMeasured: runtime.Decimal | runtime.DecimalJsLike | number | string
+  physicalProgress?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: $Enums.MeasurementStatus
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  project: Prisma.ProjectCreateNestedOneWithoutServiceMeasurementsInput
+  budgetItem: Prisma.BudgetItemCreateNestedOneWithoutMeasurementsInput
+  createdBy: Prisma.UserCreateNestedOneWithoutCreatedMeasurementsInput
+}
+
+export type ServiceMeasurementUncheckedCreateWithoutEmployeesInput = {
+  id?: string
+  projectId: string
+  budgetItemId: string
+  measuredAt: Date | string
+  periodStartDate?: Date | string | null
+  periodEndDate?: Date | string | null
+  quantityMeasured: runtime.Decimal | runtime.DecimalJsLike | number | string
+  amountMeasured: runtime.Decimal | runtime.DecimalJsLike | number | string
+  physicalProgress?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: $Enums.MeasurementStatus
+  notes?: string | null
+  createdById: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type ServiceMeasurementCreateOrConnectWithoutEmployeesInput = {
+  where: Prisma.ServiceMeasurementWhereUniqueInput
+  create: Prisma.XOR<Prisma.ServiceMeasurementCreateWithoutEmployeesInput, Prisma.ServiceMeasurementUncheckedCreateWithoutEmployeesInput>
+}
+
+export type ServiceMeasurementUpsertWithoutEmployeesInput = {
+  update: Prisma.XOR<Prisma.ServiceMeasurementUpdateWithoutEmployeesInput, Prisma.ServiceMeasurementUncheckedUpdateWithoutEmployeesInput>
+  create: Prisma.XOR<Prisma.ServiceMeasurementCreateWithoutEmployeesInput, Prisma.ServiceMeasurementUncheckedCreateWithoutEmployeesInput>
+  where?: Prisma.ServiceMeasurementWhereInput
+}
+
+export type ServiceMeasurementUpdateToOneWithWhereWithoutEmployeesInput = {
+  where?: Prisma.ServiceMeasurementWhereInput
+  data: Prisma.XOR<Prisma.ServiceMeasurementUpdateWithoutEmployeesInput, Prisma.ServiceMeasurementUncheckedUpdateWithoutEmployeesInput>
+}
+
+export type ServiceMeasurementUpdateWithoutEmployeesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  measuredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  periodStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  periodEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  quantityMeasured?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  amountMeasured?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  physicalProgress?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumMeasurementStatusFieldUpdateOperationsInput | $Enums.MeasurementStatus
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  project?: Prisma.ProjectUpdateOneRequiredWithoutServiceMeasurementsNestedInput
+  budgetItem?: Prisma.BudgetItemUpdateOneRequiredWithoutMeasurementsNestedInput
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedMeasurementsNestedInput
+}
+
+export type ServiceMeasurementUncheckedUpdateWithoutEmployeesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  budgetItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  measuredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  periodStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  periodEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  quantityMeasured?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  amountMeasured?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  physicalProgress?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumMeasurementStatusFieldUpdateOperationsInput | $Enums.MeasurementStatus
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ServiceMeasurementCreateManyCreatedByInput = {
@@ -929,6 +1045,7 @@ export type ServiceMeasurementUpdateWithoutCreatedByInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   project?: Prisma.ProjectUpdateOneRequiredWithoutServiceMeasurementsNestedInput
   budgetItem?: Prisma.BudgetItemUpdateOneRequiredWithoutMeasurementsNestedInput
+  employees?: Prisma.ServiceMeasurementEmployeeUpdateManyWithoutServiceMeasurementNestedInput
 }
 
 export type ServiceMeasurementUncheckedUpdateWithoutCreatedByInput = {
@@ -945,6 +1062,7 @@ export type ServiceMeasurementUncheckedUpdateWithoutCreatedByInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  employees?: Prisma.ServiceMeasurementEmployeeUncheckedUpdateManyWithoutServiceMeasurementNestedInput
 }
 
 export type ServiceMeasurementUncheckedUpdateManyWithoutCreatedByInput = {
@@ -993,6 +1111,7 @@ export type ServiceMeasurementUpdateWithoutProjectInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   budgetItem?: Prisma.BudgetItemUpdateOneRequiredWithoutMeasurementsNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedMeasurementsNestedInput
+  employees?: Prisma.ServiceMeasurementEmployeeUpdateManyWithoutServiceMeasurementNestedInput
 }
 
 export type ServiceMeasurementUncheckedUpdateWithoutProjectInput = {
@@ -1009,6 +1128,7 @@ export type ServiceMeasurementUncheckedUpdateWithoutProjectInput = {
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  employees?: Prisma.ServiceMeasurementEmployeeUncheckedUpdateManyWithoutServiceMeasurementNestedInput
 }
 
 export type ServiceMeasurementUncheckedUpdateManyWithoutProjectInput = {
@@ -1057,6 +1177,7 @@ export type ServiceMeasurementUpdateWithoutBudgetItemInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   project?: Prisma.ProjectUpdateOneRequiredWithoutServiceMeasurementsNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedMeasurementsNestedInput
+  employees?: Prisma.ServiceMeasurementEmployeeUpdateManyWithoutServiceMeasurementNestedInput
 }
 
 export type ServiceMeasurementUncheckedUpdateWithoutBudgetItemInput = {
@@ -1073,6 +1194,7 @@ export type ServiceMeasurementUncheckedUpdateWithoutBudgetItemInput = {
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  employees?: Prisma.ServiceMeasurementEmployeeUncheckedUpdateManyWithoutServiceMeasurementNestedInput
 }
 
 export type ServiceMeasurementUncheckedUpdateManyWithoutBudgetItemInput = {
@@ -1091,6 +1213,35 @@ export type ServiceMeasurementUncheckedUpdateManyWithoutBudgetItemInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+
+/**
+ * Count Type ServiceMeasurementCountOutputType
+ */
+
+export type ServiceMeasurementCountOutputType = {
+  employees: number
+}
+
+export type ServiceMeasurementCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  employees?: boolean | ServiceMeasurementCountOutputTypeCountEmployeesArgs
+}
+
+/**
+ * ServiceMeasurementCountOutputType without action
+ */
+export type ServiceMeasurementCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ServiceMeasurementCountOutputType
+   */
+  select?: Prisma.ServiceMeasurementCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ServiceMeasurementCountOutputType without action
+ */
+export type ServiceMeasurementCountOutputTypeCountEmployeesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ServiceMeasurementEmployeeWhereInput
+}
 
 
 export type ServiceMeasurementSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1111,6 +1262,8 @@ export type ServiceMeasurementSelect<ExtArgs extends runtime.Types.Extensions.In
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
   budgetItem?: boolean | Prisma.BudgetItemDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  employees?: boolean | Prisma.ServiceMeasurement$employeesArgs<ExtArgs>
+  _count?: boolean | Prisma.ServiceMeasurementCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["serviceMeasurement"]>
 
 export type ServiceMeasurementSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1175,6 +1328,8 @@ export type ServiceMeasurementInclude<ExtArgs extends runtime.Types.Extensions.I
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
   budgetItem?: boolean | Prisma.BudgetItemDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  employees?: boolean | Prisma.ServiceMeasurement$employeesArgs<ExtArgs>
+  _count?: boolean | Prisma.ServiceMeasurementCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ServiceMeasurementIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
@@ -1193,6 +1348,7 @@ export type $ServiceMeasurementPayload<ExtArgs extends runtime.Types.Extensions.
     project: Prisma.$ProjectPayload<ExtArgs>
     budgetItem: Prisma.$BudgetItemPayload<ExtArgs>
     createdBy: Prisma.$UserPayload<ExtArgs>
+    employees: Prisma.$ServiceMeasurementEmployeePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1606,6 +1762,7 @@ export interface Prisma__ServiceMeasurementClient<T, Null = never, ExtArgs exten
   project<T extends Prisma.ProjectDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProjectDefaultArgs<ExtArgs>>): Prisma.Prisma__ProjectClient<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   budgetItem<T extends Prisma.BudgetItemDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BudgetItemDefaultArgs<ExtArgs>>): Prisma.Prisma__BudgetItemClient<runtime.Types.Result.GetResult<Prisma.$BudgetItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   createdBy<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  employees<T extends Prisma.ServiceMeasurement$employeesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ServiceMeasurement$employeesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceMeasurementEmployeePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2047,6 +2204,30 @@ export type ServiceMeasurementDeleteManyArgs<ExtArgs extends runtime.Types.Exten
    * Limit how many ServiceMeasurements to delete.
    */
   limit?: number
+}
+
+/**
+ * ServiceMeasurement.employees
+ */
+export type ServiceMeasurement$employeesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ServiceMeasurementEmployee
+   */
+  select?: Prisma.ServiceMeasurementEmployeeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ServiceMeasurementEmployee
+   */
+  omit?: Prisma.ServiceMeasurementEmployeeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ServiceMeasurementEmployeeInclude<ExtArgs> | null
+  where?: Prisma.ServiceMeasurementEmployeeWhereInput
+  orderBy?: Prisma.ServiceMeasurementEmployeeOrderByWithRelationInput | Prisma.ServiceMeasurementEmployeeOrderByWithRelationInput[]
+  cursor?: Prisma.ServiceMeasurementEmployeeWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ServiceMeasurementEmployeeScalarFieldEnum | Prisma.ServiceMeasurementEmployeeScalarFieldEnum[]
 }
 
 /**

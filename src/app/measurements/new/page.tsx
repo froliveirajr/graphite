@@ -2,12 +2,18 @@ import Link from "next/link";
 import { AppShell } from "@/components/layout/app-shell";
 import { PageHeader } from "@/components/ui/page-header";
 import { createMeasurementAction } from "@/lib/actions/measurements";
-import { getBudgetItemOptions, getProjectTaskOptions } from "@/lib/repositories/graphite";
+import { getBudgetItemOptions, getEmployeeOptions, getProjectTaskOptions } from "@/lib/repositories/graphite";
 
 const statuses = ["Rascunho", "Enviada", "Aprovada", "Rejeitada", "Faturada"];
+const employeeRows = Array.from({ length: 8 }, (_, index) => index);
 
 export default async function NewMeasurementPage({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
-  const [{ error }, projects, budgetItems] = await Promise.all([searchParams, getProjectTaskOptions(), getBudgetItemOptions()]);
+  const [{ error }, projects, budgetItems, employees] = await Promise.all([
+    searchParams,
+    getProjectTaskOptions(),
+    getBudgetItemOptions(),
+    getEmployeeOptions(),
+  ]);
 
   return (
     <AppShell>
@@ -25,7 +31,11 @@ export default async function NewMeasurementPage({ searchParams }: { searchParam
             <label className="text-sm font-medium text-zinc-800">Item do orcamento
               <select name="budgetItemId" required className="mt-2 h-11 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm">
                 <option value="">Selecione</option>
-                {budgetItems.map((item) => <option key={item.id} value={item.id}>{item.label}</option>)}
+                {budgetItems.map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.label} - saldo {item.remainingQuantity} {item.unit}
+                  </option>
+                ))}
               </select>
             </label>
             <label className="text-sm font-medium text-zinc-800">Data da medicao
@@ -54,6 +64,46 @@ export default async function NewMeasurementPage({ searchParams }: { searchParam
             <label className="text-sm font-medium text-zinc-800 md:col-span-2">Observacoes
               <textarea name="notes" rows={3} className="mt-2 w-full rounded-md border border-zinc-200 px-3 py-2 text-sm" />
             </label>
+          </div>
+          <div className="mt-8">
+            <h2 className="text-lg font-semibold text-zinc-950">Funcionarios executantes</h2>
+            <div className="mt-3 overflow-x-auto rounded-lg border border-zinc-200">
+              <table className="w-full min-w-[920px] text-left text-sm">
+                <thead className="bg-zinc-50 text-xs uppercase tracking-wide text-zinc-500">
+                  <tr>
+                    <th className="px-3 py-3">Funcionario</th>
+                    <th className="px-3 py-3">Atividade</th>
+                    <th className="px-3 py-3">Horas</th>
+                    <th className="px-3 py-3">Observacao</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-zinc-100">
+                  {employeeRows.map((row) => (
+                    <tr key={row}>
+                      <td className="px-3 py-3">
+                        <select name="employeeId" className="h-10 w-full rounded-md border border-zinc-200 bg-white px-2 text-sm">
+                          <option value="">Selecione</option>
+                          {employees.map((employee) => (
+                            <option key={employee.id} value={employee.id}>
+                              {employee.name} - {employee.jobTitle}
+                            </option>
+                          ))}
+                        </select>
+                      </td>
+                      <td className="px-3 py-3">
+                        <input name="employeeRole" className="h-10 w-full rounded-md border border-zinc-200 px-2 text-sm" placeholder="Execucao, apoio, lideranca" />
+                      </td>
+                      <td className="px-3 py-3">
+                        <input name="employeeHours" type="number" min="0" step="0.25" className="h-10 w-full rounded-md border border-zinc-200 px-2 text-sm" />
+                      </td>
+                      <td className="px-3 py-3">
+                        <input name="employeeNotes" className="h-10 w-full rounded-md border border-zinc-200 px-2 text-sm" />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
           <div className="mt-6 flex justify-end gap-3">
             <Link href="/measurements" className="inline-flex h-10 items-center rounded-md border border-zinc-200 px-4 text-sm font-semibold text-zinc-700">Cancelar</Link>

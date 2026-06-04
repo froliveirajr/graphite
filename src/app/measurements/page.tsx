@@ -25,7 +25,7 @@ export default async function MeasurementsPage({
         {successMessage ? <div className="mb-4 rounded-md border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-800">{successMessage}</div> : null}
         {error ? <div className="mb-4 rounded-md border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-medium text-amber-800">{error}</div> : null}
         <div className="overflow-hidden rounded-lg border border-zinc-200 bg-white shadow-sm">
-          <table className="w-full min-w-[1080px] text-left text-sm">
+          <table className="w-full min-w-[1320px] text-left text-sm">
             <thead className="bg-zinc-50 text-xs uppercase tracking-wide text-zinc-500">
               <tr>
                 <th className="px-4 py-3">Data</th>
@@ -33,8 +33,10 @@ export default async function MeasurementsPage({
                 <th className="px-4 py-3">Item</th>
                 <th className="px-4 py-3">Periodo</th>
                 <th className="px-4 py-3">Qtd.</th>
+                <th className="px-4 py-3">Saldo item</th>
                 <th className="px-4 py-3">Valor</th>
                 <th className="px-4 py-3">Fisico</th>
+                <th className="px-4 py-3">Executantes</th>
                 <th className="px-4 py-3">Status</th>
                 <th className="px-4 py-3">Acoes</th>
               </tr>
@@ -46,9 +48,11 @@ export default async function MeasurementsPage({
                   <td className="px-4 py-4 font-semibold">{measurement.project}</td>
                   <td className="max-w-[260px] truncate px-4 py-4 text-zinc-700">{measurement.budgetItem}</td>
                   <td className="px-4 py-4 text-zinc-700">{measurement.periodStartDate} ate {measurement.periodEndDate}</td>
-                  <td className="px-4 py-4">{measurement.quantityMeasured}</td>
+                  <td className="px-4 py-4">{measurement.quantityMeasured} {measurement.budgetUnit}</td>
+                  <td className="px-4 py-4 text-zinc-700">{measurement.remainingQuantity} de {measurement.budgetQuantity} {measurement.budgetUnit}</td>
                   <td className="px-4 py-4 font-semibold">{formatCurrency(measurement.amountMeasured)}</td>
                   <td className="px-4 py-4">{measurement.physicalProgress}%</td>
+                  <td className="max-w-[220px] truncate px-4 py-4 text-zinc-700">{measurement.executants}</td>
                   <td className="px-4 py-4"><StatusBadge value={measurement.status} /></td>
                   <td className="px-4 py-4">
                     <div className="flex items-center gap-2">
@@ -61,7 +65,7 @@ export default async function MeasurementsPage({
                   </td>
                 </tr>
               )) : (
-                <tr><td colSpan={9} className="px-4 py-10 text-center text-sm text-zinc-500">Nenhuma medicao cadastrada.</td></tr>
+                <tr><td colSpan={11} className="px-4 py-10 text-center text-sm text-zinc-500">Nenhuma medicao cadastrada.</td></tr>
               )}
             </tbody>
           </table>
