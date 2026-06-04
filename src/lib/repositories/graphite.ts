@@ -148,6 +148,7 @@ const stockMovementLabels: Record<string, string> = {
 
 export type PurchaseListItem = {
   id: string;
+  projectId: string;
   project: string;
   requester: string;
   status: string;
@@ -156,6 +157,23 @@ export type PurchaseListItem = {
   estimatedTotal: number;
   approvedTotal: number;
   items: number;
+  justification: string;
+  notes: string;
+};
+
+export type PurchaseRequestItemLine = {
+  id: string;
+  materialId: string;
+  material: string;
+  description: string;
+  quantity: number;
+  unit: string;
+  estimatedUnitPrice: number;
+  approvedUnitPrice: number;
+};
+
+export type PurchaseDetails = PurchaseListItem & {
+  itemLines: PurchaseRequestItemLine[];
 };
 
 export type StockMovementListItem = {
@@ -759,6 +777,7 @@ export async function getProjectDetails(id: string): Promise<ProjectDetails | nu
       tasks: mappedTasks,
       materialRequests: project.purchaseRequests.map((purchase) => ({
         id: purchase.id,
+        projectId: purchase.projectId,
         project: project.name,
         requester: purchase.requestedBy.name,
         status: purchaseStatusLabels[purchase.status] ?? purchase.status,
@@ -767,6 +786,8 @@ export async function getProjectDetails(id: string): Promise<ProjectDetails | nu
         estimatedTotal: toNumber(purchase.estimatedTotal),
         approvedTotal: toNumber(purchase.approvedTotal),
         items: purchase._count.items,
+        justification: purchase.justification ?? "",
+        notes: purchase.notes ?? "",
       })),
       stockMovements: project.stockMovements.map((movement) => ({
         id: movement.id,
@@ -1098,6 +1119,7 @@ export async function getPurchases(): Promise<PurchaseListItem[]> {
 
     return purchases.map((purchase) => ({
       id: purchase.id,
+      projectId: purchase.projectId,
       project: purchase.project.name,
       requester: purchase.requestedBy.name,
       status: purchaseStatusLabels[purchase.status] ?? purchase.status,
@@ -1106,9 +1128,104 @@ export async function getPurchases(): Promise<PurchaseListItem[]> {
       estimatedTotal: toNumber(purchase.estimatedTotal),
       approvedTotal: toNumber(purchase.approvedTotal),
       items: purchase._count.items,
+      justification: purchase.justification ?? "",
+      notes: purchase.notes ?? "",
     }));
   } catch (error) {
     console.warn("Falha ao buscar compras no banco.", error);
+    return [];
+  }
+}
+
+export async function getPurchaseDetails(id: string): Promise<PurchaseDetails | null> {
+  if (!hasDatabaseUrl()) {
+    return null;
+  }
+
+  try {
+    const { prisma } = await import("@/lib/db/prisma");
+    const purchase = await prisma.purchaseRequest.findUnique({
+      where: { id },
+      include: {
+        project: true,
+        requestedBy: true,
+        items: {
+          include: {
+            material: true,
+          },
+          orderBy: {
+            createdAt: "asc",
+          },
+        },
+      },
+    });
+
+    if (!purchase) {
+      return null;
+    }
+
+    return {
+      id: purchase.id,
+      projectId: purchase.projectId,
+      project: purchase.project.name,
+      requester: purchase.requestedBy.name,
+      status: purchaseStatusLabels[purchase.status] ?? purchase.status,
+      urgency: purchase.urgency ?? "",
+      neededBy: purchase.neededBy ? formatDate(purchase.neededBy) : "",
+      estimatedTotal: toNumber(purchase.estimatedTotal),
+      approvedTotal: toNumber(purchase.approvedTotal),
+      items: purchase.items.length,
+      justification: purchase.justification ?? "",
+      notes: purchase.notes ?? "",
+      itemLines: purchase.items.map((item) => ({
+        id: item.id,
+        materialId: item.materialId ?? "",
+        material: item.material?.name ?? "-",
+        description: item.description ?? "",
+        quantity: toNumber(item.quantity),
+        unit: item.unit,
+        estimatedUnitPrice: toNumber(item.estimatedUnitPrice),
+        approvedUnitPrice: toNumber(item.approvedUnitPrice),
+      })),
+    };
+  } catch (error) {
+    console.warn("Falha ao buscar pedido de material.", error);
+    return null;
+  }
+}
+
+export async function getMaterialOptions(): Promise<Array<{ id: string; name: string; unit: string; averagePrice: number }>> {
+  if (!hasDatabaseUrl()) {
+    return getDemoMaterials().map((material) => ({
+      id: material.id,
+      name: material.name,
+      unit: material.unit,
+      averagePrice: material.averagePrice,
+    }));
+  }
+
+  try {
+    const { prisma } = await import("@/lib/db/prisma");
+    const materials = await prisma.material.findMany({
+      select: {
+        id: true,
+        name: true,
+        unit: true,
+        averagePrice: true,
+      },
+      orderBy: {
+        name: "asc",
+      },
+    });
+
+    return materials.map((material) => ({
+      id: material.id,
+      name: material.name,
+      unit: material.unit,
+      averagePrice: toNumber(material.averagePrice),
+    }));
+  } catch (error) {
+    console.warn("Falha ao buscar materiais para pedido.", error);
     return [];
   }
 }

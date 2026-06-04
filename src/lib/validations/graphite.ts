@@ -134,6 +134,24 @@ export const serviceMeasurementSchema = z.object({
   notes: z.string().optional(),
 });
 
+export const purchaseRequestSchema = z.object({
+  projectId: z.string().min(1, "Selecione uma obra."),
+  status: z.enum([
+    "Solicitada",
+    "Em cotacao",
+    "Aguardando aprovacao",
+    "Aprovada",
+    "Comprada",
+    "Recebida",
+    "Cancelada",
+    "Reprovada",
+  ]),
+  urgency: z.string().optional(),
+  neededBy: z.string().optional(),
+  justification: z.string().optional(),
+  notes: z.string().optional(),
+});
+
 export type ClientInput = z.infer<typeof clientSchema>;
 export type ProjectInput = z.infer<typeof projectSchema>;
 export type TaskInput = z.infer<typeof taskSchema>;
@@ -142,3 +160,4 @@ export type DailyReportInput = z.infer<typeof dailyReportSchema>;
 export type EmployeeAllocationInput = z.infer<typeof employeeAllocationSchema>;
 export type BudgetItemInput = z.infer<typeof budgetItemSchema>;
 export type ServiceMeasurementInput = z.infer<typeof serviceMeasurementSchema>;
+export type PurchaseRequestInput = z.infer<typeof purchaseRequestSchema>;
